@@ -2,13 +2,12 @@
   <v-card :elevation="elevation" :width="width">
     <v-card-title v-text="'Login'" />
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <p>{{ text }}</p>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-form>
+        <v-alert>{{ text }}</v-alert>
+        <v-text-field v-model="model.account" v-bind="schema.account" />
+        <v-text-field v-model="model.username" v-bind="schema.username" />
+        <v-text-field v-model="model.password" v-bind="schema.password" />        
+      </v-form>
     </v-card-text>
   </v-card>
 </template>
@@ -27,6 +26,45 @@ export default {
     text: {
       type: String,
       default: 'default text'
+    }
+  },
+  data: () => ({
+    model: {
+      account: '',
+      username: '',
+      password: ''
+    }
+  }),
+  computed: {
+    schema() {
+      return {
+        account: {
+          label: this.$t('common.account'),
+          type: 'text'
+        },
+        username: {
+          label: this.$t('common.username'),
+          type: 'text'
+        },
+        password: {
+          label: this.$t('common.password'),
+          type: 'password'
+        }
+      }
+    }
+  },
+  methods: {
+    accountErrors() {
+      const errors = []
+      return errors
+    },
+    usernameErrors() {
+      const errors = []
+      return errors
+    },
+    passwordErrors() {
+      const errors = []
+      return errors
     }
   }
 }

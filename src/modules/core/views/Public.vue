@@ -3,14 +3,19 @@
 </template>
 
 <script>
-import LoginModal from '../components/LoginModal'
+//import LoginModal from '../components/LoginModal'
+//const LoginModal = () => import(`@/modules/core/components/LoginModal`).default
+//const LoginModal = import(`@/modules/core/components/LoginModal`)
 export default {
   name: 'Public',
   methods: {
-    showLoginForm() {
+    async showLoginForm() {
       let loginProps = { width: 1000, elevation: 6, text: 'This is passed as dynamic text!' }
       let modalProps = { width: 1000, height: 'auto' }
-      this.$modal.show(LoginModal, loginProps, modalProps)
+
+      const form = await import(/* webpackChunkName: 'loginModal' */ '../components/LoginModal')
+      
+      this.$modal.show(form.default, loginProps, modalProps)
     }
   }
 }
