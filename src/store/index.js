@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 // modules
 import core from '../modules/core/store'
-//import auth from '../modules/auth/store'
+import auth from '../modules/auth/store'
 
 // persist state in cookies
 import createPersistedState from 'vuex-persistedstate'
@@ -17,7 +17,7 @@ const store = new Vuex.Store({
   namespaced: true,
   modules: {
     core,
-//    auth
+    auth
   },
   plugins: [
     createPersistedState({

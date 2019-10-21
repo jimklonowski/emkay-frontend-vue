@@ -6,9 +6,14 @@
         <v-alert>{{ text }}</v-alert>
         <v-text-field v-model="model.account" v-bind="schema.account" />
         <v-text-field v-model="model.username" v-bind="schema.username" />
-        <v-text-field v-model="model.password" v-bind="schema.password" />        
+        <v-text-field v-model="model.password" v-bind="schema.password" />
       </v-form>
     </v-card-text>
+    <v-card-actions>
+      <v-spacer />
+      <v-btn v-t="'auth.forgot_password'" tabindex="-1" text />
+      <v-btn v-t="'auth.login'" type="submit" color="primary" class="mr-4" text />
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -39,15 +44,15 @@ export default {
     schema() {
       return {
         account: {
-          label: this.$t('common.account'),
+          label: this.$t('auth.account'),
           type: 'text'
         },
         username: {
-          label: this.$t('common.username'),
+          label: this.$t('auth.username'),
           type: 'text'
         },
         password: {
-          label: this.$t('common.password'),
+          label: this.$t('auth.password'),
           type: 'password'
         }
       }

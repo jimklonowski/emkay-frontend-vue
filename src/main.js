@@ -3,7 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import i18n from './i18n'
+//import i18n from './i18n'
+import i18n from './plugins/i18n'
+
+// plugins
+import vueConfig from 'vue-config'
+import config from './settings/config'
+Vue.use(vueConfig, config)
 
 //https://github.com/euvl/vue-js-modal
 import VModal from 'vue-js-modal'

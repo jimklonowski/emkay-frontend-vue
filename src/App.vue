@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <app-navigation />
     <v-content>
       <router-view />
       <modals-container />
@@ -8,11 +9,13 @@
 </template>
 
 <script>
+import AppNavigation from '@/modules/core/components/navigation/AppNavigation'
 import ModalsContainer from 'vue-js-modal/src/ModalsContainer'
 
 export default {
   name: 'App',
   components: {
+    AppNavigation,
     ModalsContainer
   }
 }

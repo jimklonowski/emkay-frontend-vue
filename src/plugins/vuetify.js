@@ -1,23 +1,39 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
+import { en, fr, en as en_CA } from 'vuetify/lib/locale'
 
 Vue.use(Vuetify);
 
 export default new Vuetify({
+  lang: {
+    locales: { en, fr, en_CA },
+    current: 'en'
+  },
   theme: {
     themes: {
       light: {
-        primary: '#ee44aa',
-        secondary: '#424242',
-        accent: '#82B1FF',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107'
+        anchor: '#4F286C',  // emkay purple
+        primary: '#4F286C',
+        accent: '#4F286C',
+        //secondary: '',
+        //success: '',
+        //info: '',
+        warning: '#F68820'  // emkay orange
+        //error: ''
       },
-    },
+      dark: {
+        anchor: '#BF8CF8',  // even lighter purple
+        primary: '#7A57A5', // lighter purple
+        accent: '#BF8CF8',  // even lighter purple
+        // secondary: '',
+        // success: '',
+        // info: '',
+        warning: '#F68820'  // emkay orange
+        // error: ''
+      }
+    }
   },
   icons: {
-    iconfont: 'mdi',
-  },
-});
+    iconfont: 'md'
+  }
+})
