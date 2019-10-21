@@ -24,7 +24,14 @@ Vue.use(VModal, {
   }
 })
 
+// validation
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
 Vue.config.productionTip = false
+
+import ApiService from './services/api.service'
+ApiService.init()
 
 new Vue({
   router,

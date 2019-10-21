@@ -81,5 +81,8 @@
     "toll_detail": "Détail du péage",
     "upload_your_odometers": "Téléchargez vos odomètres",
     "vehicle_inspection": "Inspection de véhicule"
+  },
+  "validation": {
+    "required": "{attribute} est requis."
   }
 }

@@ -12,14 +12,14 @@
     </template>
 
     <v-card>
-      <v-list>
+      <v-list v-if="isAuthenticated">
         <v-list-item>
           <v-list-item-avatar color="primary">
             <span class="white--text headline">JK</span>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title> J. Klonowski</v-list-item-title>
-            <v-list-item-subtitle>Information Technology</v-list-item-subtitle>
+            <v-list-item-title>{{ currentUser.username }}</v-list-item-title>
+            <v-list-item-subtitle>{{ currentUser.account }}</v-list-item-subtitle>
           </v-list-item-content>
 
           <v-list-item-action />
@@ -41,7 +41,7 @@
         </v-list-item>
       </v-list>
       <v-card-actions>
-        <v-btn elevation="0" block>
+        <v-btn elevation="0" block @click.prevent="logout">
           <v-icon class="mr-4">exit_to_app</v-icon>
           {{ $t('auth.logout') }}
         </v-btn>
@@ -70,6 +70,11 @@ export default {
   },
   methods: {
     ...mapActions('auth',['changeLanguage','changeTheme']),
+    logout() {
+      this.$store.dispatch('auth/logout').then(() => {
+        this.$router.push('/login')
+      })
+    }
     
     // setDarkMode() {
     //   this.changeTheme(this.dark).then(() => { this.$vuetify.theme.dark = this.isDark })

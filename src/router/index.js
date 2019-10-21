@@ -1,29 +1,59 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Public from '@/modules/core/views/Public.vue'
+import store from '../store'
+
+
+import coreRoutes from '@/modules/core/router'
+import authRoutes from '@/modules/auth/router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'public',
-    component: Public
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+const routes = coreRoutes.concat(
+  authRoutes
+)
 
-const router = new VueRouter({
-  mode: 'history',
+/**
+ * @type {import('vue-router').RouterOptions}
+ */
+const options = {
   base: process.env.BASE_URL,
-  routes
+  mode: 'history',
+  routes: routes,
+  // Scroll to the top of each view upon routing.
+  // setTimeout: Since there's a 300ms page transition on every route in App.vue, scrollTop AFTER this transition occurs (looks better)
+  scrollBehavior() {
+    return new Promise(resolve =>
+      setTimeout(() => {
+        resolve({ x: 0, y: 0 })
+      }, 300)
+    )
+  }
+}
+
+const router = new VueRouter(options)
+
+// Global Router Navigation Guarg: role-based protection on each route
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.guest)) {
+    if (to.matched.some(record => record.meta.onlyWhenLoggedOut)) {
+      if (store.getters.isAuthenticated) {
+        next({ path: '/' })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  } else {
+    // this is an authenticated route, check auth status before proceeding
+    if (store.getters.isAuthenticated) {
+      // user is authenticated, pass route through
+      next()
+    } else {
+      // user is not authenticated, redirect to login
+      store.dispatch('auth/logout').then(() => next('/login'))
+    }
+  }
 })
 
 export default router

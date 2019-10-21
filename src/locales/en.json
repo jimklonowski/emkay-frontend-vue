@@ -81,5 +81,8 @@
     "toll_detail": "Toll Detail",
     "upload_your_odometers": "Upload Your Odometers",
     "vehicle_inspection": "Vehicle Inspection"
+  },
+  "validation": {
+    "required": "{attribute} is required."
   }
 }
