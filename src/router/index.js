@@ -36,7 +36,7 @@ const router = new VueRouter(options)
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.guest)) {
     if (to.matched.some(record => record.meta.onlyWhenLoggedOut)) {
-      if (store.getters.isAuthenticated) {
+      if (store.getters['auth/isAuthenticated']) {
         next({ path: '/' })
       } else {
         next()
@@ -46,12 +46,13 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // this is an authenticated route, check auth status before proceeding
-    if (store.getters.isAuthenticated) {
+    if (store.getters['auth/isAuthenticated']) {
       // user is authenticated, pass route through
       next()
     } else {
-      // user is not authenticated, redirect to login
-      store.dispatch('auth/logout').then(() => next('/login'))
+      // user is not authenticated, redirect to /home to show login screen
+      console.log('Not Authed -> redirect to home login')
+      store.dispatch('auth/logout').then(() => next('/'))
     }
   }
 })

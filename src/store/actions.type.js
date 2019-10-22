@@ -1,0 +1,5 @@
+export const LOGIN = 'login'
+export const LOGOUT = 'logout'
+export const LOGIN_HELP = 'loginHelp'
+export const CHANGE_LOCALE = 'changeLocale'
+export const CHANGE_THEME = 'changeTheme'

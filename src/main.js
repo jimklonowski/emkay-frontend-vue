@@ -33,10 +33,23 @@ Vue.config.productionTip = false
 import ApiService from './services/api.service'
 ApiService.init()
 
-new Vue({
+
+
+export const app = new Vue({
+  el: '#app',
   router,
   store,
   vuetify,
   i18n,
   render: h => h(App)
-}).$mount('#app')
+})
+
+store.$app = app;
+
+// new Vue({
+//   router,
+//   store,
+//   vuetify,
+//   i18n,
+//   render: h => h(App)
+// }).$mount('#app')

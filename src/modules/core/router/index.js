@@ -5,8 +5,7 @@ export default [
     alias: '/',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
     meta: {
-      guest: true,
-      onlyWhenLoggedOut: true
+      guest: true
     }
   }
 ]

@@ -10,8 +10,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn v-t="'auth.forgot_password'" to="/login-help" tabindex="-1" text />
-        <v-btn v-t="'auth.login'" type="submit" color="primary" class="mr-4" text />
+        <v-btn v-t="'auth.forgot_password'" :ripple="false" @click="toggleHelp" tabindex="-1" text />
+        <v-btn v-t="'auth.login'" :ripple="false" type="submit" color="primary" text />
       </v-card-actions>
     </v-form>
   </v-card>
@@ -30,10 +30,6 @@ export default {
     width: {
       type: [String,Number],
       default: '600px'
-    },
-    text: {
-      type: String,
-      default: 'EM102 JCK 123'
     }
   },
   data: () => ({
@@ -74,6 +70,9 @@ export default {
   },
   methods: {
     translateError,
+    toggleHelp() {
+      this.$emit('update')
+    },
     accountErrors() {
       const errors = []
       if (!this.$v.model.account.$dirty) return errors

@@ -1,5 +1,6 @@
 {
   "common": {
+    "back": "Retourner",
     "client": "Client",
     "dark_mode": "Mode Sombre",
     "driver": "Driver",
@@ -10,6 +11,7 @@
   },
   "auth": {
     "account": "Compte",
+    "email": "Email",
     "forgot_password": "Mot de passe oublié",
     "login": "Connecter",
     "logout": "Déconnecter",
@@ -83,6 +85,7 @@
     "vehicle_inspection": "Inspection de véhicule"
   },
   "validation": {
-    "required": "{attribute} est requis."
+    "required": "Le champ {attribute} est obligatoire.",
+    "email": "Le champ {attribute} doit être une adresse email valide."
   }
 }

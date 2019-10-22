@@ -1,0 +1,7 @@
+export const SHOW_MODAL = 'showModal'
+export const HIDE_MODAL = 'hideModal'
+export const SET_LOCALE = 'setLocale'
+export const SET_THEME = 'setTheme'
+export const SET_ERROR = 'setError'
+export const SET_AUTH = 'setAuth'
+export const PURGE_AUTH = 'removeAuth'

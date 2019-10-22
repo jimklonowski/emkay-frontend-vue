@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import vuetify from '@/plugins/vuetify'
+//import {app} from '@/main'
+//import vuetify from '@/plugins/vuetify'
 
-import { loadLanguageAsync } from '@/plugins/i18n'
+//import { loadLanguageAsync } from '@/plugins/i18n'
 
 import ApiService from '@/services/api.service'
 import TokenService from '@/services/token.service'
@@ -12,20 +13,27 @@ Vue.use(Vuex)
 export const mutations = {
   setLocale(state, locale) {
     state.locale = locale
+    this.$app.$i18n.locale = locale
+    this.$app.$vuetify.lang.current = 'en'
   },
   setDark(state, isDark) {
     state.isDark = isDark
-    vuetify.framework.theme.dark = isDark
+    this.$app.$vuetify.theme.dark = isDark
   },
   setError(state, error) {
     state.errors = error
   },
   setAuth(state, payload) {
-    debugger
     state.isAuthenticated = true
     state.isAdmin = payload.isAdmin
+    
     state.isDark = payload.isDark
+    this.$app.$vuetify.theme.dark = payload.isDark
+    
     state.locale = payload.locale
+    this.$app.$i18n.locale = payload.locale
+    this.$app.$vuetify.lang.current = payload.locale
+    
     state.user = payload.user
     state.errors = {}
     TokenService.saveAccessToken(payload.access_token)
@@ -34,8 +42,13 @@ export const mutations = {
   removeAuth(state) {
     state.isAuthenticated = false
     state.isAdmin = false
+    
     state.isDark = false
+    this.$app.$vuetify.theme.dark = false
+
     state.locale = 'en'
+    this.$app.$i18n.locale = 'en'
+
     state.user = {}
     state.errors = {}
     TokenService.destroyAccessToken()
@@ -56,10 +69,16 @@ export const actions = {
   logout(context) {
     context.commit('removeAuth')
   },
-  async changeLanguage(context, locale) {
-    await loadLanguageAsync(locale)
+  changeLanguage(context, locale) {
+    debugger
     context.commit('setLocale', locale)
-    console.log(`Language Set: ${locale}`)
+    // return new Promise(resolve => {
+    //   context.commit('setLocale', locale)
+    //   loadLanguageAsync(locale)
+    //   resolve()
+    // })
+    //debugger
+    //console.log(`Language Set: ${locale}`)
   },
   changeTheme(context, isDark) {
     context.commit('setDark', isDark)
