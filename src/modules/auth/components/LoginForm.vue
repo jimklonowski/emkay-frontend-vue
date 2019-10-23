@@ -1,5 +1,5 @@
 <template>
-  <v-card :elevation="elevation" :width="width" raised>
+  <v-card :loading="loading" :elevation="elevation" :width="width" raised>
     <v-form ref="form" @submit.prevent="onSubmit">
       <v-card-title :class="$config.LOGIN_BAR_CLASS" v-t="'auth.login'" />
       <v-alert v-if="errorMessage" type="error" dense tile>{{ errorMessage }}</v-alert>
@@ -108,7 +108,8 @@ export default {
         .dispatch('auth/login', this.model)
         .then(() => {
           console.log('Login Success')
-          this.$router.push({ name: 'home' })
+          console.log(this.$store)
+          this.$router.push({ name: 'home'}).catch(() => {})
         })
         .catch(error => {
           console.log('Login Failure')

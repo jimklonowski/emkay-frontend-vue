@@ -15,7 +15,7 @@
       <v-list v-if="isAuthenticated">
         <v-list-item>
           <v-list-item-avatar color="primary">
-            <span class="white--text headline">JK</span>
+            <span class="white--text headline">{{ initials }}</span>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{ currentUser.username }}</v-list-item-title>
@@ -31,7 +31,7 @@
       <v-list>
         <v-list-item class="py-2">
           <v-list-item-action>
-            <v-switch v-model="dark" color="primary" />
+            <v-switch v-model="darkMode" color="primary" />
           </v-list-item-action>
           <v-list-item-title v-t="'common.dark_mode'" />
         </v-list-item>
@@ -41,7 +41,7 @@
         </v-list-item>
       </v-list>
       <v-card-actions>
-        <v-btn elevation="0" block @click.prevent="logout">
+        <v-btn v-if="isAuthenticated" elevation="0" block @click.prevent="logout">
           <v-icon class="mr-4">exit_to_app</v-icon>
           {{ $t('auth.logout') }}
         </v-btn>
@@ -52,69 +52,41 @@
 
 <script>
 import { languages } from '@/plugins/i18n'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data: () => ({
     menu: false,
-    //locale: 'en',
-    //dark: false,
     languages
   }),
-  created() {
-    //this.dark = this.isDark
-    //this.locale = this.currentLocale
-  },
-  // watch: {
-  //   isDark(newValue, oldValue) {
-  //     console.log(`Updating from ${oldValue} to ${newValue}`)
-  //     this.changeTheme(newValue)
-  //   },
-  //   currentLocale(newValue, oldValue) {
-  //     console.log(`Updating from ${oldValue} to ${newValue}`)
-  //     this.changeLanguage(newValue)
-  //   }
-  // },
   computed: {
-    ...mapGetters('auth',['isAuthenticated','currentUser']),
-    dark: {
+    ...mapGetters('auth',['isAuthenticated','currentUser','initials']),
+    darkMode: {
       get() {
-        return this.$store.state.auth.isDark
+        return this.$store.getters['auth/isDark']
       },
       set(value) {
-        this.$store.dispatch('auth/changeTheme', value)
+        this.setIsDark(value)
       }
     },
     language: {
       get() {
-        return this.$store.state.auth.currentLocale
+        return this.$store.getters['auth/currentLocale']
       },
       set(value) {
-        this.$store.dispatch('auth/changeLanguage', value)
+        this.setLocale(value)
       }
     }
-    //...mapGetters('auth',['isAuthenticated','isDark','currentUser','currentLocale']),
-    //...mapGetters('auth',['isAuthenticated', 'currentUser']),
-    // isDark: {
-    //   get: function(){ return this.$store.getters['auth/isDark'] },
-    //   set: function(dark){ this.changeTheme(dark) }
-    // },
-    // currentLocale: {
-    //   get: function() { return this.$store.getters['auth/currentLocale'] },
-    //   set: function(locale) { await this.changeLanguage(locale) }
-    // }
   },
   methods: {
-    //...mapActions('auth',['changeLanguage','changeTheme']),
+    ...mapActions('auth',['setIsDark', 'setLocale']),
+    //...mapMutations('auth',['setIsDark','setLocale']),
     logout() {
       this.$store.dispatch('auth/logout').then(() => {
-        this.$router.push('/')
+        console.log(this.$store)
+        this.$router.push({ name: 'home'}).catch(() => {})
       })
     }
-    
-    // setDarkMode() {
-    //   this.changeTheme(this.dark).then(() => { this.$vuetify.theme.dark = this.isDark })
-    // }
   },
 }
 </script>

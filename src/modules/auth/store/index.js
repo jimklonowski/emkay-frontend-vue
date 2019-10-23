@@ -24,32 +24,17 @@ export const mutations = {
     state.errors = error
   },
   setAuth(state, payload) {
+    state.user = payload.user
     state.isAuthenticated = true
     state.isAdmin = payload.isAdmin
-    
-    state.isDark = payload.isDark
-    this.$app.$vuetify.theme.dark = payload.isDark
-    
-    state.locale = payload.locale
-    this.$app.$i18n.locale = payload.locale
-    this.$app.$vuetify.lang.current = payload.locale
-    
-    state.user = payload.user
     state.errors = {}
     TokenService.saveAccessToken(payload.access_token)
     TokenService.saveRefreshToken(payload.refresh_token)
   },
   removeAuth(state) {
+    state.user = {}
     state.isAuthenticated = false
     state.isAdmin = false
-    
-    state.isDark = false
-    this.$app.$vuetify.theme.dark = false
-
-    state.locale = 'en'
-    this.$app.$i18n.locale = 'en'
-
-    state.user = {}
     state.errors = {}
     TokenService.destroyAccessToken()
   }
@@ -62,6 +47,8 @@ export const actions = {
     let response = await ApiService.post('/auth/login', { user: credentials })
     if (response) {
       context.commit('setAuth', response.data)
+      context.commit('setLocale', response.data.locale)
+      context.commit('setDark', response.data.isDark)
     } else {
       context.commit('setError')
     }
@@ -89,7 +76,7 @@ export const actions = {
 export const state = {
   isAuthenticated: false,
   isDark: false,
-  locale: 'en',
+  locale: null,
   user: {},
   errors: {}
 }

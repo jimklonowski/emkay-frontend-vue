@@ -87,5 +87,24 @@
   "validation": {
     "required": "The field {attribute} is required.",
     "email": "The field {attribute} must be a valid email address."
+  },
+  "vehicle_dashboard": {
+    "add_new_driver": "Add New Driver",
+    "contact_information": "Contact Information",
+    "customization": "Customization",
+    "details": "Details",
+    "driver": "Driver",
+    "dashboard": "Dashboard",
+    "documents": "Documents",
+    "driver_information": "Driver Information",
+    "edit_custom_labels": "Edit Custom Labels",
+    "edit_driver": "Edit Driver",
+    "inspections": "Inspections",
+    "reassign_driver": "Reassign Driver",
+    "saferoads": "Saferoads",
+    "search_hint": "Enter a vehicle number",
+    "search_placeholder": "Find a vehicle...",
+    "transport_storage": "Transport/Storage",
+    "vehicle_information": "Vehicle Information"
   }
 }

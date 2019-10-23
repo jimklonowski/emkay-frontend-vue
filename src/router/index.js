@@ -5,11 +5,13 @@ import store from '../store'
 
 import coreRoutes from '@/modules/core/router'
 import authRoutes from '@/modules/auth/router'
+import vehicleRoutes from '@/modules/vehicle/router'
 
 Vue.use(VueRouter)
 
 const routes = coreRoutes.concat(
-  authRoutes
+  authRoutes,
+  vehicleRoutes
 )
 
 /**

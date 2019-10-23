@@ -87,5 +87,24 @@
   "validation": {
     "required": "Le champ {attribute} est obligatoire.",
     "email": "Le champ {attribute} doit être une adresse email valide."
+  },
+  "vehicle_dashboard": {
+    "add_new_driver": "Ajouter un nouveau pilote",
+    "contact_information": "Informations de contact",
+    "customization": "Personnalisation",
+    "details": "Détails",
+    "driver": "Driver",
+    "dashboard": "Tableau de bord",
+    "documents": "Les documents",
+    "driver_information": "Information du conducteur",
+    "edit_custom_labels": "Éditer les étiquettes personnalisées",
+    "edit_driver": "Editer le pilote",
+    "inspections": "Inspections",
+    "reassign_driver": "Réaffecter le pilote",
+    "saferoads": "Saferoads",
+    "search_hint": "Entrez un numéro de véhicule",
+    "search_placeholder": "Rechercher un véhicule...",
+    "transport_storage": "Transport/Storage",
+    "vehicle_information": "Information sur le véhicule"
   }
 }

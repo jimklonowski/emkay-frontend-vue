@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 
 // modules
 import core from '../modules/core/store'
-import auth from '../modules/auth/store'
+//import auth from '../modules/auth/store'
+import auth from '@/store/modules/auth'
 
 // persist state in cookies
 import createPersistedState from 'vuex-persistedstate'
