@@ -34,7 +34,8 @@ let locale = fallbackLocale
 const i18n = new VueI18n({
   locale,
   messages: { en },
-  fallbackLocale
+  fallbackLocale,
+  silentFallbackWarn: true
 })
 
 export default i18n

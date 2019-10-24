@@ -37,7 +37,7 @@ const MockService = {
         refresh_token: 'refresh_token'
       })
       // mock driver-details
-      .onGet('/driver-details/')
+      .onGet(new RegExp(`/driver-details/*`))
       .reply(200, {
         // Model - driver info
         last_name: 'KLONOWSKI',
@@ -65,6 +65,46 @@ const MockService = {
         driver_use_3: 'Bermuda Office',
         driver_use_label_4: 'Parking',
         driver_use_4: 'Parking Spot #3A'
+      })
+      // mock vehicle-details
+      .onGet(new RegExp(`/vehicle-details/*`))
+      .reply(200, {
+        // Account Information
+        account: 'EM102',
+        billing_sort: 'JCKBILLING',
+        center: '0x1',
+        center_description: 'Information Technology',
+        // Vehicle Information
+        year: '2020',
+        make: 'TESLA',
+        model: 'Model X P100D',
+        vin: 'K45286378154321EL',
+        vehicle_number: '123456',
+        client_vehicle_number: 'D34DB33F',
+        // Customization
+        client_use_label_1: 'Department',
+        client_use_1: 'I.T.',
+        client_use_label_2: 'Project',
+        client_use_2: 'Web Rewrite',
+        client_use_label_3: 'Division',
+        client_use_3: 'JavaScript',
+        client_use_label_4: 'Group',
+        client_use_4: 'Lead',
+        client_use_label_5: 'Client Use Label 5',
+        client_use_5: 'Custom 5'
+      })
+      // mock custom labels populate
+      .onGet('/custom-labels')
+      .reply(200, {
+        client_use_label_1: 'Department',
+        client_use_label_2: 'Project',
+        client_use_label_3: 'Division',
+        client_use_label_4: 'Group',
+        client_use_label_5: 'Client Use Label 5',
+        driver_use_label_1: 'Department',
+        driver_use_label_2: 'Team',
+        driver_use_label_3: 'Office',
+        driver_use_label_4: 'Parking'
       })
       .onAny()
       .passThrough()

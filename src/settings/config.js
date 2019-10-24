@@ -2,7 +2,7 @@ const SYSTEM_BAR_CLASS = 'primary darken-3'
 const APP_BAR_CLASS = 'primary darken-1'
 const TOOLBAR_CLASS = 'primary elevation-0'
 const LOGIN_BAR_CLASS = 'primary white--text font-weight-black text-uppercase'
-const SUBHEADER_CLASS = 'overline col-12'
+const SUBHEADER_CLASS = 'overline col-12 grey lighten-3 primary--text'
 const LABEL_CLASS = 'display-label'
 const FIELD_CLASS = 'display-field'
 
