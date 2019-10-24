@@ -81,6 +81,12 @@ import ToolbarMenu from '@/modules/core/components/ToolbarMenu'
 import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
 
 export default {
+  props: {
+    vehicle: {
+      type: String,
+      default: ''
+    }
+  },
   components: {
     ToolbarMenu,
     ToolbarTitle,
@@ -336,14 +342,17 @@ export default {
       }
     },
     toolbarColor() {
-      return this.errorMessage ? 'error' : 'primary'
+      return this.errorMessage ? 'error darken-2' : 'primary'
     }
   },
   async created() {
+    let url = `/vehicle-details/${this.vehicle}`
     // populate the panel
     this.isInitializing = true
     this.loading = true
-    ApiService.get('/vehicle-details', this.vehicle)
+    //ApiService.get('/vehicle-details', this.vehicle)
+    this.$http
+      .get(url)
       .then(response => {
         // populate model
         this.model = response.data

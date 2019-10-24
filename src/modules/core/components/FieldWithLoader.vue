@@ -36,7 +36,8 @@ export default {
     },
     styleObject: {
       type: Object,
-      default: () => ({}) //{ return { height: '72px' } }
+      //default: () => ({}) //{ return { height: '72px' } }
+      default: () => ({ height: '72px' })
     },
     model: {
       type: String,

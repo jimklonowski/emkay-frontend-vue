@@ -12,6 +12,7 @@
       </v-btn>
     </template>
     <v-list nav dense>
+      <slot name="actions"></slot>
       <template v-for="(item, key) in actions">
         <v-list-item :key="key" :color="item.color" @click="item.action">
           <v-list-item-icon>
@@ -36,14 +37,7 @@ export default {
   },
   data: () => ({
     menu: false
-  }),
-  methods: {
-    showForm(component) {
-      let componentProps = { width: 1000, elevation: 6, text: 'This is dynamic text!omg'}
-      let modalProps = { width: 1000, height: 'auto' }
-      this.$modal.show(component, componentProps, modalProps)
-    }
-  }
+  })
 }
 </script>
 

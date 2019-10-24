@@ -395,7 +395,7 @@ export default {
       }
     },
     toolbarColor() {
-      return this.errorMessage ? 'error' : 'primary'
+      return this.errorMessage ? 'error darken-2' : 'primary'
     }
   },
   async created() {

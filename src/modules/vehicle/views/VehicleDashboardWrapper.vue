@@ -1,11 +1,13 @@
 <template>
   <section v-if="!$route.params.vehicle">
-    <v-container fluid fill-height>
-      <v-container>
-        <v-row justify="center" tag="form" @submit.prevent="search">
-          <v-text-field v-model="vehicle" v-bind="schema.vehicle" @click:append-outer="search" />
-        </v-row>
-      </v-container>
+    <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:100px;" height="48" />
+    <v-container>
+      <v-row>
+        <v-breadcrumbs :items="breadcrumbs" />
+      </v-row>
+      <v-row no-gutters justify="center" tag="form" @submit.prevent="search">
+        <v-text-field v-model="vehicle" v-bind="schema.vehicle" @click:append-outer="search" />
+      </v-row>
     </v-container>
   </section>
   <section v-else>
@@ -32,6 +34,14 @@ export default {
     }
   },
   computed: {
+    breadcrumbs() {
+      return [
+        {
+          text: this.$t('vehicle_dashboard.vehicle_search'),
+          disabled: true
+        }
+      ]
+    },
     schema() {
       return {
         vehicle: {
