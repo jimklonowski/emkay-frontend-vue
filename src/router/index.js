@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // user is not authenticated, redirect to /home to show login screen
-      console.log('Not Authed -> redirect to home login')
+      //console.log('Not Authed -> redirect to home login')
       store.dispatch('auth/logout').then(() => next('/'))
     }
   }

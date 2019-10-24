@@ -35,7 +35,7 @@ export default {
   created() {
     this.vehicle = this.$route.params.vehicle
     
-    console.log('do saferoads stuff')
+    //console.log('do saferoads stuff')
     this.loading = false
   },
   computed: {

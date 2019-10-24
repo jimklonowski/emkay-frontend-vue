@@ -1,11 +1,12 @@
 <template>
   <nav>
     <system-bar />
-    <app-bar :items="items" />
+    <app-bar v-if="isAuthenticated" :items="items" />
   </nav>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AppBar from '@/modules/core/components/navigation/AppBar'
 import SystemBar from '@/modules/core/components/navigation/SystemBar'
 
@@ -166,7 +167,10 @@ export default {
         ]
       }
     ]
-  })
+  }),
+  computed: {
+    ...mapGetters('auth',['isAuthenticated']),
+  }
 }
 </script>
 

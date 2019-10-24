@@ -1,18 +1,20 @@
 <template>
   <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark app>
-    <template v-for="(button, key) in buttons">
-      <v-btn
-        :key="key"
-        :to="button.to"
-        small
-        text
-        tile
-      >
-        <v-icon v-text="button.icon" />
-        <span class="system-bar-text">
-          {{ $tc(button.key, button.count) }}
-        </span>
-      </v-btn>
+    <template v-if="isAuthenticated">
+      <template v-for="(button, key) in buttons">
+        <v-btn
+          :key="key"
+          :to="button.to"
+          small
+          text
+          tile
+        >
+          <v-icon v-text="button.icon" />
+          <span class="system-bar-text">
+            {{ $tc(button.key, button.count) }}
+          </span>
+        </v-btn>
+      </template>
     </template>
     <v-spacer />
     <omni-switch />
@@ -20,6 +22,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import OmniSwitch from '@/modules/core/components/navigation/OmniSwitch'
 export default {
   components: {
@@ -30,6 +33,9 @@ export default {
       type: [Number,String],
       default: 36
     }
+  },
+  computed: {
+    ...mapGetters('auth',['isAuthenticated']),
   },
   data: () => ({
     buttons: [
@@ -65,7 +71,7 @@ export default {
         text: 'Fleet Navigator',
         key: 'navigation.fleet_navigator',
         to: { name: 'notifications' },
-        icon: 'dashboard'
+        icon: 'widgets'
       }
     ]
   })

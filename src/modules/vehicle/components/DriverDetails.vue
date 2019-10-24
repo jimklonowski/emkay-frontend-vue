@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import ApiService from '@/services/api.service'
+//import ApiService from '@/services/api.service'
 import { isLength, translateError } from '@/util/helpers'
 import { email, maxLength, required } from 'vuelidate/lib/validators'
 
@@ -178,7 +178,7 @@ export default {
         //import ApiService instead of using axios directly and call ApiService.get(url, newValue)
         let url = `/postalcode/${newValue}`
 
-        if (newValue.length >= 5) {
+        if (newValue.length >= 5 && newValue.length <= 6) {
           //debugger
           this.loadingPostalCode = true
           this.$http
@@ -530,20 +530,14 @@ export default {
     },
     async showEditCustomLabelsForm() {
       let componentProps = { width: 1000, elevation: 6 }
-      let modalProps = { width: 1000, height: 'auto' }
+      let modalProps = { width: 1000, height: 'auto', delay: 0, clickToClose: false, draggable: false }
       const form = await import(/* webpackChunkName: 'customLabels' */ '@/modules/vehicle/components/modals/EditCustomLabels')
-      this.$modal.show(form.default, componentProps, modalProps)
-    },
-    async showEditDriverForm() {
-      let componentProps = { width: 1000, elevation: 6 }
-      let modalProps = { width: 1000, height: 'auto' }
-      const form = await import(/* webpackChunkName: 'addDriver' */ '@/modules/vehicle/components/modals/EditDriver')
       this.$modal.show(form.default, componentProps, modalProps)
     },
     async showReassignDriverForm() {
       let componentProps = { width: 1000, elevation: 6 }
       let modalProps = { width: 1000, height: 'auto' }
-      const form = await import(/* webpackChunkName: 'addDriver' */ '@/modules/vehicle/components/modals/ReassignDriver')
+      const form = await import(/* webpackChunkName: 'reassignDriver' */ '@/modules/vehicle/components/modals/ReassignDriver')
       this.$modal.show(form.default, componentProps, modalProps)
     },
     cancelEdit() {
@@ -570,7 +564,7 @@ export default {
         return false
       }
 
-      ApiService
+      this.$http
         .post(url, this.model)
         .then(result => {
           console.log(`successful result ${result}`)

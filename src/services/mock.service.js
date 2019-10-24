@@ -694,10 +694,47 @@ const MockService = {
           download: 'path/to/item3.pdf'
         }
       ])
-
+      // mock zip code requests
+      .onGet(new RegExp(`/postalcode/60143`))
+      .reply(200, {
+        county: 'DuPage',
+        city: 'Itasca',
+        state_province: 'IL'
+      })
+      // mock order status
+      .onGet(new RegExp(`/order-status/*`))
+      .reply(200, {
+        driver: 'Klonowski, James',
+        vehicle_number: '123456',
+        vehicle_description: '2020 Tesla Model X',
+        factory_order_number: 'FO123',
+        serial_number: 'S123',
+        ship_to_dealer_info: 'This will be shipped to some dealer at some time...',
+        priority_code: 'PRIOX',
+        comments: 'asdf',
+        timeline: {
+          emkay_ordered_date: '2019-01-01',
+          emkay_received_date: '2019-01-02',
+          zone_received_date: '2019-01-03',
+          dealer_ordered_date: '2019-01-04',
+          sent_to_plant: '2019-01-05',
+          ship_to_dealer: '2019-01-06',
+          production_scheduled: '2019-01-07',
+          build_date: '2019-01-08',
+          shipped_to_body_co: '2019-01-09',
+          at_body_co: '2019-01-10',
+          shipped_from_body_co: '2019-01-11',
+          back_at_manufacturer: '2019-01-12',
+          shipped_to_dealer: '2019-01-13',
+          release_to_convoy: '2019-01-14',
+          delivery_to_dealer: '2019-01-15',
+          delivery_date: '2019-01-16',
+        }
+      })
       // mock /test/post
       .onPost('/test/post')
       .reply(400, { error: 'error occurred' })
+      // passthrough all other requests
       .onAny()
       .passThrough()
   }

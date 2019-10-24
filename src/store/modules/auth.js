@@ -16,7 +16,7 @@ export default {
 
   actions: {
     async login({ dispatch, commit }, credentials) {
-      console.log('login action')
+      //console.log('login action')
       const { data } = await ApiService.post('/auth/login', { user: credentials })
       commit('setUser', data.user)
       commit('setIsAuthenticated', true)
@@ -26,7 +26,7 @@ export default {
       dispatch('setIsDark', data.isDark)
     },
     logout({ dispatch, commit }) {
-      console.log('logout action')
+      //console.log('logout action')
       commit('setUser', { account: '', username: '', firstname: '', lastname: '' })
       commit('setIsAuthenticated', false)
       commit('setIsAdmin', false)

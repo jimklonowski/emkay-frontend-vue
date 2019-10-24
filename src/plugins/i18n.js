@@ -55,7 +55,7 @@ export function loadLanguageAsync(lang) {
       i18n.setLocaleMessage(lang, messages.default)
       return Promise.resolve(setI18nLanguage(lang))
     }).catch(err => {
-      console.log(err)
+      //console.log(err)
       throw err
     })
   }

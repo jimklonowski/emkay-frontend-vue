@@ -6,6 +6,14 @@ import { helpers } from 'vuelidate/lib/validators'
  */
 export const isLength = length => value => helpers.len(value) === length
 
+/**
+ * Check if date is in the past
+ * @param {Date} date 
+ */
+export const isPastDate = date => {
+  const today = new Date()
+  return date <= today
+}
 
 /**
  * 
@@ -16,7 +24,6 @@ export const translateError = (msgKey, fieldKey) => {
   let attribute = typeof fieldKey === 'string' ? i18n.t(fieldKey) : fieldKey
   return i18n.t(msgKey, { attribute })
 }
-
 
 export function goTo(id) {
   this.$vuetify.goTo(id).then(() => {

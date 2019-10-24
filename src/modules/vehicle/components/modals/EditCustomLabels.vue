@@ -257,13 +257,13 @@ export default {
 
       this.$http
         .post(url, this.model)
-        .then(result => {
-          console.log(`Successful result: ${result}`)
+        .then(() => {
+          //console.log(`Successful result: ${result}`)
           this.errorMessage = null
           this.originalModel = this.model
         })
         .catch(error => {
-          console.error(error.response)
+          //console.error(error.response)
           this.errorMessage = error.response.data.error
         })
         .finally(() => {

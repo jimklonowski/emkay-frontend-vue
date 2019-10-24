@@ -5,12 +5,10 @@ Vue.use(Vuex)
 
 export const mutations = {
   showModal(state, component) {
-    debugger
     state.modalVisible = true
     state.modalComponent = component
   },
   hideModal(state) {
-    debugger
     state.modalVisible = false
   }
 }

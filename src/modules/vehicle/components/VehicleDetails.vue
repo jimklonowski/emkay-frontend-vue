@@ -420,8 +420,14 @@ export default {
     // Load/Show Action Modals
     async showEditCustomLabelsForm() {
       let componentProps = { width: 1000, elevation: 6 }
-      let modalProps = { width: 1000, height: 'auto' }
+      let modalProps = { width: 1000, height: 'auto', delay: 0, clickToClose: false, draggable: false }
       const form = await import(/* webpackChunkName: 'customLabels' */ '@/modules/vehicle/components/modals/EditCustomLabels')
+      this.$modal.show(form.default, componentProps, modalProps)
+    },
+    async showOrderStatus() {
+      let componentProps = { width: 1000, elevation: 6 }
+      let modalProps = { width: 1000, height: 600, delay: 0, clickToClose: true, draggable: false, scrollable: true }
+      const form = await import(/* webpackChunkName: 'orderStatus' */ '@/modules/vehicle/components/modals/OrderStatus')
       this.$modal.show(form.default, componentProps, modalProps)
     },
     //...
@@ -451,13 +457,13 @@ export default {
 
       ApiService
         .post(url, this.model)
-        .then(result => {
-          console.log(`successful result ${result}`)
+        .then(() => {
+          //console.log(`successful result ${result}`)
           this.errorMessage = null
           this.originalModel = this.model
         })
         .catch(error => {
-          console.log(error.response)
+          //console.log(error.response)
           this.errorMessage = error.response.data.error
         })
         .finally(() => {
