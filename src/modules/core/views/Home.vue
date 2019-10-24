@@ -1,7 +1,15 @@
 <template>
   <v-container fluid fill-height>
     <v-row justify="center">
-      <v-alert v-if="isAuthenticated" type="success">User is authenticated! ({{ currentUser.username }})</v-alert>
+      <v-alert v-if="isAuthenticated" type="warning" min-width="500" outlined prominent border="left">
+        <h3 class="headling">User is authenticated!</h3>
+        <v-divider class="my-4 warning" style="opacity:0.22;" />
+        <div><strong>Account</strong>: {{ currentUser.account }}</div>
+        <div><strong>Username</strong>: {{ currentUser.username }}</div>
+        <div><strong>Admin</strong>: {{ isAdmin }}</div>
+        <div><strong>Language</strong>: {{ currentLocale }}</div>
+        <div><strong>Dark</strong>: {{ isDark }}</div>
+      </v-alert>
       <template v-else>
         <login-form v-if="!needsHelp" @update="toggleHelp" />
         <login-help-form v-else @update="toggleHelp" />
@@ -26,25 +34,11 @@ export default {
     needsHelp: false
   }),
   computed: {
-    ...mapGetters('auth',['isAuthenticated','currentUser'])
+    ...mapGetters('auth',['isAuthenticated','currentUser','currentLocale','isAdmin','isDark'])
   },
   methods: {
     toggleHelp() {
       this.needsHelp = !this.needsHelp
-    },
-    async showLoginForm() {
-      let componentProps = { width: 1000, elevation: 6, text: 'This is passed as dynamic text!' }
-      let modalProps = { width: 1000, height: 'auto' }
-
-      const form = await import(/* webpackChunkName: 'loginForm' */ '@/modules/auth/components/LoginForm')
-      this.$modal.show(form.default, componentProps, modalProps)
-    },
-    async showLoginHelpForm() {
-      let componentProps = { width: 1000, elevation: 6, text: 'This is passed as dyna text!' }
-      let modalProps = { width: 1000, height: 'auto' }
-
-      const form = await import(/* webpackChunkName: 'loginHelpForm' */ '@/modules/auth/components/LoginHelpForm')
-      this.$modal.show(form.default, componentProps, modalProps)
     }
   }
 }

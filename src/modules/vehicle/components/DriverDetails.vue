@@ -399,10 +399,12 @@ export default {
     }
   },
   async created() {
+    let url = `/driver-details/${this.vehicle}`
     // populate the panel
     this.isInitializing = true
     this.loading = true
-    ApiService.get('/driver-details', this.vehicle)
+    this.$http
+      .get(url)
       .then(response => {
         // populate model
         this.model = response.data
@@ -577,7 +579,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response)
-          this.errorMessage = error.response.data.message || error.response.statusText
+          this.errorMessage = error.response.data.error || error.response.statusText
         })
         .finally(() => {
           this.loading = false

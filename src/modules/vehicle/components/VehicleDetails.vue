@@ -97,6 +97,7 @@ export default {
     isInitializing: false,
     isEditing: false,
     loading: false,
+    menu: false,
     title: {
       key1: 'vehicle_dashboard.vehicle',
       key2: 'vehicle_dashboard.details',
@@ -457,7 +458,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response)
-          this.errorMessage = error.response.data.message || error.response.statusText
+          this.errorMessage = error.response.data.error
         })
         .finally(() => {
           this.loading = false

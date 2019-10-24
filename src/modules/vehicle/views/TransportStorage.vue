@@ -1,14 +1,20 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-breadcrumbs :items="breadcrumbs" />
-    </v-row>
-    <v-row>
-      <v-col :cols="12">
-        transport/storage
-      </v-col>
-    </v-row>
-  </v-container>
+  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+    <v-container>
+      <v-row>
+        <v-breadcrumbs :items="breadcrumbs" />
+      </v-row>
+      <v-row>
+        <v-col :cols="12">
+          <v-card :loading="loading">
+            <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+              transtor
+            </v-toolbar>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 
 <script>
@@ -30,6 +36,7 @@ export default {
   created() {
     this.vehicle = this.$route.params.vehicle
     console.log('do transtor stuff')
+    this.loading = false
   },
   computed: {
     breadcrumbs() {

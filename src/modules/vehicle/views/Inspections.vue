@@ -1,14 +1,20 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-breadcrumbs :items="breadcrumbs" />
-    </v-row>
-    <v-row>
-      <v-col :cols="12">
-        inspections
-      </v-col>
-    </v-row>
-  </v-container>
+  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+    <v-container>
+      <v-row>
+        <v-breadcrumbs :items="breadcrumbs" />
+      </v-row>
+      <v-row>
+        <v-col :cols="12">
+          <v-card :loading="loading">
+            <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+              inspections
+            </v-toolbar>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 
 <script>

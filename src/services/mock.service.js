@@ -694,6 +694,10 @@ const MockService = {
           download: 'path/to/item3.pdf'
         }
       ])
+
+      // mock /test/post
+      .onPost('/test/post')
+      .reply(400, { error: 'error occurred' })
       .onAny()
       .passThrough()
   }

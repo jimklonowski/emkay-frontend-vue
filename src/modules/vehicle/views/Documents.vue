@@ -1,65 +1,67 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-breadcrumbs :items="breadcrumbs" />
-    </v-row>
-    <v-row>
-      <v-col :cols="12">
-        <v-card :loading="loading">
-          <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-            <toolbar-title v-bind="title" />
-            <v-spacer />
-            <v-text-field
-              v-model="search"
-              class="font-weight-regular"
-              append-icon="search"
-              :label="$t('common.search')"
-              single-line
-              hide-details
-              dark
-            />
-          </v-toolbar>
-          <v-divider />
-          <v-card-text class="pa-0">
-            <v-data-table
-              :headers="headers"
-              :items="vehicle_documents"
-              :items-per-page="10"
-              :search="search"
-              :sort-by="['date']"
-              :sort-desc="[true]"
-              :loading="loading"
-              dense
-            >
-              <template #loading>
-                <v-skeleton-loader type="table-tbody" tile />
-              </template>
-
-              <template
-                v-for="header in headers"
-                v-slot:[`header.${header.value}`]="{ header }"
+  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+    <v-container>
+      <v-row>
+        <v-breadcrumbs :items="breadcrumbs" />
+      </v-row>
+      <v-row>
+        <v-col :cols="12">
+          <v-card :loading="loading">
+            <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+              <toolbar-title v-bind="title" />
+              <v-spacer />
+              <v-text-field
+                v-model="search"
+                class="font-weight-regular"
+                append-icon="search"
+                :label="$t('common.search')"
+                single-line
+                hide-details
+                dark
+              />
+            </v-toolbar>
+            <v-divider />
+            <v-card-text class="pa-0">
+              <v-data-table
+                :headers="headers"
+                :items="vehicle_documents"
+                :items-per-page="10"
+                :search="search"
+                :sort-by="['date']"
+                :sort-desc="[true]"
+                :loading="loading"
+                dense
               >
-                {{ $t(header.key) }}
-              </template>
+                <template #loading>
+                  <v-skeleton-loader type="table-tbody" tile />
+                </template>
 
-              <template v-slot:item.actions="{ item }">
-                <v-btn icon small text @click="downloadDoc(item)">
-                  <v-icon small>
-                    get_app
-                  </v-icon>
-                </v-btn>
-                <v-btn icon small text @click="deleteDoc(item)">
-                  <v-icon small>
-                    delete
-                  </v-icon>
-                </v-btn>
-              </template>
-            </v-data-table>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+                <template
+                  v-for="header in headers"
+                  v-slot:[`header.${header.value}`]="{ header }"
+                >
+                  {{ $t(header.key) }}
+                </template>
+
+                <template v-slot:item.actions="{ item }">
+                  <v-btn icon small text @click="downloadDoc(item)">
+                    <v-icon small>
+                      get_app
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon small text @click="deleteDoc(item)">
+                    <v-icon small>
+                      delete
+                    </v-icon>
+                  </v-btn>
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 
 <script>

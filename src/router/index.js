@@ -6,12 +6,14 @@ import store from '../store'
 import coreRoutes from '@/modules/core/router'
 import authRoutes from '@/modules/auth/router'
 import vehicleRoutes from '@/modules/vehicle/router'
+import notificationsRoutes from '@/modules/notifications/router'
 
 Vue.use(VueRouter)
 
 const routes = coreRoutes.concat(
   authRoutes,
-  vehicleRoutes
+  vehicleRoutes,
+  notificationsRoutes
 )
 
 /**

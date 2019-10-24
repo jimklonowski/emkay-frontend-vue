@@ -8,54 +8,35 @@
           <v-icon v-text="'close'" />
         </v-btn>
       </v-toolbar>
-      <v-divider />
       <v-card-text class="pa-0">
+        <v-alert v-if="errorMessage" class="mb-0" type="error" dense tile>{{ errorMessage }}</v-alert>
         <v-subheader v-t="hintKey" />
         <v-divider />
         <v-container class="py-0">
           <v-row>
             <v-col cols="12" sm="6" class="py-0">
               <v-row>
-                <v-subheader v-t="'vehicle_dashboard.client_customization'" :class="$config.SUBHEADER_CLASS" />
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.client_use_label_1" v-model="model.client_use_label_1" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.client_use_label_2" v-model="model.client_use_label_2" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.client_use_label_3" v-model="model.client_use_label_3" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.client_use_label_4" v-model="model.client_use_label_4" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.client_use_label_5" v-model="model.client_use_label_5" />
-                </v-col>
+                <header :class="$config.SUBHEADER_CLASS">{{ $t('vehicle_dashboard.client_customization') }}</header>
+                <field-with-loader :model.sync="model.client_use_label_1" :schema="schema.client_use_label_1" :status="status" />
+                <field-with-loader :model.sync="model.client_use_label_2" :schema="schema.client_use_label_2" :status="status" />
+                <field-with-loader :model.sync="model.client_use_label_3" :schema="schema.client_use_label_3" :status="status" />
+                <field-with-loader :model.sync="model.client_use_label_4" :schema="schema.client_use_label_4" :status="status" />
+                <field-with-loader :model.sync="model.client_use_label_5" :schema="schema.client_use_label_5" :status="status" />
               </v-row>
             </v-col>
             <v-col cols="12" sm="6" class="py-0">
               <v-row>
-                <v-subheader v-t="'vehicle_dashboard.driver_customization'" :class="$config.SUBHEADER_CLASS" />
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.driver_use_label_1" v-model="model.driver_use_label_1" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.driver_use_label_2" v-model="model.driver_use_label_2" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.driver_use_label_3" v-model="model.driver_use_label_3" />
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-bind="schema.driver_use_label_4" v-model="model.driver_use_label_4" />
-                </v-col>
+                <header :class="$config.SUBHEADER_CLASS">{{ $t('vehicle_dashboard.driver_customization') }}</header>
+                <field-with-loader :model.sync="model.driver_use_label_1" :schema="schema.driver_use_label_1" :status="status" />
+                <field-with-loader :model.sync="model.driver_use_label_2" :schema="schema.driver_use_label_2" :status="status" />
+                <field-with-loader :model.sync="model.driver_use_label_3" :schema="schema.driver_use_label_3" :status="status" />
+                <field-with-loader :model.sync="model.driver_use_label_4" :schema="schema.driver_use_label_4" :status="status" />
               </v-row>
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-alert v-if="errorMessage" type="error" v-text="errorMessage" class="mb-0" dense outlined />
         <v-spacer />
         <v-btn
           v-t="'common.cancel'"
@@ -63,7 +44,7 @@
           color="error"
           :ripple="false"
           text
-          @click.prevent="cancelEdit"
+          @click.prevent="$emit('close')"
         />
         <v-btn
           v-t="'common.save_changes'"
@@ -84,10 +65,11 @@
 <script>
 import { maxLength } from 'vuelidate/lib/validators'
 import { translateError } from '@/util/helpers'
+import FieldWithLoader from '@/modules/core/components/FieldWithLoader'
 import ToolbarTitle from '@/modules/core/components/ToolbarTitle'
 
 export default {
-  components: { ToolbarTitle },
+  components: { FieldWithLoader, ToolbarTitle },
   props: {
     titleKey: {
       type: String,
@@ -96,6 +78,8 @@ export default {
   },
   data: () => ({
     errorMessage: null,
+    isInitializing: false,
+    isEditing: true,
     dialog: false,
     hintKey: 'vehicle_dashboard.custom_labels_subheader',
     loading: false,
@@ -116,14 +100,18 @@ export default {
     }
   }),
   computed: {
+    status() {
+      return { isEditing: this.isEditing, isInitializing: this.isInitializing }
+    },
     toolbarColor() {
-      return this.errorMessage ? 'error' : 'primary'
+      return this.errorMessage ? 'error darken-2' : 'primary'
     },
     schema() {
       return {
         client_use_label_1: {
           label: this.$t('vehicle_dashboard.client_use_label_1'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('client_use_label_1', 40),
           outlined: true,
@@ -132,6 +120,7 @@ export default {
         client_use_label_2: {
           label: this.$t('vehicle_dashboard.client_use_label_2'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('client_use_label_2', 40),
           outlined: true,
@@ -140,6 +129,7 @@ export default {
         client_use_label_3: {
           label: this.$t('vehicle_dashboard.client_use_label_3'),
           type: 'text',
+          cols: 12,
           errorMessages: this.labelErrors('client_use_label_3', 40),
           counter: 40,
           outlined: true,
@@ -148,6 +138,7 @@ export default {
         client_use_label_4: {
           label: this.$t('vehicle_dashboard.client_use_label_4'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('client_use_label_4', 40),
           outlined: true,
@@ -156,6 +147,7 @@ export default {
         client_use_label_5: {
           label: this.$t('vehicle_dashboard.client_use_label_5'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('client_use_label_5', 40),
           outlined: true,
@@ -164,6 +156,7 @@ export default {
         driver_use_label_1: {
           label: this.$t('vehicle_dashboard.driver_use_label_1'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('driver_use_label_1', 40),
           outlined: true,
@@ -172,6 +165,7 @@ export default {
         driver_use_label_2: {
           label: this.$t('vehicle_dashboard.driver_use_label_2'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('driver_use_label_2', 40),
           outlined: true,
@@ -180,6 +174,7 @@ export default {
         driver_use_label_3: {
           label: this.$t('vehicle_dashboard.driver_use_label_3'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('driver_use_label_3', 40),
           outlined: true,
@@ -188,6 +183,7 @@ export default {
         driver_use_label_4: {
           label: this.$t('vehicle_dashboard.driver_use_label_4'),
           type: 'text',
+          cols: 12,
           counter: 40,
           errorMessages: this.labelErrors('driver_use_label_4', 40),
           outlined: true,
@@ -212,6 +208,7 @@ export default {
         this.errorMessage = error.message
       })
       .finally(() => {
+        this.isInitializing = false
         this.loading = false
       })
   },
@@ -267,7 +264,7 @@ export default {
         })
         .catch(error => {
           console.error(error.response)
-          this.errorMessage = error.response.data.message
+          this.errorMessage = error.response.data.error
         })
         .finally(() => {
           this.loading = false

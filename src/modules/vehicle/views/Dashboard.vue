@@ -1,22 +1,38 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-breadcrumbs :items="breadcrumbs" />
-    </v-row>
-    <v-row>
-      <component
-        :is="section.component"
-        v-for="(section, index) in widgets"
-        :id="section.id"
-        :key="index"
-        :vehicle="$route.params.vehicle"
-        :class="section.class"
-      />
-    </v-row>
-  </v-container>
+  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+    <v-container>
+      <v-row>
+        <v-breadcrumbs :items="breadcrumbs" />
+      </v-row>
+      <v-row>
+        <component
+          :is="section.component"
+          v-for="(section, index) in widgets"
+          :id="section.id"
+          :key="index"
+          :vehicle="$route.params.vehicle"
+          :class="section.class"
+        />
+      </v-row>
+    </v-container>
+    <v-navigation-drawer
+      right
+      floating
+      clipped
+      fixed
+      permanent
+      width="200"
+      color="transparent"
+      class="overflow-hidden align-center hidden-sm-and-down"
+      style="top:148px;"
+    >
+      <table-of-contents :toc-items="widgets" />
+    </v-navigation-drawer>
+  </section>
 </template>
 
 <script>
+import TableOfContents from '@/modules/core/components/TableOfContents'
 import VehicleDetails from '@/modules/vehicle/components/VehicleDetails'
 import DriverDetails from '@/modules/vehicle/components/DriverDetails'
 import FuelHistory from '@/modules/vehicle/components/datatables/FuelHistory'
@@ -34,6 +50,7 @@ import VehicleNotes from '@/modules/vehicle/components/datatables/VehicleNotes'
 export default {
   name: 'dashboard',
   components: {
+    TableOfContents,
     VehicleDetails,
     DriverDetails,
     FuelHistory,

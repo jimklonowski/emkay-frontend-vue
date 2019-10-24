@@ -1,12 +1,12 @@
 <template>
-  <section v-if="!$route.params.vehicle">
+  <section v-if="!$route.params.vehicle" :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
     <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:100px;" height="48" />
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
       </v-row>
       <v-row no-gutters justify="center" tag="form" @submit.prevent="search">
-        <v-text-field v-model="vehicle" v-bind="schema.vehicle" @click:append-outer="search" />
+        <v-text-field v-model="vehicle" :loading="loading" v-bind="schema.vehicle" @click:append-outer="search" />
       </v-row>
     </v-container>
   </section>
@@ -24,13 +24,16 @@ export default {
     VehicleNavigation
   },
   data: () => ({
-    vehicle: ''
+    vehicle: '',
+    loading: false
   }),
   methods: {
     search() {
+      this.loading = true
       if (this.vehicle) {
         this.$router.push({ name: 'dashboard', params: { vehicle: this.vehicle }})
       }
+      this.loading = false
     }
   },
   computed: {
