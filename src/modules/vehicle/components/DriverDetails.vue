@@ -566,13 +566,13 @@ export default {
 
       this.$http
         .post(url, this.model)
-        .then(result => {
-          console.log(`successful result ${result}`)
+        .then(() => {
+          //console.log(`successful result ${result}`)
           this.errorMessage = null
           this.originalModel = this.model
         })
         .catch(error => {
-          console.log(error.response)
+          //console.log(error.response)
           this.errorMessage = error.response.data.error || error.response.statusText
         })
         .finally(() => {
