@@ -1,5 +1,5 @@
 <template>
-  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+  <section>
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
@@ -77,7 +77,7 @@ export default {
     title: {
       key1: 'vehicle_dashboard.vehicle',
       key2: 'vehicle_dashboard.documents',
-      subtitle: self.vehicle
+      subtitle: self.$route.params.vehicle
     },
     vehicle: '',
     headers: [
@@ -103,7 +103,6 @@ export default {
     vehicle_documents: []
   }),
   created() {
-    this.vehicle = this.$route.params.vehicle
     let url = `/vehicle/documents/${this.vehicle}`
     this.$http
       .get(url)
@@ -128,7 +127,8 @@ export default {
         },
         {
           text: this.$route.params.vehicle,
-          disabled: true
+          disabled: false,
+          to: { name: 'dashboard' }
         },
         {
           text: this.$t('vehicle_dashboard.documents'),

@@ -1,4 +1,8 @@
 {
+  "validation": {
+    "city_state_province_required_if_no_postal_code": "City/Province is required if no Postal Code",
+    "postal_code_required_if_no_city_state_province": "Postal Code is required if no City/Province"
+  },
   "vehicle_dashboard": {
     "license_state": "License Province",
     "postal_code": "Postal Code",

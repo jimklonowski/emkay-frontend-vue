@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar-title class="text-uppercase" style="color:rgba(255,255,255,0.8);">
+  <v-toolbar-title class="text-uppercase white--text">
     <span v-t="key1" class="font-weight-black" />
     <span v-t="key2" class="font-weight-thin" />
     <v-subheader class="d-inline" dark v-text="subtitle" />

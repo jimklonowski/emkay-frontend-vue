@@ -1,5 +1,5 @@
 <template>
-  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+  <section>
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
@@ -27,7 +27,7 @@ export default {
     title: {
       key1: 'vehicle_dashboard.vehicle',
       key2: 'vehicle_dashboard.inspections',
-      subtitle: self.vehicle
+      subtitle: self.$route.params.vehicle
     },
     vehicle: '',
     headers: [],

@@ -56,7 +56,7 @@ export default {
       },
       {
         key: 'vehicle_dashboard.transport_storage',
-        to: { name: 'transport-storage' },
+        to: { name: 'transtor-status' },
         meta: {}
       }
     ]

@@ -370,7 +370,7 @@ export default {
   },
   methods: {
     translateError,
-        getLabel(key) {
+    getLabel(key) {
       // if there's a custom label already set, fetch it from the model and display it.
       if (Object.prototype.hasOwnProperty.call(this.model, key) && !!this.model[key]) return this.model[key]
       // otherwise, return the default i18n translation of 'vehicle_dashboard.custom_use_N_label'

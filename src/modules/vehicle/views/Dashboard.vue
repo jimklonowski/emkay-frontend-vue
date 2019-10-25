@@ -1,5 +1,5 @@
 <template>
-  <section :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+  <section :style="this.$route.meta.toc && $vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
@@ -147,12 +147,11 @@ export default {
         {
           text: this.$route.params.vehicle,
           disabled: true
-        },
-        {
-          text: this.$t('vehicle_dashboard.dashboard'),
-          disabled: true
         }
       ]
+    },
+    styleObject() {
+      return this.$route.meta.toc ? 'padding-right:200px' : ''
     },
     widgets() {
       // inject an id that vuetify.goTo can use to navigate

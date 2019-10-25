@@ -731,6 +731,26 @@ const MockService = {
           delivery_date: '2019-01-16',
         }
       })
+      // mock transport status
+      .onGet(new RegExp(`/transtor/status/*`))
+      .reply(200, [
+        {
+          order_date: '2019-10-25',
+          order_number: '123',
+          pickup_location: 'Denver, CO',
+          delivery_location: 'Reno, NV'
+        }
+      ])
+      // mock transport quote
+      .onPost('/transtor/quote')
+      .reply(200, {
+        vehicle: '2019 Jeep Compass',
+        transport_method: 'driven',
+        from: '60189',
+        to: '60143',
+        estimated_distance: '1500 mi',
+        estimated_cost: '$1965.97'
+      })
       // mock /test/post
       .onPost('/test/post')
       .reply(400, { error: 'error occurred' })
