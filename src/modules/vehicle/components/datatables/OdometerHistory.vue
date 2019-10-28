@@ -41,6 +41,7 @@
           :sort-by="['date']"
           :sort-desc="[true]"
           :loading="loading"
+          class="striped"
           dense
         >
           <template #loading>

@@ -9,7 +9,7 @@
           <v-tabs-slider />
           <!-- <v-tab class="primary--text" :to="{ name: 'transtor-status' }" v-t="'vehicle_dashboard.order_status'" /> -->
           <v-tab :to="{ name: 'transtor-status' }">
-            {{ $t('vehicle_dashboard.order_status') }}
+            {{ $t('vehicle_dashboard.transport_status') }}
             <v-icon>departure_board</v-icon>
           </v-tab>
           <v-tab :to="{ name: 'transtor-quote' }">

@@ -36,6 +36,20 @@ const MockService = {
         access_token: '12345C',
         refresh_token: 'refresh_token'
       })
+      .onPost('/auth/login')
+      .reply(200, {
+        user: {
+          account: 'AB123',
+          username: 'TEST',
+          firstname: 'Foo',
+          lastname: 'Bar'
+        },
+        isAdmin: false,
+        isDark: false,
+        locale: 'en',
+        access_token: 'test1',
+        refresh_token: 'refresh_token'
+      })
       // mock driver-details
       .onGet(new RegExp(`/driver-details/*`))
       .reply(200, {
@@ -744,10 +758,10 @@ const MockService = {
       // mock transport quote
       .onPost('/transtor/quote')
       .reply(200, {
-        vehicle: '2019 Jeep Compass',
+        vehicle_description: '2019 Jeep Compass',
         transport_method: 'driven',
-        from: '60189',
-        to: '60143',
+        pickup_postal_code: '60189',
+        delivery_postal_code: '60143',
         estimated_distance: '1500 mi',
         estimated_cost: '$1965.97'
       })

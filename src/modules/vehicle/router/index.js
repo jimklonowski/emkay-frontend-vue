@@ -28,24 +28,25 @@ export default [
         component: () => import(/* webpackChunkName: "saferoads" */ '@/modules/vehicle/views/Saferoads.vue')
       },
       {
-        path: '/vehicle/:vehicle/transtor/',
-        name: 'transtor',
+        path: '/vehicle/:vehicle/transports-and-storage/',
+        name: 'transports-and-storage',
         component: () => import(/* webpackChunkName: "transtor" */ '@/modules/vehicle/views/Transtor/Transtor.vue'),
         children: [
           {
-            path: '/vehicle/:vehicle/transtor/status',
+            path: '/vehicle/:vehicle/transports-and-storage/check-status',
             name: 'transtor-status',
-            component: () => import('@/modules/vehicle/views/Transtor/Status.vue')
+            component: () => import('@/modules/vehicle/views/Transtor/CheckStatus.vue')
           },
           {
-            path: '/vehicle/:vehicle/transtor/quote',
+            path: '/vehicle/:vehicle/transports-and-storage/request-quote',
             name: 'transtor-quote',
             component: () => import('@/modules/vehicle/views/Transtor/RequestQuote.vue')
           },
           {
-            path: '/vehicle/:vehicle/transtor/new',
+            path: '/vehicle/:vehicle/transports-and-storage/create-order',
             name: 'transtor-order',
-            component: () => import('@/modules/vehicle/views/Transtor/CreateOrder.vue')
+            component: () => import('@/modules/vehicle/views/Transtor/CreateOrder.vue'),
+            props: true
           }
         ]
       }

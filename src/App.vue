@@ -21,7 +21,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.v-data-table tbody tr:nth-of-type(odd) {
+.striped.v-data-table tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 </style>
