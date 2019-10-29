@@ -1,244 +1,251 @@
 <template>
-  <v-card flat>
-    <v-stepper v-model="currentStep" class="elevation-0" tile>
-      <v-stepper-header>
-        <template v-for="(step, key) in steps">
-          <v-stepper-step :key="`step${key}`" :complete="currentStep > key" :step="key + 1">{{ $t(step.key) }}</v-stepper-step>
-          <v-divider v-if="key < steps.length - 1" :key="`div${key}`" />
-        </template>
-      </v-stepper-header>
-      <v-stepper-items>
-        <v-alert v-if="errorMessage" class="mb-0" type="error" text>{{ errorMessage }}</v-alert>
-        <header class="headline pa-5">{{ $t('vehicle_dashboard.create_order') }}</header>
-        <v-stepper-content step="1" :complete="currentStep > 1">
-          <v-form ref="step1">
-            <v-container>
-              <v-row>
-                <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.authorization_detail'" /> -->
-                <v-col cols="12" sm="6">
-                  <v-radio-group v-model="model.transtor_type" v-bind="schema.transtor_type">
-                    <template #label>
-                      {{ $t('vehicle_dashboard.transtor_type') }}
-                    </template>
-                    <v-radio value="transport">
+    <v-card tile>
+      <v-stepper v-model="currentStep" class="transparent elevation-0" tile>
+        <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.create_order') }}</v-card-title> -->
+        <v-stepper-header class="elevation-1">
+          <template v-for="(step, key) in steps">
+            <v-stepper-step :key="`step${key}`" :complete="currentStep > key" :step="key + 1">{{ $t(step.key) }}</v-stepper-step>
+            <v-divider v-if="key < steps.length - 1" :key="`div${key}`" />
+          </template>
+        </v-stepper-header>
+        <v-divider />
+        <v-stepper-items>
+          <!-- <v-alert v-if="errorMessage" class="mb-0" type="error" text>{{ errorMessage }}</v-alert> -->
+          <!-- Step 1 -->
+          <v-stepper-content step="1" :complete="currentStep > 1">
+            <v-form ref="step1">
+              <v-container>
+                <v-row>
+                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.authorization_detail'" /> -->
+                  <v-col cols="12" sm="6">
+                    <v-radio-group v-model="model.transtor_type" v-bind="schema.transtor_type">
                       <template #label>
-                        {{ $t('vehicle_dashboard.transport') }}
+                        {{ $t('vehicle_dashboard.transtor_type') }}
                       </template>
-                    </v-radio>
-                    <v-radio value="storage">
+                      <v-radio value="transport">
+                        <template #label>
+                          {{ $t('vehicle_dashboard.transport') }}
+                        </template>
+                      </v-radio>
+                      <v-radio value="storage">
+                        <template #label>
+                          {{ $t('vehicle_dashboard.storage') }}
+                        </template>
+                      </v-radio>
+                      <v-radio value="transport-out-of-storage">
+                        <template #label>
+                          {{ $t('vehicle_dashboard.transport_out_of_storage') }}
+                        </template>
+                      </v-radio>
+                    </v-radio-group>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
                       <template #label>
-                        {{ $t('vehicle_dashboard.storage') }}
+                        {{ $t('vehicle_dashboard.transport_method') }}
                       </template>
-                    </v-radio>
-                    <v-radio value="transport-out-of-storage">
-                      <template #label>
-                        {{ $t('vehicle_dashboard.transport_out_of_storage') }}
+                      <v-radio value="driven">
+                        <template #label>
+                          {{ $t('vehicle_dashboard.driven') }}
+                        </template>
+                      </v-radio>
+                      <v-radio value="trucked">
+                        <template #label>
+                          {{ $t('vehicle_dashboard.trucked') }}
+                        </template>
+                      </v-radio>
+                    </v-radio-group>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-dialog
+                      ref="pickup_modal"
+                      v-model="pickup_modal"
+                      :return-value.sync="model.requested_pickup_date"
+                      persistent
+                      width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field v-model="model.requested_pickup_date" v-bind="schema.requested_pickup_date" v-on="on" />
                       </template>
-                    </v-radio>
-                  </v-radio-group>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
-                    <template #label>
-                      {{ $t('vehicle_dashboard.transport_method') }}
-                    </template>
-                    <v-radio value="driven">
-                      <template #label>
-                        {{ $t('vehicle_dashboard.driven') }}
+                      <v-date-picker v-model="model.requested_pickup_date" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="pickup_modal = false">Cancel</v-btn>
+                        <v-btn text color="primary" @click="$refs.pickup_modal.save(model.requested_pickup_date)">OK</v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-dialog
+                      ref="delivery_modal"
+                      v-model="delivery_modal"
+                      :return-value.sync="model.requested_delivery_date"
+                      persistent
+                      width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field v-model="model.requested_delivery_date" v-bind="schema.requested_delivery_date" v-on="on" />
                       </template>
-                    </v-radio>
-                    <v-radio value="trucked">
-                      <template #label>
-                        {{ $t('vehicle_dashboard.trucked') }}
-                      </template>
-                    </v-radio>
-                  </v-radio-group>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-dialog
-                    ref="pickup_modal"
-                    v-model="pickup_modal"
-                    :return-value.sync="model.requested_pickup_date"
-                    persistent
-                    width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field v-model="model.requested_pickup_date" v-bind="schema.requested_pickup_date" v-on="on" />
-                    </template>
-                    <v-date-picker v-model="model.requested_pickup_date" scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="pickup_modal = false">Cancel</v-btn>
-                      <v-btn text color="primary" @click="$refs.pickup_modal.save(model.requested_pickup_date)">OK</v-btn>
-                    </v-date-picker>
-                  </v-dialog>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-dialog
-                    ref="delivery_modal"
-                    v-model="delivery_modal"
-                    :return-value.sync="model.requested_delivery_date"
-                    persistent
-                    width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field v-model="model.requested_delivery_date" v-bind="schema.requested_delivery_date" v-on="on" />
-                    </template>
-                    <v-date-picker v-model="model.requested_delivery_date" scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="delivery_modal = false">Cancel</v-btn>
-                      <v-btn text color="primary" @click="$refs.delivery_modal.save(model.requested_delivery_date)">OK</v-btn>
-                    </v-date-picker>
-                  </v-dialog>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn color="primary" @click.prevent="changeDriverAssignment" block>{{ $t('vehicle_dashboard.change_driver_assignment') }}</v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-stepper-content>
-        <v-stepper-content step="2" :complete="currentStep > 2">
-          <v-form ref="step2">
-            <v-container>
-              <v-row>
-                <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.pickup_information'" /> -->
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.pickup_contact_name" v-bind="schema.pickup_contact_name" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="4">
-                  <v-select v-model="model.pickup_address_type" v-bind="schema.pickup_address_type" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.pickup_address_1" v-bind="schema.pickup_address_1" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.pickup_address_2" v-bind="schema.pickup_address_2" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6" sm="12">
-                  <v-text-field v-model="model.pickup_city" v-bind="schema.pickup_city" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="2" sm="4">
-                  <v-text-field v-model="model.pickup_state_province" v-bind="schema.pickup_state_province" />
-                </v-col>
-                <v-col cols="12" md="4" sm="8">
-                  <v-text-field v-model="model.pickup_postal_code" v-bind="schema.pickup_postal_code" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="2" sm="4">
-                  <v-select v-model="model.pickup_phone_type" v-bind="schema.pickup_phone_type" />
-                </v-col>
-                <v-col cols="12" md="3" sm="6">
-                  <v-text-field v-model="model.pickup_phone" v-bind="schema.pickup_phone" />
-                </v-col>
-                <v-col cols="12" md="1" sm="2">
-                  <v-text-field v-model="model.pickup_phone_ext" v-bind="schema.pickup_phone_ext" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.pickup_contact_email" v-bind="schema.pickup_contact_email" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" sm="6">
-                  <v-checkbox v-model="model.pickup_employee_terminated" v-bind="schema.pickup_employee_terminated" />
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-stepper-content>
-        <v-stepper-content step="3" :complete="currentStep > 3">
-          <v-form ref="step3">
-            <v-container>
-              <v-row>
-                <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.delivery_information'" /> -->
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.delivery_contact_name" v-bind="schema.delivery_contact_name" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="4">
-                  <v-select v-model="model.delivery_address_type" v-bind="schema.delivery_address_type" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.delivery_address_1" v-bind="schema.delivery_address_1" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.delivery_address_2" v-bind="schema.delivery_address_2" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6" sm="12">
-                  <v-text-field v-model="model.delivery_city" v-bind="schema.delivery_city" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="2" sm="4">
-                  <v-text-field v-model="model.delivery_state_province" v-bind="schema.delivery_state_province" />
-                </v-col>
-                <v-col cols="12" md="4" sm="8">
-                  <v-text-field v-model="model.delivery_postal_code" v-bind="schema.delivery_postal_code" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="2" sm="4">
-                  <v-text-field v-model="model.delivery_phone_type" v-bind="schema.delivery_phone_type" />
-                </v-col>
-                <v-col cols="12" md="3" sm="6">
-                  <v-text-field v-model="model.delivery_phone" v-bind="schema.delivery_phone" />
-                </v-col>
-                <v-col cols="12" md="1" sm="2">
-                  <v-text-field v-model="model.delivery_phone_ext" v-bind="schema.delivery_phone_ext" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-text-field v-model="model.delivery_contact_email" v-bind="schema.delivery_contact_email" />
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-stepper-content>
-        <v-stepper-content step="4" :complete="currentStep > 4">
-          <v-form ref="step4">
-            <v-container>
-              <v-row>
-                <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.additional_services'" /> -->
-                <v-col cols="12" md="6">
-                  <v-checkbox v-model="model.approve_auto_detail" v-bind="schema.approve_auto_detail" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-checkbox v-model="model.approve_oil_change" v-bind="schema.approve_oil_change" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-textarea v-model="model.other_services" v-bind="schema.other_services" />
-                </v-col>
-                <v-responsive width="100%" />
-                <v-col cols="12" md="6">
-                  <v-textarea v-model="model.special_instructions" v-bind="schema.special_instructions" />
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
-    <!-- <v-alert type="info" class="mb-0">{{ `quote as param:` }} {{ quote }}</v-alert> -->
-    <v-card-actions>
-      <v-spacer />
-      <v-btn v-if="currentStep > 1" @click.prevent="currentStep--" text>{{ $t('common.back') }}</v-btn>
-      <v-btn v-if="currentStep < 4" @click.prevent="nextStep" color="primary">{{ $t('common.next')}}</v-btn>
-      <v-btn v-else @click.prevent="submitOrder">{{ $t('vehicle_dashboard.create_order') }}</v-btn>
-    </v-card-actions>
-  </v-card>
+                      <v-date-picker v-model="model.requested_delivery_date" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="delivery_modal = false">Cancel</v-btn>
+                        <v-btn text color="primary" @click="$refs.delivery_modal.save(model.requested_delivery_date)">OK</v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-btn color="info" @click.prevent="changeDriverAssignment" depressed block>{{ $t('vehicle_dashboard.change_driver_assignment') }}</v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-stepper-content>
+          <!-- Step 2 -->
+          <v-stepper-content step="2" :complete="currentStep > 2">
+            <v-form ref="step2">
+              <v-container>
+                <v-row>
+                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.pickup_information'" /> -->
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.pickup_contact_name" v-bind="schema.pickup_contact_name" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="4">
+                    <v-select v-model="model.pickup_address_type" v-bind="schema.pickup_address_type" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.pickup_address_1" v-bind="schema.pickup_address_1" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.pickup_address_2" v-bind="schema.pickup_address_2" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6" sm="12">
+                    <v-text-field v-model="model.pickup_city" v-bind="schema.pickup_city" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="2" sm="4">
+                    <v-text-field v-model="model.pickup_state_province" v-bind="schema.pickup_state_province" />
+                  </v-col>
+                  <v-col cols="12" md="4" sm="8">
+                    <v-text-field v-model="model.pickup_postal_code" v-bind="schema.pickup_postal_code" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="2" sm="4">
+                    <v-select v-model="model.pickup_phone_type" v-bind="schema.pickup_phone_type" />
+                  </v-col>
+                  <v-col cols="12" md="3" sm="6">
+                    <v-text-field v-model="model.pickup_phone" v-bind="schema.pickup_phone" />
+                  </v-col>
+                  <v-col cols="12" md="1" sm="2">
+                    <v-text-field v-model="model.pickup_phone_ext" v-bind="schema.pickup_phone_ext" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.pickup_contact_email" v-bind="schema.pickup_contact_email" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" sm="6">
+                    <v-checkbox v-model="model.pickup_employee_terminated" v-bind="schema.pickup_employee_terminated" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-stepper-content>
+          <!-- Step 3 -->
+          <v-stepper-content step="3" :complete="currentStep > 3">
+            <v-form ref="step3">
+              <v-container>
+                <v-row>
+                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.delivery_information'" /> -->
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.delivery_contact_name" v-bind="schema.delivery_contact_name" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="4">
+                    <v-select v-model="model.delivery_address_type" v-bind="schema.delivery_address_type" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.delivery_address_1" v-bind="schema.delivery_address_1" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.delivery_address_2" v-bind="schema.delivery_address_2" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6" sm="12">
+                    <v-text-field v-model="model.delivery_city" v-bind="schema.delivery_city" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="2" sm="4">
+                    <v-text-field v-model="model.delivery_state_province" v-bind="schema.delivery_state_province" />
+                  </v-col>
+                  <v-col cols="12" md="4" sm="8">
+                    <v-text-field v-model="model.delivery_postal_code" v-bind="schema.delivery_postal_code" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="2" sm="4">
+                    <v-text-field v-model="model.delivery_phone_type" v-bind="schema.delivery_phone_type" />
+                  </v-col>
+                  <v-col cols="12" md="3" sm="6">
+                    <v-text-field v-model="model.delivery_phone" v-bind="schema.delivery_phone" />
+                  </v-col>
+                  <v-col cols="12" md="1" sm="2">
+                    <v-text-field v-model="model.delivery_phone_ext" v-bind="schema.delivery_phone_ext" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="model.delivery_contact_email" v-bind="schema.delivery_contact_email" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-stepper-content>
+          <!-- Step 4 -->
+          <v-stepper-content step="4" :complete="currentStep > 4">
+            <v-form ref="step4">
+              <v-container>
+                <v-row>
+                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.additional_services'" /> -->
+                  <v-col cols="12" md="6">
+                    <v-checkbox v-model="model.approve_auto_detail" v-bind="schema.approve_auto_detail" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-checkbox v-model="model.approve_oil_change" v-bind="schema.approve_oil_change" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-textarea v-model="model.other_services" v-bind="schema.other_services" />
+                  </v-col>
+                  <v-responsive width="100%" />
+                  <v-col cols="12" md="6">
+                    <v-textarea v-model="model.special_instructions" v-bind="schema.special_instructions" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+      <!-- <v-alert type="info" class="mb-0">{{ `quote as param:` }} {{ quote }}</v-alert> -->
+      <v-card-actions>
+        <v-spacer />
+        <v-btn v-if="currentStep > 1" @click.prevent="currentStep--" text>{{ $t('common.back') }}</v-btn>
+        <v-btn v-if="currentStep < 4" @click.prevent="nextStep" color="primary">{{ $t('common.next')}}</v-btn>
+        <v-btn v-else @click.prevent="submitOrder">{{ $t('vehicle_dashboard.create_order') }}</v-btn>
+      </v-card-actions>
+    </v-card>
 </template>
 
 <script>
+//import TranstorVehicle from '@/modules/vehicle/components/TranstorVehicle'
 import { email, required } from 'vuelidate/lib/validators'
 import { translateError } from '@/util/helpers'
 export default {
+  //components: { TranstorVehicle },
   props: ['vehicle','quote'],
   data: () => ({
     currentStep: 1,

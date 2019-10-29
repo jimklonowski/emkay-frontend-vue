@@ -105,12 +105,20 @@
     "vehicle_inspection": "Vehicle Inspection"
   },
   "transtor": {
+    "center": "@:vehicle_dashboard.center",
+    "client_vehicle_number": "@:vehicle_dashboard.client_vehicle_number",
     "delivery_postal_code": "Delivery ZIP Code",
+    "driver": "@:vehicle_dashboard.driver",
     "estimated_cost": "Estimated Cost",
     "estimated_distance": "Estimated Distance",
     "pickup_postal_code": "Pickup ZIP Code",
+    "plate": "@:vehicle_dashboard.plate",
+    "plate_state_province": "@:vehicle_dashboard.plate_state_province",
     "transport_method": "Transport Method",
-    "vehicle_description": "Vehicle Description"
+    "vehicle_color": "Vehicle Color",
+    "vehicle_description": "Vehicle Description",
+    "vehicle_number": "@:vehicle_dashboard.vehicle_number",
+    "vin": "@:vehicle_dashboard.vin"
   },
   "validation": {
     "city_state_province_required_if_no_postal_code": "City/State is required if no ZIP Code",
@@ -245,6 +253,7 @@
     "pickup_information": "Pickup Information",
     "pickup_location": "Pickup Location",
     "plate": "License Plate",
+    "plate_state_province": "Plate State",
     "postal_code": "ZIP Code",
     "quantity": "Quantity",
     "reason": "Reason",

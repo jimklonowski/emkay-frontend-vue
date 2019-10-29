@@ -765,6 +765,24 @@ const MockService = {
         estimated_distance: '1500 mi',
         estimated_cost: '$1965.97'
       })
+      // mock transtor vehicle summary 
+      .onGet(new RegExp(`/vehicle/summary/*`))
+      .reply(function(config) {
+        let vehicle_number = config.url.split('/').pop() || 'ERR'
+        
+        let vehicle_summary = {
+          vehicle_number,
+          client_vehicle_number: 'CVE22444',
+          vin: 'THISISALONGVINNUMBER',
+          vehicle_description: '2019 JEEP Compass',
+          vehicle_color: 'Black',
+          plate: 'VANITYPL8',
+          plate_state_province: 'IL',
+          driver: 'James Klonowski',
+          center: '001'
+        }
+        return [200, {vehicle_summary}]
+      })
       // mock /test/post
       .onPost('/test/post')
       .reply(400, { error: 'error occurred' })

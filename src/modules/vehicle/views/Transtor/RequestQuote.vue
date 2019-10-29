@@ -1,82 +1,82 @@
 <template>
-  <v-card flat>
-    <v-alert v-if="errorMessage" class="mb-0" type="error" text>{{ errorMessage }}</v-alert>
-    <v-toolbar flat>
-      <v-toolbar-title>{{ $t('vehicle_dashboard.request_quote') }}</v-toolbar-title>
-    </v-toolbar>
-    <v-form @submit.prevent="requestQuote">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
-              <template #label>
-                {{ $t('vehicle_dashboard.transport_method') }}
-              </template>
-              <v-radio value="driven">
-                <template #label>
-                  {{ $t('vehicle_dashboard.driven') }}
-                </template>
-              </v-radio>
-              <v-radio value="trucked">
-                <template #label>
-                  {{ $t('vehicle_dashboard.trucked') }}
-                </template>
-              </v-radio>
-            </v-radio-group>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-label>Origin</v-label>
+  <div>
+    <v-card elevation="1" tile>
+      <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.request_quote') }}</v-card-title> -->
+      <v-form @submit.prevent="requestQuote">
+        <v-card-text>
+          <v-container>
             <v-row>
-              <v-col cols="9" md="4">
-                <v-text-field v-bind="schema.origin_city" v-model="model.origin_city" />
-              </v-col>
-              <v-col cols="3" md="2">
-                <v-text-field v-bind="schema.origin_state_province" v-model="model.origin_state_province" />
-              </v-col>
-              <v-col cols="12" md="1" class="text-center">
-                <span class="overline">or</span>
-              </v-col>
-              <v-col cols="4" md="3">
-                <v-text-field v-bind="schema.origin_postal_code" v-model="model.origin_postal_code" />
+              <v-col cols="12">
+                <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
+                  <template #label>
+                    {{ $t('vehicle_dashboard.transport_method') }}
+                  </template>
+                  <v-radio value="driven">
+                    <template #label>
+                      {{ $t('vehicle_dashboard.driven') }}
+                    </template>
+                  </v-radio>
+                  <v-radio value="trucked">
+                    <template #label>
+                      {{ $t('vehicle_dashboard.trucked') }}
+                    </template>
+                  </v-radio>
+                </v-radio-group>
               </v-col>
             </v-row>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-label>Destination</v-label>
             <v-row>
-              <v-col cols="9" md="4">
-                <v-text-field v-bind="schema.destination_city" v-model="model.destination_city" />
-              </v-col>
-              <v-col cols="3" md="2">
-                <v-text-field v-bind="schema.destination_state_province" v-model="model.destination_state_province" />
-              </v-col>
-              <v-col cols="12" md="1" class="text-center">
-                <span class="overline">or</span>
-              </v-col>
-              <v-col cols="4" md="3">
-                <v-text-field v-bind="schema.destination_postal_code" v-model="model.destination_postal_code" />
+              <v-col cols="12">
+                <v-label>Origin</v-label>
+                <v-row>
+                  <v-col cols="9" md="4">
+                    <v-text-field v-bind="schema.origin_city" v-model="model.origin_city" />
+                  </v-col>
+                  <v-col cols="3" md="2">
+                    <v-text-field v-bind="schema.origin_state_province" v-model="model.origin_state_province" />
+                  </v-col>
+                  <v-col cols="12" md="1" class="text-center">
+                    <span class="overline">or</span>
+                  </v-col>
+                  <v-col cols="4" md="3">
+                    <v-text-field v-bind="schema.origin_postal_code" v-model="model.origin_postal_code" />
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-card-actions>
-        <v-btn type="submit" color="primary" block>{{$t('vehicle_dashboard.request_quote')}}</v-btn>
-      </v-card-actions>
-    </v-form>
-    <v-divider />
-    <v-skeleton-loader v-if="quoteLoading" type="article" tile />
-    <transtor-quote v-show="showQuote" :quote="quote" />
-  </v-card>
+            <v-row>
+              <v-col cols="12">
+                <v-label>Destination</v-label>
+                <v-row>
+                  <v-col cols="9" md="4">
+                    <v-text-field v-bind="schema.destination_city" v-model="model.destination_city" />
+                  </v-col>
+                  <v-col cols="3" md="2">
+                    <v-text-field v-bind="schema.destination_state_province" v-model="model.destination_state_province" />
+                  </v-col>
+                  <v-col cols="12" md="1" class="text-center">
+                    <span class="overline">or</span>
+                  </v-col>
+                  <v-col cols="4" md="3">
+                    <v-text-field v-bind="schema.destination_postal_code" v-model="model.destination_postal_code" />
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn type="submit" color="primary lighten-2" :loading="loading" block>{{$t('vehicle_dashboard.request_quote')}}</v-btn>
+        </v-card-actions>
+      </v-form>
+    </v-card>
+    <transtor-quote v-show="showQuote" id="quote" class="py-12" :quote="quote" :quote-loading="quoteLoading" />
+  </div>
 </template>
 
 <script>
+//import TranstorVehicle from '@/modules/vehicle/components/TranstorVehicle'
 import TranstorQuote from '@/modules/vehicle/components/TranstorQuote'
-import { translateError } from '@/util/helpers'
+import { goTo, translateError } from '@/util/helpers'
 import { maxLength, required, requiredIf } from 'vuelidate/lib/validators'
 
 export default {
@@ -167,6 +167,7 @@ export default {
     }
   },
   methods: {
+    goTo,
     translateError,
     transportMethodErrors() {
       const errors = []
@@ -246,6 +247,8 @@ export default {
         .finally(() => {
           this.loading = false
           this.quoteLoading = false
+          // scroll to the quote
+          this.goTo('#quote')
         })
     }
   },

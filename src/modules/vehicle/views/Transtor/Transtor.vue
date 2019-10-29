@@ -1,12 +1,12 @@
 <template>
-  <section>
+  <section class="mb-12">
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
       </v-row>
-      <v-card>
-        <v-tabs v-model="tabs" background-color="primary" dark icons-and-text grow>
-          <v-tabs-slider />
+      <v-card class="mb-1" elevation="1" tile>
+        <v-tabs v-model="tabs" slider-color="primary lighten-4" :slider-size="5" background-color="primary lighten-1" dark icons-and-text grow>
+
           <!-- <v-tab class="primary--text" :to="{ name: 'transtor-status' }" v-t="'vehicle_dashboard.order_status'" /> -->
           <v-tab :to="{ name: 'transtor-status' }">
             {{ $t('vehicle_dashboard.transport_status') }}
@@ -21,14 +21,21 @@
             <v-icon >local_shipping</v-icon>
           </v-tab>
         </v-tabs>
-        <router-view />
+        <transtor-vehicle />
       </v-card>
+      <transition name="tabchange" mode="out-in">
+        <router-view />
+      </transition>
     </v-container>
   </section>
 </template>
 
 <script>
+import TranstorVehicle from '@/modules/vehicle/components/TranstorVehicle'
 export default {
+  components: {
+    TranstorVehicle
+  },
   data: self => ({
     errorMessage: null,
     quote_loading: true,
@@ -71,5 +78,11 @@ export default {
 </script>
 
 <style>
+.tabchange-enter-active, .tabchange-leave-active {
+  transition: opacity .5s;
+}
+.tabchange-enter, .tabchange-leave-active {
+  opacity: 0;
+}
 
 </style>

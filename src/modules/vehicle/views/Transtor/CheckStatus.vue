@@ -1,10 +1,7 @@
 <template>
-  <v-card flat>
-    <v-toolbar flat>
-      <v-toolbar-title>{{ $t('vehicle_dashboard.transport_status') }}</v-toolbar-title>
-    </v-toolbar>
-    <!-- <v-alert v-if="errorMessage" class="mb-0" type="error" dense tile>{{ errorMessage }}</v-alert> -->
-    <v-data-table :headers="headers" :items="items" :loading="loading">
+  <v-card elevation="1" tile>
+    <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.transport_status') }}</v-card-title> -->
+    <v-data-table :headers="headers" :items="items" :loading="loading" disable-sort disable-pagination hide-default-footer>
       
       <template #loading>
         <v-skeleton-loader type="table-row-divider" tile />
