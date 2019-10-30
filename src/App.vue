@@ -4,18 +4,21 @@
     <v-content>
       <router-view />
       <modals-container />
+      <fab-scroll-top />
     </v-content>
   </v-app>
 </template>
 
 <script>
 import AppNavigation from '@/modules/core/components/navigation/AppNavigation'
+import FabScrollTop from './modules/core/components/navigation/FabScrollTop'
 import ModalsContainer from 'vue-js-modal/src/ModalsContainer'
 
 export default {
   name: 'App',
   components: {
     AppNavigation,
+    FabScrollTop,
     ModalsContainer
   }
 }

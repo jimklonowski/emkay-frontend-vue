@@ -4,7 +4,9 @@
         <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.create_order') }}</v-card-title> -->
         <v-stepper-header class="elevation-1">
           <template v-for="(step, key) in steps">
-            <v-stepper-step :key="`step${key}`" :complete="currentStep > key" :step="key + 1">{{ $t(step.key) }}</v-stepper-step>
+            <v-stepper-step :key="`step${key}`" :complete="currentStep > key + 1" :step="key + 1" :rules="[() => !steps[key].errors]">
+              <span class="text-center" v-t="step.key" />
+            </v-stepper-step>
             <v-divider v-if="key < steps.length - 1" :key="`div${key}`" />
           </template>
         </v-stepper-header>
@@ -13,7 +15,8 @@
           <!-- <v-alert v-if="errorMessage" class="mb-0" type="error" text>{{ errorMessage }}</v-alert> -->
           <!-- Step 1 -->
           <v-stepper-content step="1" :complete="currentStep > 1">
-            <v-form ref="step1">
+            <!-- v-if or dynamic key is required to fix vuetify outlined field labels: https://github.com/vuetifyjs/vuetify/issues/7470 -->
+            <v-form ref="step1" v-if="currentStep == 1">
               <v-container>
                 <v-row>
                   <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.authorization_detail'" /> -->
@@ -101,53 +104,53 @@
           </v-stepper-content>
           <!-- Step 2 -->
           <v-stepper-content step="2" :complete="currentStep > 2">
-            <v-form ref="step2">
+            <v-form ref="step2" v-if="currentStep == 2">
               <v-container>
                 <v-row>
-                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.pickup_information'" /> -->
                   <v-col cols="12" md="6">
-                    <v-text-field v-model="model.pickup_contact_name" v-bind="schema.pickup_contact_name" />
+                    <v-row>
+                      <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.pickup_information'" /> -->
+                      <v-col cols="12">
+                        <v-text-field v-model="model.pickup_contact_name" v-bind="schema.pickup_contact_name" />
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select v-model="model.pickup_address_type" v-bind="schema.pickup_address_type" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.pickup_address_1" v-bind="schema.pickup_address_1" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.pickup_address_2" v-bind="schema.pickup_address_2" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.pickup_city" v-bind="schema.pickup_city" />
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field v-model="model.pickup_state_province" v-bind="schema.pickup_state_province" />
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field v-model="model.pickup_postal_code" v-bind="schema.pickup_postal_code" />
+                      </v-col>
+                    </v-row>
                   </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="4">
-                    <v-select v-model="model.pickup_address_type" v-bind="schema.pickup_address_type" />
-                  </v-col>
-                  <v-responsive width="100%" />
                   <v-col cols="12" md="6">
-                    <v-text-field v-model="model.pickup_address_1" v-bind="schema.pickup_address_1" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6">
-                    <v-text-field v-model="model.pickup_address_2" v-bind="schema.pickup_address_2" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6" sm="12">
-                    <v-text-field v-model="model.pickup_city" v-bind="schema.pickup_city" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="2" sm="4">
-                    <v-text-field v-model="model.pickup_state_province" v-bind="schema.pickup_state_province" />
-                  </v-col>
-                  <v-col cols="12" md="4" sm="8">
-                    <v-text-field v-model="model.pickup_postal_code" v-bind="schema.pickup_postal_code" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="2" sm="4">
-                    <v-select v-model="model.pickup_phone_type" v-bind="schema.pickup_phone_type" />
-                  </v-col>
-                  <v-col cols="12" md="3" sm="6">
-                    <v-text-field v-model="model.pickup_phone" v-bind="schema.pickup_phone" />
-                  </v-col>
-                  <v-col cols="12" md="1" sm="2">
-                    <v-text-field v-model="model.pickup_phone_ext" v-bind="schema.pickup_phone_ext" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6">
-                    <v-text-field v-model="model.pickup_contact_email" v-bind="schema.pickup_contact_email" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" sm="6">
-                    <v-checkbox v-model="model.pickup_employee_terminated" v-bind="schema.pickup_employee_terminated" />
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <v-select v-model="model.pickup_phone_type" v-bind="schema.pickup_phone_type" />
+                      </v-col>
+                      <v-col cols="8">
+                        <v-text-field v-model="model.pickup_phone" v-bind="schema.pickup_phone" />
+                      </v-col>
+                      <v-col cols="4">
+                        <v-text-field v-model="model.pickup_phone_ext" v-bind="schema.pickup_phone_ext" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.pickup_contact_email" v-bind="schema.pickup_contact_email" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-checkbox v-model="model.pickup_employee_terminated" v-bind="schema.pickup_employee_terminated" />
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-container>
@@ -155,49 +158,49 @@
           </v-stepper-content>
           <!-- Step 3 -->
           <v-stepper-content step="3" :complete="currentStep > 3">
-            <v-form ref="step3">
+            <v-form ref="step3" v-if="currentStep == 3">
               <v-container>
                 <v-row>
-                  <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.delivery_information'" /> -->
                   <v-col cols="12" md="6">
-                    <v-text-field v-model="model.delivery_contact_name" v-bind="schema.delivery_contact_name" />
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.delivery_contact_name" v-bind="schema.delivery_contact_name" />
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select v-model="model.delivery_address_type" v-bind="schema.delivery_address_type" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.delivery_address_1" v-bind="schema.delivery_address_1" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.delivery_address_2" v-bind="schema.delivery_address_2" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.delivery_city" v-bind="schema.delivery_city" />
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field v-model="model.delivery_state_province" v-bind="schema.delivery_state_province" />
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field v-model="model.delivery_postal_code" v-bind="schema.delivery_postal_code" />
+                      </v-col>
+                    </v-row>
                   </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="4">
-                    <v-select v-model="model.delivery_address_type" v-bind="schema.delivery_address_type" />
-                  </v-col>
-                  <v-responsive width="100%" />
                   <v-col cols="12" md="6">
-                    <v-text-field v-model="model.delivery_address_1" v-bind="schema.delivery_address_1" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6">
-                    <v-text-field v-model="model.delivery_address_2" v-bind="schema.delivery_address_2" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6" sm="12">
-                    <v-text-field v-model="model.delivery_city" v-bind="schema.delivery_city" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="2" sm="4">
-                    <v-text-field v-model="model.delivery_state_province" v-bind="schema.delivery_state_province" />
-                  </v-col>
-                  <v-col cols="12" md="4" sm="8">
-                    <v-text-field v-model="model.delivery_postal_code" v-bind="schema.delivery_postal_code" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="2" sm="4">
-                    <v-text-field v-model="model.delivery_phone_type" v-bind="schema.delivery_phone_type" />
-                  </v-col>
-                  <v-col cols="12" md="3" sm="6">
-                    <v-text-field v-model="model.delivery_phone" v-bind="schema.delivery_phone" />
-                  </v-col>
-                  <v-col cols="12" md="1" sm="2">
-                    <v-text-field v-model="model.delivery_phone_ext" v-bind="schema.delivery_phone_ext" />
-                  </v-col>
-                  <v-responsive width="100%" />
-                  <v-col cols="12" md="6">
-                    <v-text-field v-model="model.delivery_contact_email" v-bind="schema.delivery_contact_email" />
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <v-text-field v-model="model.delivery_phone_type" v-bind="schema.delivery_phone_type" />
+                      </v-col>
+                      <v-col cols="8">
+                        <v-text-field v-model="model.delivery_phone" v-bind="schema.delivery_phone" />
+                      </v-col>
+                      <v-col cols="4">
+                        <v-text-field v-model="model.delivery_phone_ext" v-bind="schema.delivery_phone_ext" />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="model.delivery_contact_email" v-bind="schema.delivery_contact_email" />
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-container>
@@ -205,7 +208,7 @@
           </v-stepper-content>
           <!-- Step 4 -->
           <v-stepper-content step="4" :complete="currentStep > 4">
-            <v-form ref="step4">
+            <v-form ref="step4" v-if="currentStep == 4">
               <v-container>
                 <v-row>
                   <!-- <header :class="$config.SUBHEADER_CLASS" v-t="'vehicle_dashboard.additional_services'" /> -->
@@ -226,6 +229,7 @@
                   </v-col>
                 </v-row>
               </v-container>
+              <v-alert type="error" v-if="errorMessage" v-text="errorMessage" />
             </v-form>
           </v-stepper-content>
         </v-stepper-items>
@@ -233,7 +237,7 @@
       <!-- <v-alert type="info" class="mb-0">{{ `quote as param:` }} {{ quote }}</v-alert> -->
       <v-card-actions>
         <v-spacer />
-        <v-btn v-if="currentStep > 1" @click.prevent="currentStep--" text>{{ $t('common.back') }}</v-btn>
+        <v-btn v-if="currentStep > 1" @click.prevent="prevStep" text>{{ $t('common.back') }}</v-btn>
         <v-btn v-if="currentStep < 4" @click.prevent="nextStep" color="primary">{{ $t('common.next')}}</v-btn>
         <v-btn v-else @click.prevent="submitOrder">{{ $t('vehicle_dashboard.create_order') }}</v-btn>
       </v-card-actions>
@@ -253,23 +257,28 @@ export default {
     loading: false,
     delivery_modal: false,
     pickup_modal: false,
+    
 
     steps: [
       {
         step: 1,
         key: 'vehicle_dashboard.authorization_detail',
+        errors: null
       },
       {
         step: 2,
-        key: 'vehicle_dashboard.pickup_information'
+        key: 'vehicle_dashboard.pickup_information',
+        errors: null
       },
       {
         step: 3,
-        key: 'vehicle_dashboard.delivery_information'
+        key: 'vehicle_dashboard.delivery_information',
+        errors: null
       },
       {
         step: 4,
-        key: 'vehicle_dashboard.additional_services'
+        key: 'vehicle_dashboard.additional_services',
+        errors: null
       }
     ],
 
@@ -498,13 +507,11 @@ export default {
         },
         other_services: {
           label: this.$t('vehicle_dashboard.other_services'),
-          outlined: true,
-          dense: true
+          outlined: true
         },
         special_instructions: {
           label: this.$t('vehicle_dashboard.special_instructions'),
-          outlined: true,
-          dense: true
+          outlined: true
         }
       }
     }
@@ -711,6 +718,19 @@ export default {
     changeDriverAssignment() {
       alert('todo: change driver assignment')
     },
+    // stepErrors(n) {
+    //   if (this.currentStep !== n)
+    //     return false
+    //   let step = `step${n}`
+    //   this.$v[step].$touch()
+    //   return !this.$v[step].$invalid
+    // },
+    prevStep() {
+      let step = `step${this.currentStep}`
+      this.$v[step].$reset();
+      this.steps[this.currentStep - 1].errors = null
+      this.currentStep--;
+    },
     nextStep() {
       //console.log(`currentStep: ${this.currentStep}`)
       let step = `step${this.currentStep}`
@@ -718,9 +738,12 @@ export default {
       this.$v[step].$touch()
       if (this.$v[step].$invalid) {
         this.errorMessage = `Fix step ${this.currentStep} errors`
+        this.steps[this.currentStep-1].errors = `STEP ${this.currentStep} ERRORS!`
         this.loading = false
         return false
       }
+      //clear errors and advance step
+      this.steps[this.currentStep-1].errors = null
       this.errorMessage = null
       this.currentStep++;
     },

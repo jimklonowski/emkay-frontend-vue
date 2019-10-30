@@ -9,7 +9,7 @@
           :class="{ 'grey--text': activeIndex !== index }"
           :style="{ borderColor: activeIndex === index ? 'inherit' : null }"
           class="body-2 d-block"
-          @click.stop.prevent="goTo(`#${item.id}`, options)"
+          @click.stop.prevent="$vuetify.goTo(`#${item.id}`, options)"
           v-text="$t(item.key)"
         />
       </li>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import goTo from 'vuetify/lib/services/goto'
+//import goTo from 'vuetify/lib/services/goto'
 import { clearTimeout, setTimeout } from 'timers'
 export default {
   props: {
@@ -48,7 +48,7 @@ export default {
     }
   },
   methods: {
-    goTo,
+    //goTo,
     onScroll() {
       this.currentOffset =
         window.pageYOffset || document.documentElement.offsetTop

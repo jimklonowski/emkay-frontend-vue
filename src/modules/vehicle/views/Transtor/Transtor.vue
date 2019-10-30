@@ -23,9 +23,9 @@
         </v-tabs>
         <transtor-vehicle />
       </v-card>
-      <transition name="tabchange" mode="out-in">
+      <v-fade-transition mode="out-in">
         <router-view />
-      </transition>
+      </v-fade-transition>
     </v-container>
   </section>
 </template>
@@ -76,13 +76,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.tabchange-enter-active, .tabchange-leave-active {
-  transition: opacity .5s;
-}
-.tabchange-enter, .tabchange-leave-active {
-  opacity: 0;
-}
-
-</style>

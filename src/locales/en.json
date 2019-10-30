@@ -121,14 +121,14 @@
     "vin": "@:vehicle_dashboard.vin"
   },
   "validation": {
-    "city_state_province_required_if_no_postal_code": "City/State is required if no ZIP Code",
+    "city_state_province_required_if_no_postal_code": "Required if no ZIP Code",
     "email": "The field {attribute} must be a valid email address.",
     "invalid": "{attribute} is invalid.",
     "length": "Must be {attribute} characters.",
     "max_length": "Max {attribute} characters.",
     "min_length": "Min {attribute} characters.",
     "required": "{attribute} is required.",
-    "postal_code_required_if_no_city_state_province": "ZIP Code is required if no City/State"
+    "postal_code_required_if_no_city_state_province": "Required if no City/State"
   },
   "vehicle_dashboard": {
     "accident": "Accident",

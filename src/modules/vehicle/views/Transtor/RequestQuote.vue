@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-card elevation="1" tile>
+      <v-toolbar flat>
+        <v-toolbar-title>{{ $t('vehicle_dashboard.request_quote') }}</v-toolbar-title>
+      </v-toolbar>
       <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.request_quote') }}</v-card-title> -->
       <v-form @submit.prevent="requestQuote">
         <v-card-text>
@@ -25,38 +28,30 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" lg="6">
                 <v-label>Origin</v-label>
                 <v-row>
-                  <v-col cols="9" md="4">
+                  <v-col cols="9" md="5">
                     <v-text-field v-bind="schema.origin_city" v-model="model.origin_city" />
                   </v-col>
-                  <v-col cols="3" md="2">
+                  <v-col cols="3" md="3">
                     <v-text-field v-bind="schema.origin_state_province" v-model="model.origin_state_province" />
                   </v-col>
-                  <v-col cols="12" md="1" class="text-center">
-                    <span class="overline">or</span>
-                  </v-col>
-                  <v-col cols="4" md="3">
+                  <v-col cols="5" md="4">
                     <v-text-field v-bind="schema.origin_postal_code" v-model="model.origin_postal_code" />
                   </v-col>
                 </v-row>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
+              <v-col cols="12" lg="6">
                 <v-label>Destination</v-label>
                 <v-row>
-                  <v-col cols="9" md="4">
+                  <v-col cols="9" md="5">
                     <v-text-field v-bind="schema.destination_city" v-model="model.destination_city" />
                   </v-col>
-                  <v-col cols="3" md="2">
+                  <v-col cols="3" md="3">
                     <v-text-field v-bind="schema.destination_state_province" v-model="model.destination_state_province" />
                   </v-col>
-                  <v-col cols="12" md="1" class="text-center">
-                    <span class="overline">or</span>
-                  </v-col>
-                  <v-col cols="4" md="3">
+                  <v-col cols="5" md="4">
                     <v-text-field v-bind="schema.destination_postal_code" v-model="model.destination_postal_code" />
                   </v-col>
                 </v-row>
@@ -65,11 +60,14 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <v-btn type="submit" color="primary lighten-2" :loading="loading" block>{{$t('vehicle_dashboard.request_quote')}}</v-btn>
+          <v-spacer />
+          <v-btn type="submit" color="primary lighten-2" :loading="loading">{{$t('vehicle_dashboard.request_quote')}}</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
-    <transtor-quote v-show="showQuote" id="quote" class="py-12" :quote="quote" :quote-loading="quoteLoading" />
+    <v-scale-transition>
+      <transtor-quote v-show="showQuote" id="quote" class="py-12" :quote="quote" :quote-loading="quoteLoading" />
+    </v-scale-transition>
   </div>
 </template>
 
@@ -95,7 +93,7 @@ export default {
       destination_state_province: '',
       destination_postal_code: ''
     },
-    quote: null,
+    quote: {},
     quoteLoading: false,
     showQuote: false,
   }),
@@ -108,6 +106,7 @@ export default {
         transport_method: {
           label: this.$t('vehicle_dashboard.transport_method'),
           errorMessages: this.transportMethodErrors()
+
         },
         origin_city: {
           label: this.$t('vehicle_dashboard.city'),
@@ -116,16 +115,20 @@ export default {
           class: 'col-12 col-md-5',
           cols: 12,
           md: 5,
-          dense: true
+          dense: true,
+          outlined: true
         },
         origin_state_province: {
           label: this.$t('vehicle_dashboard.state_province'),
           type: 'text',
           errorMessages: this.originStateProvinceErrors(),
+          // setting errorcount to 0 will hide the error text since city/state use the same error
+          errorCount: 0,
           class: 'col-12 col-md-4',
           cols: 12,
           md: 4,
-          dense: true
+          dense: true,
+          outlined: true
         },
         origin_postal_code: {
           label: this.$t('vehicle_dashboard.postal_code'),
@@ -134,7 +137,8 @@ export default {
           class: 'col-12 col-md-3',
           cols: 12,
           md: 3,
-          dense: true
+          dense: true,
+          outlined: true
         },
         destination_city: {
           label: this.$t('vehicle_dashboard.city'),
@@ -143,16 +147,20 @@ export default {
           class: 'col-12 col-md-5',
           cols: 12,
           md: 5,
-          dense: true
+          dense: true,
+          outlined: true
         },
         destination_state_province: {
           label: this.$t('vehicle_dashboard.state_province'),
           type: 'text',
           errorMessages: this.destinationStateProvinceErrors(),
+          // setting errorcount to 0 will hide the error text since city/state use the same error
+          errorCount: 0,
           class: 'col-12 col-md-4',
           cols: 12,
           md: 4,
-          dense: true
+          dense: true,
+          outlined: true
         },
         destination_postal_code: {
           label: this.$t('vehicle_dashboard.postal_code'),
@@ -161,7 +169,8 @@ export default {
           class: 'col-12 col-md-3',
           cols: 12,
           md: 3,
-          dense: true
+          dense: true,
+          outlined: true
         }
       }
     }

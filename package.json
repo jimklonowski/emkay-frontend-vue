@@ -26,7 +26,7 @@
     "vuelidate": "^0.7.4",
     "vuetify": "^2.1.7",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.6.0"
+    "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.3.0",

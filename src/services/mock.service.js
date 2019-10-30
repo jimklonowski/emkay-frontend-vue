@@ -757,14 +757,26 @@ const MockService = {
       ])
       // mock transport quote
       .onPost('/transtor/quote')
-      .reply(200, {
-        vehicle_description: '2019 Jeep Compass',
-        transport_method: 'driven',
-        pickup_postal_code: '60189',
-        delivery_postal_code: '60143',
-        estimated_distance: '1500 mi',
-        estimated_cost: '$1965.97'
+      .reply(config => {
+        let data = JSON.parse(config.data)
+        let quote = {
+          vehicle_description: '2019 Jeep Compass',
+          transport_method: data.transport_method,
+          pickup_postal_code: data.origin_postal_code,
+          delivery_postal_code: data.destination_postal_code,
+          estimated_distance: '1500 mi',
+          estimated_cost: '$1965.97'
+        }
+        return [200, quote]
       })
+      // .reply(200, {
+      //   vehicle_description: '2019 Jeep Compass',
+      //   transport_method: 'driven',
+      //   pickup_postal_code: '60189',
+      //   delivery_postal_code: '60143',
+      //   estimated_distance: '1500 mi',
+      //   estimated_cost: '$1965.97'
+      // })
       // mock transtor vehicle summary 
       .onGet(new RegExp(`/vehicle/summary/*`))
       .reply(function(config) {
