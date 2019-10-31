@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-card
-      color="blue-grey lighten-2"
+      color="primary"
       :style="{
         position: 'fixed',
         left: 0,
         right: 0,
-        top: '48px',
+        top: '64px',
         cursor: 'auto',
         width: '100vw',
         minWidth: '100vw',

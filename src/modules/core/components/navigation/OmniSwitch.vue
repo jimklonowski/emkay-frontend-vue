@@ -6,8 +6,8 @@
     offset-x
   >
     <template #activator="{ on }">
-      <v-btn small depressed text icon v-on="on">
-        <v-icon small>language</v-icon>
+      <v-btn text style="min-width:48px;" v-on="on">
+        <v-icon size="24">language</v-icon>
       </v-btn>
     </template>
 
