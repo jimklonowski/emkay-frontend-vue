@@ -2,12 +2,13 @@
   <v-app-bar
     tile
     dense
+    height="36"
     absolute
     elevation="2"
-    style="position:sticky;top:100px;z-index:4;"
+    style="position:sticky;top:72px;z-index:4;"
     tag="nav"
   >
-    <v-tabs color="primary lighten-3">
+    <v-tabs color="primary lighten-3" height="36">
       <v-tabs-slider color="primary--text text--lighten-2" />
       <v-tab
         v-for="item in items"

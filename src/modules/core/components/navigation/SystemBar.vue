@@ -1,16 +1,17 @@
 <template>
-  <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark app>
+  <v-system-bar :class="$config.SYSTEM_BAR_CLASS" style="z-index:5;" dense dark app>
     <template v-if="isAuthenticated">
       <template v-for="(button, key) in buttons">
         <v-btn
           :key="key"
           :to="button.to"
-          small
-          text
-          tile
+          :title="$tc(button.key, button.count)"
+          x-small
+          :icon="$vuetify.breakpoint.smAndDown"
+          :text="!$vuetify.breakpoint.smAndDown"
         >
           <v-icon v-text="button.icon" />
-          <span class="system-bar-text">
+          <span class="system-bar-text" v-show="$vuetify.breakpoint.mdAndUp">
             {{ $tc(button.key, button.count) }}
           </span>
         </v-btn>

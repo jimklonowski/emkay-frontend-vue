@@ -1,6 +1,6 @@
 <template>
   <section v-if="!$route.params.vehicle" :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
-    <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:100px;" height="48" />
+    <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:72px;" height="48" />
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />

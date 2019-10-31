@@ -1,5 +1,5 @@
 <template>
-  <section :style="this.$route.meta.toc && $vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+  <section :style="$route.meta.toc && $vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
