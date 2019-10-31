@@ -5,9 +5,10 @@
         <v-btn
           :key="key"
           :to="button.to"
-          small
+          x-small
           text
-          tile
+          depressed
+          rounded
         >
           <v-icon v-text="button.icon" />
           <span class="system-bar-text">

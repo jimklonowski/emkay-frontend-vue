@@ -145,8 +145,8 @@ export default {
         //debugger
       })
       .catch(error => {
-        console.error(error)
-        this.errorMessage = 'error occurred!!'
+        //console.error(error)
+        this.errorMessage = error.response.data.error
       })
       .finally(() => {
         this.loading = false

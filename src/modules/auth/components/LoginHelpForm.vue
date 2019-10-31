@@ -78,11 +78,11 @@ export default {
       // submit login help request
       ApiService.post('auth/help', this.model)
         .then(() => {
-          console.log('Login Help Success')
+          //console.log('Login Help Success')
           //this.$router.push({ name: 'home' })
         })
         .catch(error => {
-          console.log('Login Help Failure')
+          //console.log('Login Help Failure')
           this.errorMessage = error.message
         })
         .finally(() => {

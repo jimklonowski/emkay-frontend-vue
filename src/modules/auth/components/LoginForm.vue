@@ -107,12 +107,12 @@ export default {
       this.$store
         .dispatch('auth/login', this.model)
         .then(() => {
-          console.log('Login Success')
-          console.log(this.$store)
+          //console.log('Login Success')
+          //console.log(this.$store)
           this.$router.push({ name: 'home'}).catch(() => {})
         })
         .catch(error => {
-          console.log('Login Failure')
+          //console.log('Login Failure')
           this.errorMessage = error.message
         })
         .finally(() => {

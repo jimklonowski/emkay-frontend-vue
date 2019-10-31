@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-card
-      color="primary"
+      light
+      outlined
       :style="{
         position: 'fixed',
         left: 0,
@@ -12,7 +13,7 @@
         minWidth: '100vw',
         zIndex: 5,
       }"
-      elevation="0"
+      elevation="1"
       tile
     >
       <v-container fluid>

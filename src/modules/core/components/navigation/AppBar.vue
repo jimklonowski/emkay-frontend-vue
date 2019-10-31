@@ -9,6 +9,7 @@
           :ref="item.ref"
           @mouseover="showMenu(item)"
           @mouseleave="hideMenu(item)"
+          small
           text
           dark
         >
@@ -23,7 +24,7 @@
             />
           </transition>
         </v-btn>
-        <v-btn v-else :key="i" :to="item.to" text dark>
+        <v-btn v-else :key="i" :to="item.to" small text dark>
           {{ $t(item.key) }}
         </v-btn>
       </template>

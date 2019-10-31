@@ -11,7 +11,7 @@
       bottom
       right
       large
-      color="primary"
+      color="primary lighten-2"
       @click="toTop"
     >
       <v-icon v-text="'keyboard_arrow_up'" />

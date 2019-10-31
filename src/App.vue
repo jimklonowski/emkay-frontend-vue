@@ -1,22 +1,25 @@
 <template>
   <v-app>
     <app-navigation />
-    <v-content>
+    <v-content class="content-wrap">
       <router-view />
       <modals-container />
       <fab-scroll-top />
     </v-content>
+    <app-footer />
   </v-app>
 </template>
 
 <script>
+import AppFooter from '@/modules/core/components/navigation/AppFooter'
 import AppNavigation from '@/modules/core/components/navigation/AppNavigation'
-import FabScrollTop from './modules/core/components/navigation/FabScrollTop'
+import FabScrollTop from '@/modules/core/components/navigation/FabScrollTop'
 import ModalsContainer from 'vue-js-modal/src/ModalsContainer'
 
 export default {
   name: 'App',
   components: {
+    AppFooter,
     AppNavigation,
     FabScrollTop,
     ModalsContainer
@@ -24,6 +27,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.content-wrap {
+  min-height: 100vh;
+}
 .striped.v-data-table tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }

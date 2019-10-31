@@ -870,5 +870,7 @@ export default {
 </script>
 
 <style>
-
+.v-stepper .v-stepper__step--active .v-stepper__label {
+  text-shadow: none !important;
+}
 </style>
