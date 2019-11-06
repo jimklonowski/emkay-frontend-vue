@@ -1,16 +1,28 @@
 export default [
-  {
-    path: '/vehicle',
-    //alias: '/vehicle-search',
-    name: 'vehicle-dashboard-search',
-    component: () => import(/* webpackChunkName: "vehicle-dashboard-search" */ '@/modules/vehicle/views/VehicleDashboardSearch.vue'),
-    meta: {
-      breadcrumb: {
-        path: { name: 'vehicle-dashboard-search' },
-        key: 'vehicle_dashboard.vehicle_search'
-      }
-    },
-    children: [
+  // {
+  //   path: '/vehicle',
+  //   //alias: '/vehicle-search',
+  //   name: 'vehicle-dashboard-wrapper',
+  //   component: () => import(/* webpackChunkName: "vehicle-dashboard-search" */ '@/modules/vehicle/views/VehicleDashboardWrapper.vue'),
+  //   meta: {
+  //     breadcrumb: {
+  //       path: { name: 'vehicle-dashboard' },
+  //       key: 'vehicle_dashboard.vehicle_search'
+  //     }
+  //   },
+  //   children: [
+      {
+        path: '/vehicle',
+        //alias: '/vehicle-search',
+        name: 'vehicle-dashboard-wrapper',
+        component: () => import(/* webpackChunkName: "vehicle-dashboard-search" */ '@/modules/vehicle/views/VehicleDashboardWrapper.vue'),
+        meta: {
+          breadcrumb: {
+            path: { name: 'vehicle-dashboard-wrapper' },
+            key: 'vehicle_dashboard.vehicle_search'
+          }
+        }
+      },
       {
         path: '/vehicle/:vehicle',
         name: 'vehicle-dashboard',
@@ -209,6 +221,7 @@ export default [
           {
             path: '/vehicle/:vehicle/transports-and-storage/',
             name: 'transports-and-storage',
+            redirect: { name: 'transtor-status' },
             component: () => import(/* webpackChunkName: "transtor" */ '@/modules/vehicle/views/Transtor/Transtor.vue'),
             meta: {
               breadcrumb: {
@@ -259,8 +272,8 @@ export default [
           }        
         ]
       }
-    ]
-  }
+    
+  
 ]
 
 

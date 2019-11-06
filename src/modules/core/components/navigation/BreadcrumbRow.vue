@@ -17,6 +17,7 @@ export default {
       let crumbs = []
       currentPaths.forEach(function(path, index) {
         //console.log(path)
+        if (index >= self.$route.matched.length) return
         let breadcrumb = self.$route.matched[index].meta.breadcrumb
         crumbs.push({
           exact: true,

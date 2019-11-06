@@ -795,6 +795,55 @@ const MockService = {
         }
         return [200, {vehicle_summary}]
       })
+      .onGet('/vehicles/search')
+      .reply(function(config) {
+        let query = config.params.query
+        if (query) query = query.toLowerCase()
+        let vehicles = [
+          {
+            vehicle_number: 'E22444',
+            driver_name: 'Andrew Griffith',
+            description: '2012 Jeep Compass'
+          },
+          {
+            vehicle_number: '442545',
+            driver_name: 'Monty Burns',
+            description: '2019 TESLA Model X'
+          },
+          {
+            vehicle_number: '0F016D',
+            driver_name: 'Jim Klonowski',
+            description: '1994 Ford Bronco'
+          }
+        ]
+        let filtered = vehicles.filter(v => v.vehicle_number.toLowerCase().includes(query))
+
+        return [200, filtered]
+      })
+      .onGet('/drivers/search')
+      .reply(function(config) {
+        let query = config.params.query
+        if (query) query = query.toLowerCase()
+        let vehicles = [
+          {
+            vehicle_number: 'E22444',
+            driver_name: 'Andrew Griffith',
+            description: '2012 Jeep Compass'
+          },
+          {
+            vehicle_number: '666069',
+            driver_name: 'Lucien Greaves',
+            description: '2012 TESLA Model S'
+          },
+          {
+            vehicle_number: '442545',
+            driver_name: 'J. Klo Klonowski',
+            description: '1990 Ford Crown Victoria'
+          }
+        ]
+        let filtered = vehicles.filter(v => v.driver_name.toLowerCase().includes(query))
+        return [200, filtered]
+      })
       // mock /test/post
       .onPost('/test/post')
       .reply(400, { error: 'error occurred' })
