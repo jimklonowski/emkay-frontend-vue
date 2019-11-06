@@ -1,23 +1,22 @@
 <template>
   <v-navigation-drawer width="300" left absolute permanent>
-    <v-list>
-      <v-list-item>
-        <v-list-item-avatar color="secondary white--text lighten-2" :size="75" v-text="$route.params.vehicle" />
+    <v-list dense nav>
+      <v-list-item class="pa-4">
+        <v-list-item-avatar class="caption" color="secondary white--text lighten-2" :size="60" v-text="$route.params.vehicle" />
         <v-list-item-content>
           <v-list-item-title class="title" v-t="'vehicle_dashboard.dashboard'" />
-          <v-list-item-subtitle>{{ $route.params.vehicle }}</v-list-item-subtitle>
+          <v-list-item-subtitle class="caption">{{ $route.params.vehicle }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       
       <v-divider />
 
-      <v-list-group :prepend-icon="'dashboard'" :value="true" no-action>
+      <v-list-group :prepend-icon="'dashboard'" class="py-2" :value="true" no-action>
         <template #activator>
           <v-list-item-content>
             <v-list-item-title>{{ $t('vehicle_dashboard.dashboard') }}</v-list-item-title>
           </v-list-item-content>
         </template>
-
       
         <v-list-item v-for="(item, name) in dashboard_items" :key="name" :to="item.to" dense>
           <v-list-item-content>
@@ -27,27 +26,26 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
+    
+
+      <v-list-item v-for="(item, name) in nav_items" :key="name" :to="item.to" color="primary" dense>
+        <v-list-item-icon>
+          <v-icon v-text="item.icon" />
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ $t(item.key) }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
-
-    <v-divider />
-
-    <v-list-item v-for="(item, name) in nav_items" :key="name" :to="item.to">
-      <v-list-item-icon>
-        <v-icon v-text="item.icon" />
-      </v-list-item-icon>
-      <v-list-item-content>
-        <v-list-item-title>
-          {{ $t(item.key) }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-
   </v-navigation-drawer>
 </template>
 <script>
 export default {
   name: 'vehicle-dashboard-toc',
   data: () => ({
+    mini: true,
     dashboard_items: [
       {
         key: 'vehicle_dashboard.vehicle_and_driver',

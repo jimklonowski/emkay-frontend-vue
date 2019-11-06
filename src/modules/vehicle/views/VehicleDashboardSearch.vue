@@ -2,7 +2,7 @@
   <v-container fill-height>
     <v-row justify="center">
       <v-col cols="12">
-        <v-form @submit.prevent="onSubmit">
+        <v-form @submit.prevent.stop="onSubmit">
           <v-card color="primary lighten-2" class="pt-12 pb-6 px-12" dark>
             <!-- <v-text-field v-model="vehicle" :loading="loading" v-bind="schema.vehicle" @click:append-outer="search" /> -->
             <v-card-title class="title">Vehicle Search</v-card-title>
@@ -23,8 +23,19 @@
                 :label="$t('common.search')"
                 filled
                 outlined
+                @keydown.enter.native.prevent="onSubmit"
                 :menu-props="{ 'nudgeBottom': 10, 'maxHeight': 360 }"
               >
+                <template #progress>
+                  <v-progress-linear
+                    color="warning lighten-2"
+                    :buffer-value="0"
+                    height="4"
+                    absolute
+                    indeterminate
+                    stream
+                  />
+                </template>
                 <template #no-data>
                   <v-list-item>
                     <v-list-item-title v-t="'vehicle_dashboard.search_placeholder'" />
