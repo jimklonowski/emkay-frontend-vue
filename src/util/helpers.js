@@ -1,3 +1,4 @@
+import moment from 'moment'
 import i18n from '@/plugins/i18n'
 import { helpers } from 'vuelidate/lib/validators'
 
@@ -8,12 +9,15 @@ export const isLength = length => value => helpers.len(value) === length
 
 /**
  * Check if date is in the past
+ * @param {Date} date
+ */
+export const isPastDate = date => moment(date).isBefore(new Date(), 'day')
+
+/**
+ * Return true if Date is today or later
  * @param {Date} date 
  */
-export const isPastDate = date => {
-  const today = new Date()
-  return date <= today
-}
+export const notInThePast = date => !isPastDate(date)
 
 /**
  * 

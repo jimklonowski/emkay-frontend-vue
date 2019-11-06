@@ -1,4 +1,8 @@
 {
+  "transtor": {
+    "delivery_postal_code": "Delivery Postal Code",
+    "pickup_postal_code": "Pickup Postal Code"
+  },
   "validation": {
     "city_state_province_required_if_no_postal_code": "City/Province is required if no Postal Code",
     "postal_code_required_if_no_city_state_province": "Postal Code is required if no City/Province"

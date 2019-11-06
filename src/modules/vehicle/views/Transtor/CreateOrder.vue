@@ -23,21 +23,21 @@
                   <v-col cols="12" sm="6">
                     <v-radio-group v-model="model.transtor_type" v-bind="schema.transtor_type">
                       <template #label>
-                        {{ $t('vehicle_dashboard.transtor_type') }}
+                        {{ $t('transtor.transtor_type') }}
                       </template>
                       <v-radio value="transport">
                         <template #label>
-                          {{ $t('vehicle_dashboard.transport') }}
+                          {{ $t('transtor.transport_this_vehicle') }}
                         </template>
                       </v-radio>
                       <v-radio value="storage">
                         <template #label>
-                          {{ $t('vehicle_dashboard.storage') }}
+                          {{ $t('transtor.store_this_vehicle') }}
                         </template>
                       </v-radio>
                       <v-radio value="transport-out-of-storage">
                         <template #label>
-                          {{ $t('vehicle_dashboard.transport_out_of_storage') }}
+                          {{ $t('transtor.transport_out_of_storage') }}
                         </template>
                       </v-radio>
                     </v-radio-group>
@@ -45,16 +45,16 @@
                   <v-col cols="12" sm="6">
                     <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
                       <template #label>
-                        {{ $t('vehicle_dashboard.transport_method') }}
+                        {{ $t('transtor.transport_method') }}
                       </template>
                       <v-radio value="driven">
                         <template #label>
-                          {{ $t('vehicle_dashboard.driven') }}
+                          {{ $t('transtor.driven') }}
                         </template>
                       </v-radio>
                       <v-radio value="trucked">
                         <template #label>
-                          {{ $t('vehicle_dashboard.trucked') }}
+                          {{ $t('transtor.trucked') }}
                         </template>
                       </v-radio>
                     </v-radio-group>
@@ -245,9 +245,9 @@
 </template>
 
 <script>
-//import TranstorVehicle from '@/modules/vehicle/components/TranstorVehicle'
+import moment from 'moment'
 import { email, required } from 'vuelidate/lib/validators'
-import { translateError } from '@/util/helpers'
+import { notInThePast, translateError } from '@/util/helpers'
 export default {
   //components: { TranstorVehicle },
   props: ['vehicle','quote'],
@@ -262,22 +262,22 @@ export default {
     steps: [
       {
         step: 1,
-        key: 'vehicle_dashboard.authorization_detail',
+        key: 'transtor.authorization_detail',
         errors: null
       },
       {
         step: 2,
-        key: 'vehicle_dashboard.pickup_information',
+        key: 'transtor.pickup_information',
         errors: null
       },
       {
         step: 3,
-        key: 'vehicle_dashboard.delivery_information',
+        key: 'transtor.delivery_information',
         errors: null
       },
       {
         step: 4,
-        key: 'vehicle_dashboard.additional_services',
+        key: 'transtor.additional_services',
         errors: null
       }
     ],
@@ -324,11 +324,11 @@ export default {
     schema() {
       return {
         transtor_type: {
-          label: this.$t('vehicle_dashboard.transtor_type'),
+          label: this.$t('transtor.transtor_type'),
           errorMessages: this.transtorTypeErrors()
         },
         transport_method: {
-          label: this.$t('vehicle_dashboard.transport_method'),
+          label: this.$t('transtor.transport_method'),
           errorMessages: this.transportMethodErrors()
         },
         requested_pickup_date: {
@@ -628,24 +628,27 @@ export default {
       const errors = []
       if (!this.$v.model.requested_delivery_date.$dirty) return errors
       !this.$v.model.requested_delivery_date.required && errors.push(this.translateError('validation.required', 'dates.requested_delivery_date'))
+      !this.$v.model.requested_delivery_date.notInThePast && errors.push(this.translateError('validation.not_past_date', 'dates.requested_delivery_date'))
+      !this.$v.model.requested_delivery_date.notBeforePickup && errors.push(this.translateError('validation.not_before_pickup_date', 'dates.requested_delivery_date'))
       return errors
     },
     requestedPickupDateErrors() {
       const errors = []
       if (!this.$v.model.requested_pickup_date.$dirty) return errors
       !this.$v.model.requested_pickup_date.required && errors.push(this.translateError('validation.required', 'dates.requested_pickup_date'))
+      !this.$v.model.requested_pickup_date.notInThePast && errors.push(this.translateError('validation.not_past_date', 'dates.requested_pickup_date'))
       return errors
     },
     transportMethodErrors() {
       const errors = []
       if (!this.$v.model.transport_method.$dirty) return errors
-      !this.$v.model.transport_method.required && errors.push(this.translateError('validation.required', 'vehicle_dashboard.transport_method'))
+      !this.$v.model.transport_method.required && errors.push(this.translateError('validation.required', 'transtor.transport_method'))
       return errors
     },
     transtorTypeErrors() {
       const errors = []
       if (!this.$v.model.transtor_type.$dirty) return errors
-      !this.$v.model.transtor_type.required && errors.push(this.translateError('validation.required', 'vehicle_dashboard.transtor_type'))
+      !this.$v.model.transtor_type.required && errors.push(this.translateError('validation.required', 'transtor.transtor_type'))
       return errors
     },
     deliveryContactNameErrors() {
@@ -783,8 +786,17 @@ export default {
       //step 1
       transport_method: { required },
       transtor_type: { required },
-      requested_pickup_date: { required },
-      requested_delivery_date: { required },
+      requested_pickup_date: { 
+        required,
+        notInThePast
+      },
+      requested_delivery_date: {
+        required,
+        notInThePast,
+        notBeforePickup: function(value) {
+          return moment(value).isSameOrAfter(this.model.requested_pickup_date)
+        }
+      },
       // step2: pickup information
       pickup_contact_name: { required },
       pickup_address_type: { required },

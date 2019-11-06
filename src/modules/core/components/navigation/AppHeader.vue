@@ -1,8 +1,8 @@
 <template>
-  <nav>
+  <header>
     <system-bar />
     <app-bar v-if="isAuthenticated" :items="items" />
-  </nav>
+  </header>
 </template>
 
 <script>

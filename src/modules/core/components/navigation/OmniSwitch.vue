@@ -83,7 +83,7 @@ export default {
     //...mapMutations('auth',['setIsDark','setLocale']),
     logout() {
       this.$store.dispatch('auth/logout').then(() => {
-        console.log(this.$store)
+        //console.log(this.$store)
         this.$router.push({ name: 'home'}).catch(() => {})
       })
     }

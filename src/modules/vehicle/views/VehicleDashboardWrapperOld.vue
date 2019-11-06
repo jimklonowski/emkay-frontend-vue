@@ -1,6 +1,6 @@
 <template>
-  <section v-if="!$route.params.vehicle" :style="$vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
-    <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:100px;" height="48" />
+  <section v-if="!$route.params.vehicle">
+    <!-- <v-sheet color="transparent" elevation="0" tile style="position:sticky;top:100px;" height="48" /> -->
     <v-container>
       <v-row>
         <v-breadcrumbs :items="breadcrumbs" />
@@ -10,10 +10,10 @@
       </v-row>
     </v-container>
   </section>
-  <section v-else>
+  <div v-else>
     <vehicle-navigation />
     <router-view />
-  </section>
+  </div>
 </template>
 
 <script>
@@ -31,13 +31,15 @@ export default {
     search() {
       this.loading = true
       if (this.vehicle) {
-        this.$router.push({ name: 'dashboard', params: { vehicle: this.vehicle }})
+        this.$router.push({ name: 'vehicle-dashboard-details', params: { vehicle: this.vehicle }})
       }
       this.loading = false
     }
   },
   computed: {
     breadcrumbs() {
+      //debugger
+      
       return [
         {
           text: this.$t('vehicle_dashboard.vehicle_search'),

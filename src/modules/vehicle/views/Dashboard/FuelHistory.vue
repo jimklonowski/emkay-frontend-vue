@@ -1,68 +1,66 @@
 <template>
-  <article>
-    <v-card :loading="loading">
-      <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
-        <toolbar-title v-bind="title" />
-        <v-spacer />
-        <v-text-field
-          v-model="search"
-          class="font-weight-regular"
-          append-icon="search"
-          :label="$t('common.search')"
-          single-line
-          hide-details
-          dark
-        />
+  <v-card :loading="loading">
+    <v-toolbar :class="$config.TOOLBAR_CLASS" dark>
+      <toolbar-title v-bind="title" />
+      <v-spacer />
+      <v-text-field
+        v-model="search"
+        class="font-weight-regular"
+        append-icon="search"
+        :label="$t('common.search')"
+        single-line
+        hide-details
+        dark
+      />
 
-        <toolbar-menu :actions="actions">
-          <template #actions>
-            <v-list-item link>
-              <v-list-item-icon>
-                <v-icon v-text="'cloud_download'" />
-              </v-list-item-icon>
-                <v-list-item-content>
-                  <!-- export as excel button -->
-                  <v-list-item-title>
-                    <json-excel v-t="'common.export_to_excel'" :fields="getHeaders" :data="fuel_history" :name="getName" />
-                  </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-          </template>
-        </toolbar-menu>
+      <toolbar-menu :actions="actions">
+        <template #actions>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon v-text="'cloud_download'" />
+            </v-list-item-icon>
+              <v-list-item-content>
+                <!-- export as excel button -->
+                <v-list-item-title>
+                  <json-excel v-t="'common.export_to_excel'" :fields="getHeaders" :data="fuel_history" :name="getName" />
+                </v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
+        </template>
+      </toolbar-menu>
 
-      </v-toolbar>
-      <v-divider />
-      <v-card-text class="pa-0">
-        <v-data-table
-          :headers="headers"
-          :items="fuel_history"
-          :items-per-page="10"
-          :search="search"
-          :sort-by="['date']"
-          :sort-desc="[true]"
-          :loading="loading"
-          class="striped"
-          dense
+    </v-toolbar>
+    <v-divider />
+    <v-card-text class="pa-0">
+      <v-data-table
+        :headers="headers"
+        :items="fuel_history"
+        :items-per-page="10"
+        :search="search"
+        :sort-by="['date']"
+        :sort-desc="[true]"
+        :loading="loading"
+        class="striped"
+        height="auto"
+      >
+        <template #loading>
+          <v-skeleton-loader type="table-tbody" tile />
+        </template>
+        <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
+          https://github.com/vuetifyjs/vuetify/issues/8571#issuecomment-524846520
+        -->
+        <template
+          v-for="header in headers"
+          v-slot:[`header.${header.value}`]="{ header }"
         >
-          <template #loading>
-            <v-skeleton-loader type="table-tbody" tile />
-          </template>
-          <!-- using i18n on the fly is tedious for column headers currently, but this dynamic solution works:
-            https://github.com/vuetifyjs/vuetify/issues/8571#issuecomment-524846520
-          -->
-          <template
-            v-for="header in headers"
-            v-slot:[`header.${header.value}`]="{ header }"
-          >
-            {{ $t(header.key) }}
-          </template>
-          <template v-slot:item.type="{ item }">
-            <v-chip :color="getColor(item.type)" x-small v-text="item.type" />
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card>
-  </article>
+          {{ $t(header.key) }}
+        </template>
+        <template v-slot:item.type="{ item }">
+          <v-chip :color="getColor(item.type)" x-small v-text="item.type" />
+        </template>
+      </v-data-table>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

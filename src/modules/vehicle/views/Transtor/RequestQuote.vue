@@ -2,7 +2,7 @@
   <div>
     <v-card elevation="1" tile>
       <v-toolbar flat>
-        <v-toolbar-title>{{ $t('vehicle_dashboard.request_quote') }}</v-toolbar-title>
+        <v-toolbar-title>{{ $t('transtor.request_quote') }}</v-toolbar-title>
       </v-toolbar>
       <!-- <v-card-title class="display-2 font-weight-light justify-center">{{ $t('vehicle_dashboard.request_quote') }}</v-card-title> -->
       <v-form @submit.prevent="requestQuote">
@@ -12,16 +12,16 @@
               <v-col cols="12">
                 <v-radio-group v-model="model.transport_method" v-bind="schema.transport_method">
                   <template #label>
-                    {{ $t('vehicle_dashboard.transport_method') }}
+                    {{ $t('transtor.transport_method') }}
                   </template>
                   <v-radio value="driven">
                     <template #label>
-                      {{ $t('vehicle_dashboard.driven') }}
+                      {{ $t('transtor.driven') }}
                     </template>
                   </v-radio>
                   <v-radio value="trucked">
                     <template #label>
-                      {{ $t('vehicle_dashboard.trucked') }}
+                      {{ $t('transtor.trucked') }}
                     </template>
                   </v-radio>
                 </v-radio-group>
@@ -29,12 +29,12 @@
             </v-row>
             <v-row>
               <v-col cols="12" lg="6">
-                <v-label>Origin</v-label>
+                <v-label>{{ $t('transtor.origin') }}</v-label>
                 <v-row>
-                  <v-col cols="9" md="5">
+                  <v-col cols="12" md="5">
                     <v-text-field v-bind="schema.origin_city" v-model="model.origin_city" />
                   </v-col>
-                  <v-col cols="3" md="3">
+                  <v-col cols="7" md="3">
                     <v-text-field v-bind="schema.origin_state_province" v-model="model.origin_state_province" />
                   </v-col>
                   <v-col cols="5" md="4">
@@ -43,12 +43,12 @@
                 </v-row>
               </v-col>
               <v-col cols="12" lg="6">
-                <v-label>Destination</v-label>
+                <v-label>{{ $t('transtor.destination') }}</v-label>
                 <v-row>
-                  <v-col cols="9" md="5">
+                  <v-col cols="12" md="5">
                     <v-text-field v-bind="schema.destination_city" v-model="model.destination_city" />
                   </v-col>
-                  <v-col cols="3" md="3">
+                  <v-col cols="7" md="3">
                     <v-text-field v-bind="schema.destination_state_province" v-model="model.destination_state_province" />
                   </v-col>
                   <v-col cols="5" md="4">
@@ -61,7 +61,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn type="submit" color="primary lighten-2" :loading="loading">{{$t('vehicle_dashboard.request_quote')}}</v-btn>
+          <v-btn type="submit" color="primary lighten-2" :loading="loading">{{$t('transtor.request_quote')}}</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -104,7 +104,7 @@ export default {
     schema() {
       return {
         transport_method: {
-          label: this.$t('vehicle_dashboard.transport_method'),
+          label: this.$t('transtor.transport_method'),
           errorMessages: this.transportMethodErrors()
 
         },
@@ -181,7 +181,7 @@ export default {
     transportMethodErrors() {
       const errors = []
       if (!this.$v.model.transport_method.$dirty) return errors
-      !this.$v.model.transport_method.required && errors.push(this.translateError('validation.required', 'vehicle_dashboard.transport_method'))
+      !this.$v.model.transport_method.required && errors.push(this.translateError('validation.required', 'transtor.transport_method'))
       return errors
     },
     originCityErrors() {

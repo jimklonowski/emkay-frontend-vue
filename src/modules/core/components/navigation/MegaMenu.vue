@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-card
-      light
+      dark
+      color="primary lighten-2"
       outlined
       :style="{
         position: 'fixed',

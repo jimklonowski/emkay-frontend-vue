@@ -1,12 +1,20 @@
 <template>
   <v-expansion-panels v-model="panel">
     <v-expansion-panel>
-      <v-expansion-panel-header>
-        <v-subheader>
-          <v-icon color="info" class="mr-4">info</v-icon>
-          {{ $t('vehicle_dashboard.vehicle_information') }}
-          <!-- Transport/Storage for {{this.vehicle_summary.vehicle_description}} -->
-        </v-subheader>
+      <v-expansion-panel-header v-slot="{ open }">
+        <v-row no-gutters>
+          <v-col cols="auto">
+            <v-subheader>
+              <v-icon color="info lighten-1" class="mr-4">info</v-icon>
+              {{ $t('vehicle_dashboard.vehicle_information') }}
+            </v-subheader>
+          </v-col>
+          <v-col cols="auto">
+            <v-fade-transition leave-absolute v-if="!open">
+              <v-subheader>{{ vehicle_summary.vehicle_description }}</v-subheader>
+            </v-fade-transition>
+          </v-col>
+        </v-row>
       </v-expansion-panel-header>
       <v-divider />
       <v-expansion-panel-content>
@@ -120,7 +128,7 @@
 <script>
 export default {
   data: () => ({
-    panel: [],
+    panel: 0,
     loading: false,
     showAvatars: false,
     vehicle_summary: {

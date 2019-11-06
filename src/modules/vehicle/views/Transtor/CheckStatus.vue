@@ -4,15 +4,9 @@
     <v-data-table :headers="headers" :items="items" :loading="loading" disable-sort disable-pagination hide-default-footer>
       <template #top>
         <v-toolbar flat>
-          <v-toolbar-title>Pending Transports</v-toolbar-title>
-          <v-spacer />
-          <!-- <v-btn>
-            <v-icon>add</v-icon>
-            New Order
-          </v-btn> -->
+          <v-toolbar-title>{{ $t('transtor.pending_orders') }}</v-toolbar-title>
         </v-toolbar>
       </template>
-
 
       <template #loading>
         <v-skeleton-loader type="table-row-divider" tile />

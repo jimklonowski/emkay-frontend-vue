@@ -1,4 +1,4 @@
-const SYSTEM_BAR_CLASS = 'primary darken-3'
+const SYSTEM_BAR_CLASS = 'secondary darken-2'
 const APP_BAR_CLASS = 'primary darken-1'
 const TOOLBAR_CLASS = 'primary elevation-0'
 const LOGIN_BAR_CLASS = 'primary white--text font-weight-black text-uppercase'

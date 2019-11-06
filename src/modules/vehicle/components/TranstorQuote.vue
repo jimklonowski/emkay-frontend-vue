@@ -4,7 +4,7 @@
       <v-col cols="12" md="6">
         <v-card elevation="2">
           <v-toolbar elevation="0">
-            <v-toolbar-title class="display-1 font-weight-light justify-center">Your Quote</v-toolbar-title>
+            <v-toolbar-title class="display-1 font-weight-light justify-center">{{ $t('transtor.your_quote') }}</v-toolbar-title>
           </v-toolbar>
           <v-divider />
           <v-row>

@@ -1,155 +1,96 @@
 <template>
-  <section :style="this.$route.meta.toc && $vuetify.breakpoint.mdAndUp ? 'padding-right:200px' : ''">
+  <div class="d-flex" :style="this.$route.meta.toc ? 'padding-left:300px' : ''">
     <v-container>
-      <v-row>
-        <v-breadcrumbs :items="breadcrumbs" />
-      </v-row>
-      <v-row>
-        <component
-          :is="section.component"
-          v-for="(section, index) in widgets"
-          :id="section.id"
-          :key="index"
-          :vehicle="$route.params.vehicle"
-          :class="section.class"
-        />
-      </v-row>
+      <breadcrumb-row />
+      <v-scroll-y-transition mode="out-in">
+        <router-view />
+      </v-scroll-y-transition>
     </v-container>
-    <v-navigation-drawer
-      right
-      floating
-      clipped
-      fixed
-      permanent
-      width="200"
-      color="transparent"
-      class="overflow-hidden align-center hidden-sm-and-down"
-      style="top:148px;"
-    >
-      <table-of-contents :toc-items="widgets" />
-    </v-navigation-drawer>
-  </section>
+    <vehicle-dashboard-toc />
+  </div>
 </template>
 
 <script>
-import TableOfContents from '@/modules/core/components/TableOfContents'
-import VehicleDetails from '@/modules/vehicle/components/VehicleDetails'
-import DriverDetails from '@/modules/vehicle/components/DriverDetails'
-import FuelHistory from '@/modules/vehicle/components/datatables/FuelHistory'
-import MaintenanceHistory from '@/modules/vehicle/components/datatables/MaintenanceHistory'
-import InvoiceHistory from '@/modules/vehicle/components/datatables/InvoiceHistory'
-import LicensingHistory from '@/modules/vehicle/components/datatables/LicensingHistory'
-import AccidentHistory from '@/modules/vehicle/components/datatables/AccidentHistory'
-import RentalHistory from '@/modules/vehicle/components/datatables/RentalHistory'
-import TollHistory from '@/modules/vehicle/components/datatables/TollHistory'
-import ViolationHistory from '@/modules/vehicle/components/datatables/ViolationHistory'
-import OdometerHistory from '@/modules/vehicle/components/datatables/OdometerHistory'
-import DriverHistory from '@/modules/vehicle/components/datatables/DriverHistory'
-import VehicleNotes from '@/modules/vehicle/components/datatables/VehicleNotes'
-
+//import VehicleSearch from '@/modules/vehicle/views/VehicleSearch'
+import BreadcrumbRow from '@/modules/core/components/navigation/BreadcrumbRow'
+import VehicleDashboardToc from '@/modules/vehicle/components/VehicleDashboardToc'
 export default {
-  name: 'dashboard',
-  components: {
-    TableOfContents,
-    VehicleDetails,
-    DriverDetails,
-    FuelHistory,
-    MaintenanceHistory,
-    InvoiceHistory,
-    LicensingHistory,
-    AccidentHistory,
-    RentalHistory,
-    TollHistory,
-    ViolationHistory,
-    OdometerHistory,
-    DriverHistory,
-    VehicleNotes
-  },
+  components: { BreadcrumbRow, VehicleDashboardToc },
   data: () => ({
-    vehicle: '',
-    items: [
-      {
-        key: 'vehicle_dashboard.vehicle_details',
-        class: 'pa-5 col-lg-6',
-        component: VehicleDetails
-      },
-      {
-        key: 'vehicle_dashboard.driver_details',
-        class: 'pa-5 col-lg-6',
-        component: DriverDetails
-      },
-      {
-        key: 'vehicle_dashboard.fuel_history',
-        class: 'pa-5 col-12',
-        component: FuelHistory
-      },
-      {
-        key: 'vehicle_dashboard.maintenance_history',
-        class: 'pa-5 col-12',
-        component: MaintenanceHistory
-      },
-      {
-        key: 'vehicle_dashboard.invoice_history',
-        class: 'pa-5 col-12',
-        component: InvoiceHistory
-      },
-      {
-        key: 'vehicle_dashboard.licensing_history',
-        class: 'pa-5 col-12',
-        component: LicensingHistory
-      },
-      {
-        key: 'vehicle_dashboard.accident_history',
-        class: 'pa-5 col-12',
-        component: AccidentHistory
-      },
-      {
-        key: 'vehicle_dashboard.rental_history',
-        class: 'pa-5 col-12',
-        component: RentalHistory
-      },
-      {
-        key: 'vehicle_dashboard.toll_history',
-        class: 'pa-5 col-12',
-        component: TollHistory
-      },
-      {
-        key: 'vehicle_dashboard.violation_history',
-        class: 'pa-5 col-lg-6',
-        component: ViolationHistory
-      },
-      {
-        key: 'vehicle_dashboard.odometer_history',
-        class: 'pa-5 col-lg-6',
-        component: OdometerHistory
-      },
-      {
-        key: 'vehicle_dashboard.driver_history',
-        class: 'pa-5 col-lg-6',
-        component: DriverHistory
-      },
-      {
-        key: 'vehicle_dashboard.vehicle_notes',
-        class: 'pa-5 col-lg-6',
-        component: VehicleNotes
-      }
-    ]
+    vehicle: ''
+    // items: [
+    //   {
+    //     key: 'vehicle_dashboard.vehicle_and_driver',
+    //     to: { name: 'vehicle-dashboard-details' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.fuel_history',
+    //     to: { name: 'vehicle-dashboard-fuel' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.maintenance_history',
+    //     to: { name: 'vehicle-dashboard-maintenance' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.invoice_history',
+    //     to: { name: 'vehicle-dashboard-invoice' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.licensing_history',
+    //     to: { name: 'vehicle-dashboard-licensing' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.accident_history',
+    //     to: { name: 'vehicle-dashboard-accident' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.rental_history',
+    //     to: { name: 'vehicle-dashboard-rentals' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.toll_history',
+    //     to: { name: 'vehicle-dashboard-tolls' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.violation_history',
+    //     to: { name: 'vehicle-dashboard-violations' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.odometer_history',
+    //     to: { name: 'vehicle-dashboard-odometers' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.driver_history',
+    //     to: { name: 'vehicle-dashboard-drivers' }
+    //   },
+    //   {
+    //     key: 'vehicle_dashboard.vehicle_notes',
+    //     to: { name: 'vehicle-dashboard-notes' }
+    //   }
+    // ]
   }),
+  beforeCreate() {
+    //debugger
+  },
   computed: {
-    breadcrumbs() {
-      return [
-        {
-          text: this.$t('vehicle_dashboard.vehicle_search'),
-          disabled: false,
-          exact: true,
-          to: { name: 'vehicle-dashboard' }
-        },
-        {
-          text: this.$route.params.vehicle,
-          disabled: true
-        }
-      ]
-    },
+    // breadcrumbs() {
+    //   let currentPaths = this.$route.path.split("/")
+    //   currentPaths.shift() // first path is empty /, so omit it from array
+    //   let self = this
+    //   let crumbs = []
+    //   currentPaths.forEach(function(path, index) {
+    //     //console.log(path)
+    //     let breadcrumb = self.$route.matched[index].meta.breadcrumb
+    //     crumbs.push({
+    //       exact: true,
+    //       text: breadcrumb.useParam ? self.$route.params.vehicle : self.$t(breadcrumb.key),
+    //       to: breadcrumb.path,
+    //       disabled: self.$route.name === self.$route.matched[index].name
+    //     })
+    //   })
+    //   //debugger
+    //   return crumbs
+    // },
     styleObject() {
       return this.$route.meta.toc ? 'padding-right:200px' : ''
     },
@@ -162,5 +103,23 @@ export default {
 </script>
 
 <style>
+.toc {
+  list-style-type: none;
+}
+.toc li a {
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 16px;
+  transition: color 0.1s ease-in;
+  color: currentColor;
+}
 
+.toc-item {
+  color: #9E9E9E !important;
+  display:block;
+}
+.toc-item.router-link-active {
+  color: #4F286C !important;
+  border-left: 2px solid;
+}
 </style>

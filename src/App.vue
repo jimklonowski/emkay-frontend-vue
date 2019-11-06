@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-navigation />
+    <app-header />
     <v-content class="content-wrap">
       <router-view />
       <modals-container />
@@ -12,7 +12,7 @@
 
 <script>
 import AppFooter from '@/modules/core/components/navigation/AppFooter'
-import AppNavigation from '@/modules/core/components/navigation/AppNavigation'
+import AppHeader from '@/modules/core/components/navigation/AppHeader'
 import FabScrollTop from '@/modules/core/components/navigation/FabScrollTop'
 import ModalsContainer from 'vue-js-modal/src/ModalsContainer'
 
@@ -20,7 +20,7 @@ export default {
   name: 'App',
   components: {
     AppFooter,
-    AppNavigation,
+    AppHeader,
     FabScrollTop,
     ModalsContainer
   }

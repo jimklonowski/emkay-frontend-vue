@@ -1,10 +1,11 @@
 <template>
   <v-app-bar
+    app
     tile
     dense
-    absolute
     elevation="2"
-    style="position:sticky;top:100px;z-index:4;"
+    fixed
+    style="top:64px;z-index:4;"
     tag="nav"
   >
     <v-tabs color="primary lighten-3">
@@ -33,7 +34,7 @@ export default {
     items: [
       {
         key: 'vehicle_dashboard.dashboard',
-        to: { name: 'dashboard' },
+        to: { name: 'vehicle-dashboard-details' },
         meta: {
           // allow this route to be taken without a vehicle parameter (shows the search route)
           allowNoParam: true
@@ -55,7 +56,7 @@ export default {
         meta: {}
       },
       {
-        key: 'vehicle_dashboard.transport_storage',
+        key: 'transtor.transports_and_storage',
         to: { name: 'transtor-status' },
         meta: {}
       }

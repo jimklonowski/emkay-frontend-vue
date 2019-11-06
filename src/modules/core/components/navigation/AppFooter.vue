@@ -2,7 +2,7 @@
   <v-footer dark>
     <v-container>
       <v-row justify="center">
-        <v-col v-for="(category, i) in categories" :key="i" cols="12" sm="4" lg="2" class="justify-center">
+        <v-col v-for="(category, i) in categories" :key="i" cols="12" sm="4" lg="2" :class="category.class">
           <div class="overline mb-2">
             {{ $t(category.key) }}
           </div>
@@ -28,6 +28,7 @@ export default {
     categories: [
       {
         key: 'navigation.about',
+        class: 'text-left',
         items: [
           {
             key: 'navigation.about_emkay'
@@ -45,6 +46,7 @@ export default {
       },
       {
         key: 'navigation.more',
+        class: 'text-center',
         items: [
           {
             key: 'navigation.press_releases'
@@ -62,6 +64,7 @@ export default {
       },
       {
         key: 'navigation.technology',
+        class: 'text-right',
         items: [
           {
             key: 'navigation.celsius'
