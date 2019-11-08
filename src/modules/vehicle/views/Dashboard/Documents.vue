@@ -6,7 +6,7 @@
       <v-text-field
         v-model="search"
         class="font-weight-regular"
-        append-icon="search"
+        append-icon="mdi-magnify"
         :label="$t('common.search')"
         single-line
         hide-details

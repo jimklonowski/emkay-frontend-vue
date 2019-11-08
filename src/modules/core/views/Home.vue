@@ -1,19 +1,22 @@
 <template>
-  <v-container fluid fill-height>
-    <v-row justify="center">
-      <v-alert v-if="isAuthenticated" type="warning" min-width="500" outlined prominent border="left">
+  <v-container class="road-hero" fluid fill-height>
+    <v-img :src="require('@/assets/logodark.png')" height="50" contain style="position:absolute;top:50px;left:0;right:0;opacity:0.2;" />
+    <v-row v-if="isAuthenticated" justify="center">
+      <v-alert type="warning" min-width="800" prominent border="left">
         <h3 class="headling">User is authenticated!</h3>
-        <v-divider class="my-4 warning" style="opacity:0.22;" />
-        <div><strong>Account</strong>: {{ currentUser.account }}</div>
-        <div><strong>Username</strong>: {{ currentUser.username }}</div>
-        <div><strong>Admin</strong>: {{ isAdmin }}</div>
-        <div><strong>Language</strong>: {{ currentLocale }}</div>
-        <div><strong>Dark</strong>: {{ isDark }}</div>
+        <v-divider class="my-4" />
+        <v-row>
+          <v-col><strong>Account</strong>: {{ currentUser.account }}</v-col>
+          <v-col><strong>Username</strong>: {{ currentUser.username }}</v-col>
+          <v-col><strong>Admin</strong>: {{ isAdmin }}</v-col>
+          <v-col><strong>Language</strong>: {{ currentLocale }}</v-col>
+          <v-col><strong>Dark</strong>: {{ isDark }}</v-col>
+        </v-row>
       </v-alert>
-      <template v-else>
-        <login-form v-if="!needsHelp" @update="toggleHelp" />
-        <login-help-form v-else @update="toggleHelp" />
-      </template>
+    </v-row>
+    <v-row v-else justify="center">
+      <login-form v-if="!needsHelp" @update="toggleHelp" />
+      <login-help-form v-else @update="toggleHelp" />
     </v-row>
   </v-container>
 </template>
@@ -45,5 +48,18 @@ export default {
 </script>
 
 <style>
-
+.road-hero::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(~@/assets/road.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  opacity: 0.5;
+}
 </style>

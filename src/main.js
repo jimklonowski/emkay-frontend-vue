@@ -16,7 +16,7 @@ Vue.use(VModal, {
   dialog: true,
   dynamic: true,
   //injectModalsContainer: true,
-  dynamicDefaults: {}
+  dynamicDefaults: {} // need to fix https://github.com/euvl/vue-js-modal/pull/445
 })
 
 // validation

@@ -4,8 +4,8 @@
       <v-toolbar :color="toolbarColor" :class="$config.TOOLBAR_CLASS" dark>
         <toolbar-title v-bind="title" />
         <v-spacer />
-        <v-btn large icon tile dark @click.prevent="$emit('close')">
-          <v-icon v-text="'close'" />
+        <v-btn large icon dark @click.prevent="$emit('close')">
+          <v-icon v-text="'mdi-close'" />
         </v-btn>
       </v-toolbar>
       <v-card-text class="pa-0">

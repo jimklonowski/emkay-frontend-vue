@@ -1,69 +1,59 @@
 <template>
-  <v-container fill-height>
+  <v-container class="search-hero" fluid fill-height>
+    <v-img :src="require('@/assets/logolight.png')" height="50" contain style="position:absolute;top:50px;left:0;right:0;opacity:0.6;" />
     <v-row justify="center">
-      <v-col cols="12">
-        <v-form @submit.prevent.stop="onSubmit">
-          <v-card color="primary lighten-2" class="pt-12 pb-6 px-12" dark>
-            <!-- <v-text-field v-model="vehicle" :loading="loading" v-bind="schema.vehicle" @click:append-outer="search" /> -->
-            <v-card-title class="title">Vehicle Search</v-card-title>
-            <v-card-text>
-              <v-autocomplete
-                v-model="selection"
-                autocomplete="off"
-                :loading="loading"
-                :items="items"
-                :search-input.sync="query"
-                item-value="vehicle_number"
-                item-text="description"
-                no-filter
-                class="mx-4"
-                color="white"
-                clearable
-                return-object
-                :label="$t('common.search')"
-                filled
-                outlined
-                @keydown.enter.native.prevent="onSubmit"
-                :menu-props="{ 'nudgeBottom': 10, 'maxHeight': 360 }"
-              >
-                <template #progress>
-                  <v-progress-linear
-                    color="warning lighten-2"
-                    :buffer-value="0"
-                    height="4"
-                    absolute
-                    indeterminate
-                    stream
-                  />
-                </template>
-                <template #no-data>
-                  <v-list-item>
-                    <v-list-item-title v-t="'vehicle_dashboard.search_placeholder'" />
-                  </v-list-item>
-                </template>
-                <template #selection="data">
-                  {{ data.item.vehicle_number }}
-                </template>
-                <template #item="data">
-                  <v-list-item-avatar tile color="primary lighten-2" :size="60">
-                    <span class="white--text">{{ data.item.vehicle_number }}</span>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title v-text="data.item.description" />
-                    <v-list-item-subtitle v-text="data.item.driver_name" />
-                  </v-list-item-content>
-                </template>
-                <template #append-outer>
-                  <v-btn type="submit" text tile>
-                    <v-icon v-text="'search'" />
-                  </v-btn>
-                  <!-- <v-btn type="submit" v-t="'common.search'" /> -->
-                </template>
-              </v-autocomplete>
-            </v-card-text>
-          </v-card>
-        </v-form>
-      </v-col>
+      <v-form @submit.prevent.stop="onSubmit">
+        <v-autocomplete
+          v-model="selection"
+          autocomplete="off"
+          :label="$t('common.search')"
+          :loading="loading"
+          :items="items"
+          item-value="vehicle_number"
+          item-text="description"
+          :search-input.sync="query"
+          :style="{ 'minWidth': '800px' }"
+          clearable
+          solo
+          hide-details
+          no-filter
+          return-object
+          full-width
+          append-outer-icon="mdi-search-web"
+          @change="onSubmit"
+          @click:append-outer="onSubmit"
+          @keydown.enter.native.prevent="onSubmit"
+          :menu-props="{ 'nudgeBottom': 10, 'maxHeight': 360 }"
+        >
+          <template #progress>
+            <v-progress-linear
+              color="warning lighten-2"
+              :buffer-value="0"
+              height="5"
+              absolute
+              indeterminate
+              stream
+            />
+          </template>
+          <template #no-data>
+            <v-list-item dense>
+              <v-list-item-title v-t="'vehicle_dashboard.vehicle_search_placeholder'" />
+            </v-list-item>
+          </template>
+          <template #selection="data">
+            {{ data.item.vehicle_number }}
+          </template>
+          <template #item="data">
+            <v-list-item-avatar tile color="primary lighten-2" :size="60">
+              <span class="white--text">{{ data.item.vehicle_number }}</span>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-text="data.item.description" />
+              <v-list-item-subtitle v-text="data.item.driver_name" />
+            </v-list-item-content>
+          </template>
+        </v-autocomplete>
+      </v-form>
     </v-row>
   </v-container>
 </template>
@@ -78,9 +68,10 @@ export default {
     selection: null
   }),
   watch: {
-    async query (newVal, oldVal) {
-      if (newVal === oldVal) return
-      if (!newVal) return
+    //async query (newVal, oldVal) {
+    async query () {
+      //if (!newVal) return
+      //if (newVal === oldVal) return
 
       // items have already been requested
       if (this.loading) return
@@ -109,7 +100,7 @@ export default {
       this.loading = true
       if (this.selection && this.selection.vehicle_number) {
         //this.$router.push({ name: 'vehicle-dashboard', params: { vehicle: this.selection.vehicle_number }})
-        this.$router.push({ name: 'vehicle-dashboard', params: { vehicle: '123456' }})
+        this.$router.push({ name: 'vehicle-dashboard', params: { vehicle: this.selection.vehicle_number }})
       }
       this.loading = false
     }
@@ -141,3 +132,19 @@ export default {
   }
 }
 </script>
+<style>
+.search-hero::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(~@/assets/desertroad.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  opacity: 0.5;
+}
+</style>

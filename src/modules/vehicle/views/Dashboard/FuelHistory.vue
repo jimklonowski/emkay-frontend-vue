@@ -6,7 +6,7 @@
       <v-text-field
         v-model="search"
         class="font-weight-regular"
-        append-icon="search"
+        append-icon="mdi-magnify"
         :label="$t('common.search')"
         single-line
         hide-details
@@ -17,7 +17,7 @@
         <template #actions>
           <v-list-item link>
             <v-list-item-icon>
-              <v-icon v-text="'cloud_download'" />
+              <v-icon v-text="'mdi-cloud-download'" />
             </v-list-item-icon>
               <v-list-item-content>
                 <!-- export as excel button -->
@@ -96,12 +96,12 @@ export default {
     actions: [
       {
         key: 'vehicle_dashboard.order_fuel_card',
-        icon: 'credit_card',
+        icon: 'mdi-credit-card-settings',
         action: () => alert('order fuel card')
       },
       {
         key: 'vehicle_dashboard.reassign_auth_profile',
-        icon: 'assignment_return',
+        icon: 'mdi-security',
         action: () => alert('reassign profile')
       }
     ],

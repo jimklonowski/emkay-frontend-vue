@@ -106,23 +106,23 @@ export default {
     actions: [
       {
         key: 'vehicle_dashboard.edit_driver',
-        icon: 'edit',
+        icon: 'mdi-account-edit',
         action: () => self.toggleEdit(),
         divider: true
       },
       {
         key: 'vehicle_dashboard.edit_custom_labels',
-        icon: 'label_important',
+        icon: 'mdi-label',
         action: () => self.showEditCustomLabelsForm()
       },
       {
         key: 'vehicle_dashboard.reassign_driver',
-        icon: 'assignment_ind',
+        icon: 'mdi-account-switch',
         action: () => self.showReassignDriverForm()
       },
       {
         key: 'vehicle_dashboard.add_new_driver',
-        icon: 'person_add',
+        icon: 'mdi-account-plus',
         action: () => self.showAddDriverForm()
       }
     ],
@@ -531,7 +531,7 @@ export default {
     async showEditCustomLabelsForm() {
       let componentProps = { width: 1000, elevation: 6 }
       let modalProps = { width: 1000, height: 'auto', delay: 0, clickToClose: false, draggable: false }
-      const form = await import(/* webpackChunkName: 'customLabels' */ '@/modules/vehicle/components/modals/EditCustomLabels')
+      const form = await import(/* webpackChunkName: 'customLabels2' */ '@/modules/vehicle/components/modals/EditCustomLabels')
       this.$modal.show(form.default, componentProps, modalProps)
     },
     async showReassignDriverForm() {

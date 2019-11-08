@@ -14,7 +14,7 @@
       color="primary lighten-2"
       @click="toTop"
     >
-      <v-icon v-text="'keyboard_arrow_up'" />
+      <v-icon v-text="'mdi-chevron-up'" />
     </v-btn>
   </v-fab-transition>
 </template>

@@ -9,6 +9,7 @@
     "date": "Date",
     "download": "Download",
     "driver": "Driver",
+    "edit": "Edit",
     "export_to_excel": "Export to Excel",
     "fleet": "Fleet",
     "language": "Language",
@@ -24,6 +25,7 @@
     "login": "Login",
     "logout": "Logout",
     "password": "Password",
+    "remember_me": "Remember Me",
     "username": "Username"
   },
   "dates": {
@@ -322,6 +324,7 @@
     "vehicle_notes": "@:vehicle_dashboard.vehicle @:vehicle_dashboard.notes",
     "vehicle_number": "Vehicle Number",
     "vehicle_search": "Vehicle Search",
+    "vehicle_search_placeholder": "Search for a vehicle by vehicle number, driver number, driver name ...",
     "vendor": "Vendor",
     "vin": "VIN",
     "violation": "Violation",

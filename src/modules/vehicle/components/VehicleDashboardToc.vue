@@ -1,17 +1,31 @@
 <template>
   <v-navigation-drawer width="300" left absolute permanent>
-    <v-list dense nav>
-      <v-list-item class="pa-4">
-        <v-list-item-avatar class="caption" color="secondary white--text lighten-2" :size="60" v-text="$route.params.vehicle" />
+    <!-- <v-list dense nav>
+      <v-list-item two-line>
+        <v-list-item-avatar class="caption" color="secondary lighten-2" :size="50">
+          <v-icon color="white">mdi-car</v-icon>
+        </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="title" v-t="'vehicle_dashboard.dashboard'" />
-          <v-list-item-subtitle class="caption">{{ $route.params.vehicle }}</v-list-item-subtitle>
+          <v-list-item-title class="title">{{ $route.params.vehicle }}</v-list-item-title>
+          <v-list-item-subtitle class="caption">2012 Jeep Compass</v-list-item-subtitle>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-btn icon>
+            <v-icon>mdi-settings</v-icon>
+          </v-btn>
+        </v-list-item-action>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content>
+          
         </v-list-item-content>
       </v-list-item>
-      
-      <v-divider />
+    </v-list> -->
+    <vehicle-card />
+    <v-divider />
 
-      <v-list-group :prepend-icon="'dashboard'" class="py-2" :value="true" no-action>
+    <v-list dense nav>
+      <v-list-group :prepend-icon="'mdi-view-dashboard'" class="py-2" :value="true" no-action>
         <template #activator>
           <v-list-item-content>
             <v-list-item-title>{{ $t('vehicle_dashboard.dashboard') }}</v-list-item-title>
@@ -42,25 +56,29 @@
   </v-navigation-drawer>
 </template>
 <script>
+import VehicleCard from '@/modules/vehicle/components/VehicleCard'
 export default {
   name: 'vehicle-dashboard-toc',
+  components: {
+    VehicleCard
+  },
   data: () => ({
     mini: true,
     dashboard_items: [
       {
         key: 'vehicle_dashboard.vehicle_and_driver',
         to: { name: 'vehicle-dashboard-details' },
-        icon: 'drive_eta'
+        icon: 'mdi-car'
       },
       {
         key: 'vehicle_dashboard.fuel',
         to: { name: 'vehicle-dashboard-fuel' },
-        icon: 'local_gas_station'
+        icon: 'mdi-gas-station'
       },
       {
         key: 'vehicle_dashboard.maintenance',
         to: { name: 'vehicle-dashboard-maintenance' },
-        icon: 'build'
+        icon: 'mdi-maintenance'
       },
       {
         key: 'vehicle_dashboard.invoice',
@@ -112,22 +130,22 @@ export default {
       {
         key: 'vehicle_dashboard.documents',
         to: { name: 'vehicle-dashboard-documents' },
-        icon: 'file_copy'
+        icon: 'mdi-file-document'
       },
       {
         key: 'vehicle_dashboard.inspections',
         to: { name: 'vehicle-dashboard-inspections' },
-        icon: 'search'
+        icon: 'mdi-car-info'
       },
       {
         key: 'vehicle_dashboard.saferoads',
         to: { name: 'vehicle-dashboard-saferoads' },
-        icon: 'av_timer'
+        icon: 'mdi-chart-areaspline'
       },
       {
         key: 'transtor.transports_and_storage',
         to: { name: 'transtor-status' },
-        icon: 'local_shipping'
+        icon: 'mdi-car-multiple'
       }
     ]
   })

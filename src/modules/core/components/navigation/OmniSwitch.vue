@@ -7,7 +7,7 @@
   >
     <template #activator="{ on }">
       <v-btn text style="min-width:48px;" v-on="on">
-        <v-icon size="24">language</v-icon>
+        <v-icon size="24">mdi-web</v-icon>
       </v-btn>
     </template>
 
@@ -42,7 +42,7 @@
       </v-list>
       <v-card-actions>
         <v-btn v-if="isAuthenticated" elevation="0" block @click.prevent="logout">
-          <v-icon class="mr-4">exit_to_app</v-icon>
+          <v-icon class="mr-4">mdi-logout</v-icon>
           {{ $t('auth.logout') }}
         </v-btn>
       </v-card-actions>

@@ -8,7 +8,7 @@
   >
     <template #activator="{ on }">
       <v-btn color="rgba(255, 255, 255, 0.8)" dark icon v-on="on">
-        <v-icon v-text="'more_vert'" />
+        <v-icon v-text="'mdi-dots-horizontal'" />
       </v-btn>
     </template>
     <v-list nav dense>

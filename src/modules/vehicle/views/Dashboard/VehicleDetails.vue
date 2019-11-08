@@ -106,40 +106,42 @@ export default {
     actions: [
       {
         key: 'vehicle_dashboard.edit_vehicle',
-        icon: 'edit',
+        icon: 'mdi-cogs',
         action: () => self.toggleEdit(),
         divider: true
       },
       {
         key: 'vehicle_dashboard.order_status',
-        icon: 'av_timer',
-        action: () => self.showOrderStatus()
+        icon: 'mdi-receipt',
+        //action: () => self.showOrderStatus()
+        action: () => alert('order status')
         //component: () => import('@/modules/vehicle/components/Details/OrderStatus'),
       },
       {
         key: 'vehicle_dashboard.edit_custom_labels',
-        icon: 'label_important',
-        action: () => self.showEditCustomLabelsForm(),
+        icon: 'mdi-label',
+        action: () => alert('custom labels')
+        //action: () => self.showEditCustomLabelsForm(),
         //component: () => import('@/modules/vehicle/components/Forms/EditCustomLabels')
       },
       {
         key: 'vehicle_dashboard.schedule_ac',
-        icon: 'schedule',
+        icon: 'mdi-calendar',
         action: () => alert('A/C click')
       },
       {
         key: 'vehicle_dashboard.report_expenses',
-        icon: 'assessment',
+        icon: 'mdi-coin',
         action: () => alert('Report Expenses')
       },
       {
         key: 'vehicle_dashboard.used_vehicle_quote',
-        icon: 'local_atm',
+        icon: 'mdi-car-info',
         action: () => alert('Used Quote')
       },
       {
         key: 'vehicle_dashboard.terminate_vehicle',
-        icon: 'cancel_presentation',
+        icon: 'mdi-calendar-remove',
         action: () => alert('Terminate Vehicle')
       }
     ],
@@ -418,18 +420,18 @@ export default {
     },
 
     // Load/Show Action Modals
-    async showEditCustomLabelsForm() {
-      let componentProps = { width: 1000, elevation: 6 }
-      let modalProps = { width: 1000, height: 'auto', delay: 0, clickToClose: false, draggable: false }
-      const form = await import(/* webpackChunkName: 'customLabels' */ '@/modules/vehicle/components/modals/EditCustomLabels')
-      this.$modal.show(form.default, componentProps, modalProps)
-    },
-    async showOrderStatus() {
-      let componentProps = { width: 1000, elevation: 6 }
-      let modalProps = { width: 1000, height: 600, delay: 0, clickToClose: true, draggable: false, scrollable: true }
-      const form = await import(/* webpackChunkName: 'orderStatus' */ '@/modules/vehicle/components/modals/OrderStatus')
-      this.$modal.show(form.default, componentProps, modalProps)
-    },
+    // async showEditCustomLabelsForm() {
+    //   let componentProps = { width: 1000, elevation: 6 }
+    //   let modalProps = { width: 1000, height: 'auto', delay: 0, clickToClose: false, draggable: false }
+    //   const form = await import(/* webpackChunkName: 'customLabels' */ '@/modules/vehicle/components/modals/EditCustomLabels')
+    //   this.$modal.show(form.default, componentProps, modalProps)
+    // },
+    // async showOrderStatus() {
+    //   let componentProps = { width: 1000, elevation: 6 }
+    //   let modalProps = { width: 1000, height: 600, delay: 0, clickToClose: true, draggable: false, scrollable: true }
+    //   const form = await import(/* webpackChunkName: 'orderStatus' */ '@/modules/vehicle/components/modals/OrderStatus')
+    //   this.$modal.show(form.default, componentProps, modalProps)
+    // },
     //...
     cancelEdit() {
       this.isEditing = !this.isEditing

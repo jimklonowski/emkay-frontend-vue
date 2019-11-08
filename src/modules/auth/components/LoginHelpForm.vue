@@ -9,7 +9,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn v-t="'common.back'" :ripple="false" @click="toggleHelp" tabindex="-1" text />
-        <v-btn v-t="'auth.forgot_password'" :ripple="false" type="submit" color="primary" text />
+        <v-btn v-t="'auth.forgot_password'" :ripple="false" type="submit" color="primary" small text />
       </v-card-actions>
     </v-form>
   </v-card>

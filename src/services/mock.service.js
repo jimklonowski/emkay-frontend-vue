@@ -80,6 +80,41 @@ const MockService = {
         driver_use_label_4: 'Parking',
         driver_use_4: 'Parking Spot #3A'
       })
+      .onGet(new RegExp(`/driver-info/*`))
+      .reply(200, {
+        // Model - driver info
+        driver_info: {
+          last_name: 'KLONOWSKI',
+          first_name: 'JAMES',
+          employee_id: '123456789',
+          license_state: 'IL',
+          license_number: 'ABCDEF12309876QWERTY',
+          selector_level: 'I.T.'
+        },
+        // Model - contact info
+        contact_info: {
+          address_1: 'EMKAY, Inc',
+          address_2: '805 W THORNDALE AVE',
+          postal_code: '60143',
+          city: 'ITASCA',
+          state_province: 'IL',
+          county: 'DUPAGE',
+          email: 'JKLONOWSKI@email.com',
+          phone: '630-864-0000',
+          cell: '630-864-0999'
+        },
+        // Model - customization
+        customization: {
+          //driver_use_label_1: 'Department',
+          driver_use_1: 'Sales',
+          //driver_use_label_2: 'Team',
+          driver_use_2: 'Senior Sales',
+          //driver_use_label_3: 'Office',
+          driver_use_3: 'Bermuda Office',
+          //driver_use_label_4: 'Parking',
+          driver_use_4: 'Parking Spot #3A'
+        }
+      })
       // mock vehicle-details
       .onGet(new RegExp(`/vehicle-details/*`))
       .reply(200, {
@@ -106,6 +141,39 @@ const MockService = {
         client_use_4: 'Lead',
         client_use_label_5: 'Client Use Label 5',
         client_use_5: 'Custom 5'
+      })
+      // mock vehicle-details
+      .onGet(new RegExp(`/vehicle-info/*`))
+      .reply(200, {
+        // Account Information
+        account_info: {
+          account: 'EM102',
+          billing_sort: 'JCKBILLING',
+          center: '0x1',
+          center_description: 'Information Technology'
+        },
+        // Vehicle Information
+        vehicle_info: {
+          year: '2020',
+          make: 'TESLA',
+          model: 'Model X P100D',
+          vin: 'K45286378154321EL',
+          vehicle_number: '123456',
+          client_vehicle_number: 'D34DB33F'
+        },
+        // Customization
+        customization: {
+          //client_use_label_1: 'Department',
+          client_use_1: 'I.T.',
+          //client_use_label_2: 'Project',
+          client_use_2: 'Web Rewrite',
+          //client_use_label_3: 'Division',
+          client_use_3: 'JavaScript',
+          //client_use_label_4: 'Group',
+          client_use_4: 'Lead',
+          //client_use_label_5: 'Client Use Label 5',
+          client_use_5: 'Custom 5'
+        }
       })
       // mock custom labels populate
       .onGet('/custom-labels')
@@ -462,6 +530,16 @@ const MockService = {
           quantity: '19.89',
           unit_cost: '$3.699',
           amount: '$60.21'
+        },
+        {
+          date: '2019-01-18',
+          odometer: '16112',
+          driver: 'Andrew Griffith',
+          merchant_address: 'BP PRODUCTS ITASCA, IL',
+          type: 'UNL GAS',
+          quantity: '19.89',
+          unit_cost: '$3.199',
+          amount: '$60.21'
         }
       ])
       // mock maintenance history
@@ -486,6 +564,38 @@ const MockService = {
         {
           date: '2019-04-01',
           odometer: '10901',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$750.00'
+        },
+        {
+          date: '2019-03-01',
+          odometer: '10801',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$750.00'
+        },
+        {
+          date: '2019-02-01',
+          odometer: '10701',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$350.00'
+        },
+        {
+          date: '2019-01-01',
+          odometer: '10201',
+          vendor: 'EMKAY Motors',
+          in_network: true,
+          service: 'Wash & Detail (Fee)',
+          amount: '$750.00'
+        },
+        {
+          date: '2018-04-01',
+          odometer: '10101',
           vendor: 'EMKAY Motors',
           in_network: true,
           service: 'Wash & Detail (Fee)',

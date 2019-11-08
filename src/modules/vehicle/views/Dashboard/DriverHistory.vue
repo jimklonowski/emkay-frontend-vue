@@ -6,7 +6,7 @@
       <v-text-field
         v-model="search"
         class="font-weight-regular"
-        append-icon="search"
+        append-icon="mdi-magnify"
         :label="$t('common.search')"
         single-line
         hide-details
@@ -17,7 +17,7 @@
         <template #actions>
           <v-list-item link>
             <v-list-item-icon>
-              <v-icon v-text="'cloud_download'" />
+              <v-icon v-text="'mdi-cloud-download'" />
             </v-list-item-icon>
               <v-list-item-content>
                 <!-- export as excel button -->

@@ -1,8 +1,18 @@
 <template>
   <div class="d-flex" :style="this.$route.meta.toc ? 'padding-left:300px' : ''">
     <vehicle-dashboard-toc />
-    <v-container>
+    <v-container fluid>
       <breadcrumb-row />
+      <!-- <v-row>
+        <v-col cols="12">
+          <vehicle-info :vehicle="$route.params.vehicle" />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <driver-info />
+        </v-col>
+      </v-row> -->
       <v-scroll-y-transition mode="out-in">
         <router-view />
       </v-scroll-y-transition>
@@ -11,13 +21,14 @@
 </template>
 
 <script>
+//import VehicleInfo from '@/modules/vehicle/components/VehicleInfo'
+//import DriverInfo from '@/modules/vehicle/components/DriverInfo'
 import BreadcrumbRow from '@/modules/core/components/navigation/BreadcrumbRow'
 import VehicleDashboardToc from '@/modules/vehicle/components/VehicleDashboardToc'
 export default {
-  components: { BreadcrumbRow,VehicleDashboardToc },
+  components: { BreadcrumbRow, VehicleDashboardToc },
   data: () => ({
-    vehicle: ''
- 
+    vehicle: '' 
   }),
   beforeCreate() {
     //debugger

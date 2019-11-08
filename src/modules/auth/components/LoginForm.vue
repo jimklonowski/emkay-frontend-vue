@@ -1,17 +1,36 @@
 <template>
-  <v-card :loading="loading" :elevation="elevation" :width="width" raised>
+  <v-card :loading="loading" :width="width" raised>
     <v-form ref="form" @submit.prevent="onSubmit">
-      <v-card-title :class="$config.LOGIN_BAR_CLASS" v-t="'auth.login'" />
-      <v-alert v-if="errorMessage" type="error" dense tile>{{ errorMessage }}</v-alert>
-      <v-card-text class="pa-4">      
-        <v-text-field v-model="model.account" v-bind="schema.account" />
-        <v-text-field v-model="model.username" v-bind="schema.username" />
-        <v-text-field v-model="model.password" v-bind="schema.password" />
+      <!-- <v-card-title class="justify-center" v-t="'auth.login'" /> -->
+      <!-- <v-alert v-if="errorMessage" type="error" dense tile text>{{ errorMessage }}</v-alert> -->
+      <v-card-text class="my-4">
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field v-model="model.account" v-bind="schema.account" tile />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field v-model="model.username" v-bind="schema.username" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field v-model="model.password" v-bind="schema.password" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-checkbox v-model="model.remember" v-bind="schema.remember" />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer />
-        <v-btn v-t="'auth.forgot_password'" :ripple="false" @click="toggleHelp" tabindex="-1" text />
-        <v-btn v-t="'auth.login'" :ripple="false" type="submit" color="primary" text />
+      <v-card-actions class="flex-column">
+        <!-- <v-spacer /> -->
+        <v-btn v-t="'auth.login'" :ripple="false" type="submit" color="primary lighten-2" large depressed block />
+        <v-btn v-t="'auth.forgot_password'" :ripple="false" @click="toggleHelp" tabindex="-1" small text block />
       </v-card-actions>
     </v-form>
   </v-card>
@@ -25,18 +44,19 @@ export default {
   props: {
     elevation: {
       type: Number,
-      default: 4
+      default: 0
     },
     width: {
       type: [String,Number],
-      default: '600px'
+      default: '500px'
     }
   },
   data: () => ({
     model: {
       account: '',
       username: '',
-      password: ''
+      password: '',
+      remember: false
     },
     errorMessage: null,
     loading: false
@@ -47,23 +67,34 @@ export default {
         account: {
           label: this.$t('auth.account'),
           type: 'text',
+          outlined: false,
+          dense: true,
           errorMessages: this.accountErrors(),
-          appendIcon: 'account_balance',
+          //prependIcon: 'account_balance',
           autocomplete: 'organization'
         },
         username: {
           label: this.$t('auth.username'),
           type: 'text',
+          outlined: false,
+          dense: true,
           errorMessages: this.usernameErrors(),
-          appendIcon: 'person',
+          //prependIcon: 'person',
           autocomplete: 'username'
         },
         password: {
           label: this.$t('auth.password'),
           type: 'password',
+          outlined: false,
+          dense: true,
           errorMessages: this.passwordErrors(),
-          appendIcon: 'lock',
+          //prependIcon: 'lock',
           autocomplete: 'current-password'
+        },
+        remember: {
+          label: this.$t('auth.remember_me'),
+          class: 'mt-0',
+          dense: true
         }
       }
     }
@@ -103,9 +134,17 @@ export default {
         return false
       }
 
+
+      let { rememberMe, ...credentials } = this.model
+      
+      if (rememberMe) {
+        console.log('remember me? '+rememberMe)
+        // not sure what to do with this, maybe use it to register the auto-refresh-login config
+      }
+
       // try to login
       this.$store
-        .dispatch('auth/login', this.model)
+        .dispatch('auth/login', credentials)
         .then(() => {
           //console.log('Login Success')
           //console.log(this.$store)
@@ -124,7 +163,8 @@ export default {
     model: {
       account: { required },
       username: { required },
-      password: { required }
+      password: { required },
+      remember: {}
     }
   }
 }

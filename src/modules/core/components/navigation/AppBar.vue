@@ -15,7 +15,7 @@
         >
           <span>
             {{ $t(item.key) }}
-            <v-icon>arrow_drop_down</v-icon>
+            <v-icon>mdi-menu-down</v-icon>
           </span>
           <transition name="fade">
             <mega-menu
@@ -31,7 +31,7 @@
     </v-toolbar-items>
     <v-spacer />
     <v-text-field
-      append-icon="search"
+      append-icon="mdi-magnify"
       :hint="$t('common.search')"
       :placeholder="$t('common.search_placeholder')"
       hide-details

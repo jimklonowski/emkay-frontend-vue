@@ -1,5 +1,5 @@
 <template>
-  <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark app>
+  <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark lights-out app>
     <template v-if="isAuthenticated">
       <template v-for="(button, key) in buttons">
         <v-btn
@@ -44,35 +44,35 @@ export default {
         text: 'Unread Messages',
         key: 'notifications.unread_messages',
         to: { name: 'notifications' },
-        icon: 'mail',
+        icon: 'mdi-email',
         count: 10
       },
       {
         text: 'Critical Alerts',
         key: 'notifications.critical_alerts',
         to: { name: 'notifications' },
-        icon: 'notifications',
+        icon: 'mdi-bell',
         count: 3
       },
       {
         text: 'Driver Order Approvals',
         key: 'notifications.driver_order_approvals',
         to: { name: 'notifications' },
-        icon: 'drive_eta',
+        icon: 'mdi-car',
         count: 0
       },
       {
         text: 'Maintenance Approvals',
         key: 'notifications.maintenance_approvals',
         to: { name: 'notifications' },
-        icon: 'report',
+        icon: 'mdi-alert-circle-check',
         count: 1
       },
       {
         text: 'Fleet Navigator',
         key: 'navigation.fleet_navigator',
         to: { name: 'notifications' },
-        icon: 'widgets'
+        icon: 'mdi-widgets'
       }
     ]
   })
