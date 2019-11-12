@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark>
+  <v-footer height="350" dark>
     <v-container>
       <v-row justify="center">
         <v-col v-for="(category, i) in categories" :key="i" cols="12" sm="4" lg="2" :class="category.class">

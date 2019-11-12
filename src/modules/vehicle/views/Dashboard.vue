@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex" :style="this.$route.meta.toc ? 'padding-left:300px' : ''">
+  <!-- <div class="d-flex content-wrap" :style="$route.meta.toc ? 'padding-left:300px' : ''"> -->
+  <div class="d-flex">
     <vehicle-dashboard-toc />
     <v-container fluid>
       <breadcrumb-row />

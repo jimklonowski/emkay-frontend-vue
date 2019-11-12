@@ -1,28 +1,14 @@
 <template>
-  <v-navigation-drawer width="300" left absolute permanent>
-    <!-- <v-list dense nav>
-      <v-list-item two-line>
-        <v-list-item-avatar class="caption" color="secondary lighten-2" :size="50">
-          <v-icon color="white">mdi-car</v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title class="title">{{ $route.params.vehicle }}</v-list-item-title>
-          <v-list-item-subtitle class="caption">2012 Jeep Compass</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon>mdi-settings</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          
-        </v-list-item-content>
-      </v-list-item>
-    </v-list> -->
-    <vehicle-card />
-    <v-divider />
+<!-- style="top:100px;" clipped left fixed permanent -->
+  <!-- <v-navigation-drawer width="300" left clipped fixed style="height:100vh;top:100px;max-height:calc(100% - 100px);"> -->
+  <v-navigation-drawer v-model="drawer" width="300" stateless left clipped style="min-width:300px;position:sticky;left:0;top:100px;bottom:100px;height:calc(100vh - 100px);">
+    <template #prepend>
+      <!-- show vehicle info and actions on top left of vehicle dashboard navigation drawer -->
+      <vehicle-card />
+      <!-- <v-divider class="mx-5" /> -->
+      <v-divider />
+    </template>
+
 
     <v-list dense nav>
       <v-list-group :prepend-icon="'mdi-view-dashboard'" class="py-2" :value="true" no-action>
@@ -53,6 +39,14 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <template #append>
+      <v-divider />
+      <v-list-item>
+        <v-list-item-content>
+          <v-btn color="primary" small tile block text depressed :to="{ name: 'vehicle-dashboard-wrapper' }">Back to search</v-btn>
+        </v-list-item-content>
+      </v-list-item>
+    </template>
   </v-navigation-drawer>
 </template>
 <script>
@@ -63,12 +57,17 @@ export default {
     VehicleCard
   },
   data: () => ({
-    mini: true,
+    drawer: true,
     dashboard_items: [
+      // {
+      //   key: 'vehicle_dashboard.vehicle_and_driver',
+      //   to: { name: 'vehicle-dashboard-details' },
+      //   icon: 'mdi-car'
+      // },
       {
-        key: 'vehicle_dashboard.vehicle_and_driver',
-        to: { name: 'vehicle-dashboard-details' },
-        icon: 'mdi-car'
+        key: 'vehicle_dashboard.driver',
+        to: { name: 'vehicle-dashboard-drivers' },
+        icon: 'person'
       },
       {
         key: 'vehicle_dashboard.fuel',
@@ -96,7 +95,7 @@ export default {
         icon: 'error_outline'
       },
       {
-        key: 'vehicle_dashboard.rental_history',
+        key: 'vehicle_dashboard.rental',
         to: { name: 'vehicle-dashboard-rentals' },
         icon: 'emoji_transportation'
       },
@@ -116,12 +115,7 @@ export default {
         icon: 'av_timer'
       },
       {
-        key: 'vehicle_dashboard.driver_history',
-        to: { name: 'vehicle-dashboard-drivers' },
-        icon: 'person'
-      },
-      {
-        key: 'vehicle_dashboard.vehicle_notes',
+        key: 'vehicle_dashboard.notes',
         to: { name: 'vehicle-dashboard-notes' },
         icon: 'note'
       }

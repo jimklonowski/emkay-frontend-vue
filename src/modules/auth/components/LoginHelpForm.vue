@@ -45,7 +45,7 @@ export default {
           label: this.$t('auth.email'),
           type: 'email',
           errorMessages: this.emailErrors(),
-          appendIcon: 'mail',
+          appendIcon: 'mdi-email',
           autocomplete: 'email'
         }
       }

@@ -1,48 +1,44 @@
 <template>
-  <v-expansion-panel>
-    <v-expansion-panel-content>
-      <v-card>
-        <v-form>
-          <v-card-title class="headline" v-text="$t('vehicle_dashboard.driver_details')" />
-          <v-card-text>
-            <v-row v-if="initializing">
-              <v-skeleton-loader type="table-row-divider@4" />
-            </v-row>
-            <v-row v-else>
-              <v-col cols="12" lg="4">
-                <v-row :dense="isEditing">
-                  <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.driver_information')" />
-                  <v-col v-for="(item, name, key) in model.driver_info" :key="key" v-bind="schema.driver_info[name].flex">
-                    <v-text-field v-model="model.driver_info[name]" v-bind="schema.driver_info[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
-                    <!-- <v-text-field :label="name" :disabled="!isEditing" :filled="isEditing" :solo="!isEditing" :flat="!isEditing" dense /> -->
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" lg="4">
-                <v-row :dense="isEditing">
-                  <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.contact_information')" />
-                  <v-col v-for="(item, name, key) in model.driver_info" :key="key" v-bind="schema.driver_info[name].flex">
-                    <v-text-field v-model="model.driver_info[name]" v-bind="schema.driver_info[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" lg="4">
-                <v-row :dense="isEditing">
-                  <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.customization')" />
-                  <v-col v-for="(item, name, key) in model.customization" :key="key" v-bind="schema.customization[name].flex">
-                    <v-text-field v-model="model.customization[name]" v-bind="schema.customization[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
-                  </v-col>
-                </v-row>
+  <v-card>
+    <v-form>
+      <v-card-title class="headline" v-text="$t('vehicle_dashboard.driver_details')" />
+      <v-card-text>
+        <v-row v-if="initializing">
+          <v-skeleton-loader type="table-row-divider@4" />
+        </v-row>
+        <v-row v-else>
+          <v-col cols="12" lg="4">
+            <v-row :dense="isEditing">
+              <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.driver_information')" />
+              <v-col v-for="(item, name, key) in model.driver_info" :key="key" v-bind="schema.driver_info[name].flex">
+                <v-text-field v-model="model.driver_info[name]" v-bind="schema.driver_info[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
+                <!-- <v-text-field :label="name" :disabled="!isEditing" :filled="isEditing" :solo="!isEditing" :flat="!isEditing" dense /> -->
               </v-col>
             </v-row>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn @click="isEditing = !isEditing">EDIT</v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
+          </v-col>
+          <v-col cols="12" lg="4">
+            <v-row :dense="isEditing">
+              <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.contact_information')" />
+              <v-col v-for="(item, name, key) in model.driver_info" :key="key" v-bind="schema.driver_info[name].flex">
+                <v-text-field v-model="model.driver_info[name]" v-bind="schema.driver_info[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col cols="12" lg="4">
+            <v-row :dense="isEditing">
+              <v-subheader class="col-12 overline" v-text="$t('vehicle_dashboard.customization')" />
+              <v-col v-for="(item, name, key) in model.customization" :key="key" v-bind="schema.customization[name].flex">
+                <v-text-field v-model="model.customization[name]" v-bind="schema.customization[name].props" :disabled="!isEditing" :filled="isEditing" rounded />
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="isEditing = !isEditing">EDIT</v-btn>
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>

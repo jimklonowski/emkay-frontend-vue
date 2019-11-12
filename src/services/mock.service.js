@@ -36,7 +36,7 @@ const MockService = {
         access_token: '12345C',
         refresh_token: 'refresh_token'
       })
-      .onPost('/auth/login')
+      .onPost('/auth/login', {})
       .reply(200, {
         user: {
           account: 'AB123',

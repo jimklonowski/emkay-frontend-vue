@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="loading" :width="width" raised>
     <v-form ref="form" @submit.prevent="onSubmit">
-      <!-- <v-card-title class="justify-center" v-t="'auth.login'" /> -->
+      <v-card-title class="justify-center font-weight-thin display-2 ma-4" v-t="'auth.login'" />
       <!-- <v-alert v-if="errorMessage" type="error" dense tile text>{{ errorMessage }}</v-alert> -->
       <v-card-text class="my-4">
         <v-container>
@@ -70,7 +70,7 @@ export default {
           outlined: false,
           dense: true,
           errorMessages: this.accountErrors(),
-          //prependIcon: 'account_balance',
+          prependIcon: 'mdi-bank',
           autocomplete: 'organization'
         },
         username: {
@@ -79,7 +79,7 @@ export default {
           outlined: false,
           dense: true,
           errorMessages: this.usernameErrors(),
-          //prependIcon: 'person',
+          prependIcon: 'mdi-account-tie',
           autocomplete: 'username'
         },
         password: {
@@ -88,7 +88,7 @@ export default {
           outlined: false,
           dense: true,
           errorMessages: this.passwordErrors(),
-          //prependIcon: 'lock',
+          prependIcon: 'mdi-lock-question',
           autocomplete: 'current-password'
         },
         remember: {
@@ -134,13 +134,14 @@ export default {
         return false
       }
 
-
-      let { rememberMe, ...credentials } = this.model
+      // separate the credentials from the 'remember' checkbox
+      let { remember, ...credentials } = this.model
       
-      if (rememberMe) {
-        console.log('remember me? '+rememberMe)
+      if (remember) {
+        console.log('remember me? '+remember)
         // not sure what to do with this, maybe use it to register the auto-refresh-login config
       }
+
 
       // try to login
       this.$store

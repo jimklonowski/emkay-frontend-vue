@@ -5,6 +5,11 @@ export const editCustomLabels = async () => {
   store.$app.$modal.show(form.default, { width: 1000, elevation: 6 }, { width: 1000, height: 'auto', delay: 0, draggable: true, clickToClose: true })
 }
 
+export const editDriver = async () => {
+  const form = await import(/* webpackChunkName: 'editDriver' */ '@/modules/vehicle/components/modals/EditDriver')
+  store.$app.$modal.show(form.default, { width: 1000, elevation: 6 }, { width: 1000, height: 'auto', delay: 0, draggable: true, clickToClose: true })
+}
+
 export const editVehicle = async () => {
   const form = await import(/* webpackChunkName: 'editVehicle' */ '@/modules/vehicle/components/modals/EditVehicle')
   store.$app.$modal.show(form.default, { width: 1000, elevation: 6 }, { width: 1000, height: 'auto', delay: 0, draggable: true, clickToClose: true })

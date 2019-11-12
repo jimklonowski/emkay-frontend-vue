@@ -1,128 +1,74 @@
 <template>
-  <v-expansion-panels v-model="panel" accordian>
-    <v-expansion-panel>
-      <v-expansion-panel-header>
-        <v-list dense nav>
-          <v-list-item two-line>
-            <v-list-item-avatar color="secondary lighten-2" :size="50">
-              <v-icon color="white">mdi-car</v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title class="title">{{ $route.params.vehicle }}</v-list-item-title>
-              <v-list-item-subtitle class="caption">2012 Jeep Compass</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-expansion-panel-header>
-      <v-divider />
-      <v-expansion-panel-content>
-        <v-list dense>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Client Vehicle Number</v-list-item-title>
-              <v-list-item-subtitle>CVN123456</v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-menu bottom right>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon v-on="on" :ripple="false">
-                    <v-icon>mdi-settings</v-icon>
-                  </v-btn>
-                </template>
-                <v-list dense>
-                  <template v-for="(item, name, key) in vehicle_actions">
-                    <v-list-item :key="key" :color="item.color" @click="item.callback">
-                      <v-list-item-icon>
-                        <v-icon v-text="item.icon" />
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title v-t="item.key" />
-                      </v-list-item-content>
-                    </v-list-item>
+  <v-card elevation="0" tile>
+    <v-expansion-panels v-model="panel">
+      <v-expansion-panel id="expandVehicle" style="background-color:transparent;">
+        <v-expansion-panel-header disable-icon-rotate>
+          <template #default="{ open }">
+            <v-list-item nav two-line>
+              <v-list-item-avatar color="secondary lighten-2" :size="50">
+                <v-icon color="white">mdi-car</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content class="elevation-0">
+                <v-list-item-title class="title">{{ $route.params.vehicle }}</v-list-item-title>
+                <v-list-item-subtitle class="caption">2012 Jeep Compass</v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-menu bottom right>
+                  <template v-slot:activator="{ on }">
+                    <v-btn icon v-on="on" :ripple="false" @click.native.stop>
+                      <v-icon>mdi-settings</v-icon>
+                    </v-btn>
                   </template>
-                </v-list>
-              </v-menu>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Center</v-list-item-title>
-              <v-list-item-subtitle>001 - Executive</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
+                  <v-list dense>
+                    <template v-for="(item, name, key) in vehicle_actions">
+                      <v-list-item :key="key" :color="item.color" @click="item.callback">
+                        <v-list-item-icon>
+                          <v-icon v-text="item.icon" />
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title v-t="item.key" />
+                        </v-list-item-content>
+                      </v-list-item>
+                    </template>
+                  </v-list>
+                </v-menu>
+              </v-list-item-action>
+            </v-list-item>
+          </template>
+          <template #actions>
+            <v-icon color="primary">mdi-alert-circle</v-icon>
+          </template>
+        </v-expansion-panel-header>
+        <!-- <v-divider class="mx-5" /> -->
+        <v-expansion-panel-content>
+          <v-list-item dense>
             <v-list-item-content>
               <v-list-item-title>VIN</v-list-item-title>
               <v-list-item-subtitle>MYVIN1234567890</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <v-list-item dense>
             <v-list-item-content>
               <v-list-item-title>Billing Sort</v-list-item-title>
               <v-list-item-subtitle>n/a</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-        </v-list>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
-  <!-- <v-list dense nav>
-    <v-list-item two-line>
-      <v-list-item-avatar>
-        <v-icon>mdi-car</v-icon>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="title">{{ $route.params.vehicle }}</v-list-item-title>
-        <v-list-item-subtitle class="caption">2012 Jeep Compass</v-list-item-subtitle>
-      </v-list-item-content>
-      <v-list-item-action>
-        <v-menu bottom right>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" :ripple="false">
-              <v-icon>mdi-settings</v-icon>
-            </v-btn>
-          </template>
-          <v-list dense>
-            <template v-for="(item, name, key) in vehicle_actions">
-              <v-list-item :key="key" :color="item.color" @click="item.callback">
-                <v-list-item-icon>
-                  <v-icon v-text="item.icon" />
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title v-t="item.key" />
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-list>
-        </v-menu>
-      </v-list-item-action>
-    </v-list-item>
-    <v-divider />
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>Client Vehicle Number</v-list-item-title>
-        <v-list-item-subtitle>CVN123456</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>Center</v-list-item-title>
-        <v-list-item-subtitle>001 - Executive</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>VIN</v-list-item-title>
-        <v-list-item-subtitle>MYVIN1234567890</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>Billing Sort</v-list-item-title>
-        <v-list-item-subtitle>n/a</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list> -->
+          <v-list-item dense>
+            <v-list-item-content>
+              <v-list-item-title>Center</v-list-item-title>
+              <v-list-item-subtitle>001 - Executive</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item dense>
+            <v-list-item-content>
+              <v-list-item-title>Client Vehicle Number</v-list-item-title>
+              <v-list-item-subtitle>CVN123456</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-card>
 </template>
 <script>
 import { 
@@ -180,3 +126,9 @@ export default {
   })
 }
 </script>
+<style>
+#expandVehicle::before {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+</style>

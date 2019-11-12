@@ -26,7 +26,7 @@ export default [
       {
         path: '/vehicle/:vehicle',
         name: 'vehicle-dashboard',
-        redirect: { name: 'vehicle-dashboard-details' },
+        redirect: { name: 'vehicle-dashboard-drivers' },
         component: () => import(/* webpackChunkName: "vehicle-dashboard" */ '@/modules/vehicle/views/Dashboard.vue'),
         meta: {
           breadcrumb: {
@@ -37,25 +37,25 @@ export default [
           toc: true
         },
         children: [
-          {
-            path: '/vehicle/:vehicle/details',
-            alias: '/vehicle/:vehicle',
-            name: 'vehicle-dashboard-details',
-            meta: {
-              breadcrumb: {
-                key: 'vehicle_dashboard.vehicle_and_driver',
-                path: { name: 'vehicle-dashboard-details' }
-              },
-              toc: true
-            },
-            component: () => import('@/modules/vehicle/views/Dashboard/VehicleAndDriverDetails')
-          },
+          // {
+          //   path: '/vehicle/:vehicle/details',
+          //   alias: '/vehicle/:vehicle',
+          //   name: 'vehicle-dashboard-details',
+          //   meta: {
+          //     breadcrumb: {
+          //       key: 'vehicle_dashboard.vehicle_and_driver',
+          //       path: { name: 'vehicle-dashboard-details' }
+          //     },
+          //     toc: true
+          //   },
+          //   component: () => import('@/modules/vehicle/views/Dashboard/VehicleAndDriverDetails')
+          // },
           {
             path: '/vehicle/:vehicle/fuel',
             name: 'vehicle-dashboard-fuel',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.fuel_history',
+                key: 'vehicle_dashboard.fuel',
                 path: { name: 'vehicle-dashboard-fuel' }
               },
               toc: true
@@ -67,7 +67,7 @@ export default [
             name: 'vehicle-dashboard-maintenance',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.maintenance_history',
+                key: 'vehicle_dashboard.maintenance',
                 path: { name: 'vehicle-dashboard-maintenance' }
               },
               toc: true
@@ -79,7 +79,7 @@ export default [
             name: 'vehicle-dashboard-invoice',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.invoice_history',
+                key: 'vehicle_dashboard.invoice',
                 path: { name: 'vehicle-dashboard-invoice' }
               },
               toc: true
@@ -91,7 +91,7 @@ export default [
             name: 'vehicle-dashboard-licensing',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.licensing_history',
+                key: 'vehicle_dashboard.licensing',
                 path: { name: 'vehicle-dashboard-licensing' }
               },
               toc: true
@@ -103,7 +103,7 @@ export default [
             name: 'vehicle-dashboard-accident',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.accident_history',
+                key: 'vehicle_dashboard.accident',
                 path: { name: 'vehicle-dashboard-accident' }
               },
               toc: true
@@ -115,7 +115,7 @@ export default [
             name: 'vehicle-dashboard-rentals',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.rental_history',
+                key: 'vehicle_dashboard.rental',
                 path: { name: 'vehicle-dashboard-rentals' }
               },
               toc: true
@@ -127,7 +127,7 @@ export default [
             name: 'vehicle-dashboard-tolls',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.toll_history',
+                key: 'vehicle_dashboard.toll',
                 path: { name: 'vehicle-dashboard-tolls' }
               },
               toc: true
@@ -139,7 +139,7 @@ export default [
             name: 'vehicle-dashboard-violations',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.violation_history',
+                key: 'vehicle_dashboard.violation',
                 path: { name: 'vehicle-dashboard-violations' }
               },
               toc: true
@@ -151,7 +151,7 @@ export default [
             name: 'vehicle-dashboard-odometers',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.odometer_history',
+                key: 'vehicle_dashboard.odometer',
                 path: { name: 'vehicle-dashboard-odometers' }
               },
               toc: true
@@ -163,7 +163,7 @@ export default [
             name: 'vehicle-dashboard-drivers',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.driver_history',
+                key: 'vehicle_dashboard.driver',
                 path: { name: 'vehicle-dashboard-drivers' }
               },
               toc: true
@@ -175,7 +175,7 @@ export default [
             name: 'vehicle-dashboard-notes',
             meta: {
               breadcrumb: {
-                key: 'vehicle_dashboard.vehicle_notes',
+                key: 'vehicle_dashboard.notes',
                 path: { name: 'vehicle-dashboard-notes' }
               },
               toc: true

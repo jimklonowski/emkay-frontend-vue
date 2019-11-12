@@ -1,4 +1,5 @@
 import moment from 'moment'
+import cloneDeep from 'lodash/cloneDeep'
 import i18n from '@/plugins/i18n'
 import { helpers } from 'vuelidate/lib/validators'
 
@@ -64,3 +65,21 @@ export const headersForExport = headers => {
   // return a single object with all exported columns as fields
   return Object.assign({}, ...headerColumns)
 }
+
+
+/**
+ * Click-to-Dial phone number
+ * @param {*} number 
+ */
+export const dialTo = number => { window.location = `tel:${number}` }
+
+/**
+ * Click-to-Compose email
+ * @param {*} number 
+ */
+export const emailTo = email => { window.location = `mailto:${email}` }
+
+/**
+ * Export _.cloneDeep as cloneDeep
+ */
+export { cloneDeep as cloneDeep }
