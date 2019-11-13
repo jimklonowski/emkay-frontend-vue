@@ -14,25 +14,23 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        anchor: '#4F286C',  // emkay purple
-        primary: '#4F286C',
-        accent: '#4F286C',
-        //secondary: '',
-        //success: '',
-        //info: '',
-        warning: '#F68820'  // emkay orange
-        //error: ''
+        primary: '#2d1258'
       },
       dark: {
-        anchor: '#BF8CF8',  // even lighter purple
-        primary: '#7A57A5', // lighter purple
-        accent: '#BF8CF8',  // even lighter purple
-        // secondary: '',
-        // success: '',
-        // info: '',
-        warning: '#F68820'  // emkay orange
-        // error: ''
+        primary: '#212121'
       }
+      // light: {
+      //   anchor: '#4F286C',  // emkay purple
+      //   primary: '#4F286C',
+      //   accent: '#4F286C',
+      //   warning: '#F68820'  // emkay orange
+      // },
+      // dark: {
+      //   anchor: '#BF8CF8',  // even lighter purple
+      //   primary: '#7A57A5', // lighter purple
+      //   accent: '#BF8CF8',  // even lighter purple
+      //   warning: '#F68820'  // emkay orange
+      // }
     }
   },
   icons: {

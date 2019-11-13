@@ -1,7 +1,7 @@
 <template>
 <!-- style="top:100px;" clipped left fixed permanent -->
   <!-- <v-navigation-drawer width="300" left clipped fixed style="height:100vh;top:100px;max-height:calc(100% - 100px);"> -->
-  <v-navigation-drawer v-model="drawer" width="300" stateless left clipped style="min-width:300px;position:sticky;left:0;top:100px;bottom:100px;height:calc(100vh - 100px);">
+  <v-navigation-drawer v-model="drawer" width="300" stateless left style="min-width:300px;position:sticky;left:0;top:100px;bottom:100px;height:calc(100vh - 100px);">
     <template #prepend>
       <!-- show vehicle info and actions on top left of vehicle dashboard navigation drawer -->
       <vehicle-card />

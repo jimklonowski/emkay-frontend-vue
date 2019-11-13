@@ -1,5 +1,5 @@
 <template>
-  <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark lights-out app>
+  <v-system-bar :class="this.$config.SYSTEM_BAR_CLASS" style="z-index:5;" v-bind="{height}" dark app>
     <template v-if="isAuthenticated">
       <template v-for="(button, key) in buttons">
         <v-btn

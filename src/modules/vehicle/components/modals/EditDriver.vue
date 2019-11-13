@@ -39,6 +39,7 @@ import { translateError } from '@/util/helpers'
 import { email, maxLength, required } from 'vuelidate/lib/validators'
 export default {
   data: () => ({
+    error: null,
     loading: false,
     model: {
       address: {

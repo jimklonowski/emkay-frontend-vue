@@ -1,5 +1,6 @@
 //const SYSTEM_BAR_CLASS = 'secondary darken-2'
-const SYSTEM_BAR_CLASS = 'secondary'
+//const SYSTEM_BAR_CLASS = 'secondary'
+const SYSTEM_BAR_CLASS = ''
 const APP_BAR_CLASS = 'primary'
 //const APP_BAR_CLASS = ''
 const TOOLBAR_CLASS = 'primary elevation-0'

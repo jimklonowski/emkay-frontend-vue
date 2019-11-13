@@ -1,13 +1,15 @@
 <template>
   <v-menu
     v-model="menu"
-    :close-on-content-click="false"
-    :nudge-width="200"
+    transition="scale-transition"
+    origin="top right"
     offset-x
+    absolute
+    :close-on-content-click="false"
   >
     <template #activator="{ on }">
-      <v-btn text style="min-width:48px;" v-on="on">
-        <v-icon size="24">mdi-web</v-icon>
+      <v-btn icon v-on="on">
+        <v-icon class="ma-0">mdi-web</v-icon>
       </v-btn>
     </template>
 
@@ -21,8 +23,12 @@
             <v-list-item-title>{{ currentUser.username }}</v-list-item-title>
             <v-list-item-subtitle>{{ currentUser.account }}</v-list-item-subtitle>
           </v-list-item-content>
-
-          <v-list-item-action />
+          <v-list-item-action>
+            <!-- <v-list-item-action-text>Log Out</v-list-item-action-text> -->
+            <v-btn v-if="isAuthenticated" :title="$t('auth.logout')" @click.prevent="logout" icon>
+              <v-icon class="ma-0" color="primary">mdi-power</v-icon>
+            </v-btn>
+          </v-list-item-action>
         </v-list-item>
       </v-list>
       
@@ -41,10 +47,10 @@
         </v-list-item>
       </v-list>
       <v-card-actions>
-        <v-btn v-if="isAuthenticated" elevation="0" block @click.prevent="logout">
+        <!-- <v-btn elevation="0" block v-if="isAuthenticated" @click.prevent="logout">
           <v-icon class="mr-4">mdi-logout</v-icon>
           {{ $t('auth.logout') }}
-        </v-btn>
+        </v-btn> -->
       </v-card-actions>
     </v-card>
   </v-menu>
