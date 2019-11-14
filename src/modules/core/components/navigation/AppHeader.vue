@@ -3,8 +3,9 @@
     <!-- <system-bar /> -->
     <v-system-bar
       app
+      lights-out
       dark
-      color="primary darken-3"
+      color="primary darken-1"
       window
       style="z-index:6;"
     >
@@ -21,160 +22,121 @@
     </v-system-bar>
     <v-app-bar
       app
-      color="primary"
+      style="background-image: linear-gradient(120deg,#4f286c,#8ec5fc)!important;"
       :dark="!$vuetify.theme.dark"
     >
       <v-app-bar-nav-icon />
-      <v-toolbar-title>EMKAY, Inc</v-toolbar-title>
+      <v-toolbar-title class="title" style="min-width:100px;">EMKAY</v-toolbar-title>
       <v-spacer />
+      <v-tabs v-model="navigationTabs" background-color="transparent" right>
+        <v-tabs-slider />
+        <v-tab :to="{ name: 'home' }">
+          <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-home</v-icon>
+          <span v-show="$vuetify.breakpoint.lgAndUp">
+            {{ $t('navigation.home') }}
+          </span>
+        </v-tab>
 
-      <v-btn text :to="{ name: 'home' }">
-        <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-home</v-icon>
-        <span v-show="$vuetify.breakpoint.lgAndUp">
-          {{ $t('navigation.home') }}
-        </span>
-      </v-btn>
+        <v-tab to="/fleet">
+          <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-multiple</v-icon>
+          <span v-show="$vuetify.breakpoint.lgAndUp">
+            {{ $t('navigation.fleet_dashboard') }}
+          </span>
+        </v-tab>
+        
+        <v-tab :to="{ name: 'vehicle-dashboard-wrapper' }">
+          <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-cruise-control</v-icon>
+          <span v-show="$vuetify.breakpoint.lgAndUp">
+            {{ $t('navigation.vehicle_dashboard') }}
+          </span>
+        </v-tab>
 
-      <v-btn text to="/fleet">
-        <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-multiple</v-icon>
-        <span v-show="$vuetify.breakpoint.lgAndUp">
-          {{ $t('navigation.fleet_dashboard') }}
-        </span>
-      </v-btn>
-      
-      <v-btn text :to="{ name: 'vehicle-dashboard-wrapper' }">
-        <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-cruise-control</v-icon>
-        <span v-show="$vuetify.breakpoint.lgAndUp">
-          {{ $t('navigation.vehicle_dashboard') }}
-        </span>
-      </v-btn>
-
-      <v-menu
-        v-model="orderingMenu"
-        :close-on-content-click="false"
-        origin="top right"
-        transition="scale-transition"
-        left
-        offset-y
-        :nudge-bottom="12"
-        bottom
-      >
-        <template #activator="{ on }">
-          <v-btn v-on="on" text>
-            <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-steering</v-icon>
-            <span v-show="$vuetify.breakpoint.lgAndUp">
-              {{ $t('navigation.ordering') }}
-              <v-icon>mdi-chevron-down</v-icon>
-            </span>
-          </v-btn>
-        </template>
-        <v-card width="800">
-          <v-card-title class="subtitle-1 text-center" style="background-image: linear-gradient(120deg,#e0c3fc,#8ec5fc)!important;">Ordering</v-card-title>
-          <v-divider />
-          <v-card-text class="pa-0">
-            <v-row no-gutters>
-              <v-col sm="6" lg="4">
-                <v-list dense nav subheader class="d-flex flex-column align-start">
-                  <v-subheader v-t="ordering_categories[0].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[0].items" :key="key" :to="item.to">
-                    <v-icon x-small class="mr-2">mdi-source-commit</v-icon>
-                    {{ $t(item.key) }}
+        <v-menu
+          v-model="orderingMenu"
+          :close-on-content-click="false"
+          origin="top right"
+          transition="scale-transition"
+          left
+          offset-y
+          :nudge-bottom="12"
+          bottom
+        >
+          <template #activator="{ on }">
+            <v-tab v-on="on" readonly>
+              <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-steering</v-icon>
+              <span v-show="$vuetify.breakpoint.lgAndUp">
+                {{ $t('navigation.ordering') }}
+                <v-icon>mdi-chevron-down</v-icon>
+              </span>
+            </v-tab>
+          </template>
+          <v-card>
+            <!-- <v-card-title class="subtitle-2 font-weight-light">Ordering</v-card-title>
+            <v-divider /> -->
+            <v-card-text class="pa-0">
+              <v-tabs
+                v-model="orderingTabs"
+                centered
+                height="32"
+              >
+                <v-tab v-for="(category, key) in ordering_categories" :key="`tab${key}`" class="overline" tag="span">
+                  {{ $t(category.key) }}
+                </v-tab>
+              </v-tabs>
+              <v-divider />
+              <v-tabs-items v-model="orderingTabs">
+                <v-tab-item v-for="(category, key) in ordering_categories" :key="`tab-item${key}`">
+                  <v-card-text>
+                    <v-list dense nav subheader class="d-flex flex-column align-start">
+                      <v-btn x-small text v-for="(item, name, key) in category.items" :key="key" :to="category.to">
+                        <v-icon x-small class="mr-2">mdi-source-commit</v-icon>
+                        {{ $t(item.key) }}
+                      </v-btn>
+                    </v-list>
+                  </v-card-text>
+                </v-tab-item>
+              </v-tabs-items>
+            </v-card-text>
+            <v-divider />
+            <v-card-actions class="pa-0 flex-row">
+              <v-tooltip open-delay="200" bottom>
+                <template #activator="{ on }">
+                  <v-btn large tile text width="50%" v-on="on">
+                    <v-badge  color="warning" overlap>
+                      <template #badge>
+                        <span>2</span>
+                      </template>
+                      <v-icon large>mdi-timer-sand</v-icon>
+                    </v-badge>
                   </v-btn>
-                </v-list>
-              </v-col>
-              <v-col sm="6" lg="4">
-                <v-list dense nav subheader class="d-flex flex-column align-start">
-                  <v-subheader v-t="ordering_categories[1].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[1].items" :key="key" :to="item.to">
-                    <v-icon x-small class="mr-2">mdi-source-commit-local</v-icon>
-                    {{ $t(item.key) }}
-                  </v-btn>
-                </v-list>
-              </v-col>
-              <v-col sm="6" lg="4">
-                <v-list dense nav subheader class="d-flex flex-column align-start">
-                  <v-subheader v-t="ordering_categories[2].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[2].items" :key="key" :to="item.to">
-                    <v-icon x-small class="mr-2">{{ item.icon }}</v-icon>
-                    {{ $t(item.key) }}
-                  </v-btn>
-                </v-list>
-              </v-col>
-            </v-row>
+                </template>
+                <span class="overline">Driver Orders Awaiting Approval</span>
+              </v-tooltip>
+              <v-btn large tile text width="50%">
+                Action
+              </v-btn>
+              
+              
+            </v-card-actions>
+          </v-card>
+        </v-menu>
 
-            <!-- <div class="d-flex justify-space-around">
-              <v-list subheader dense nav class="flex-grow-1">
-                <v-subheader v-t="ordering_categories[0].key" />
-                <v-btn x-small text v-for="(item, name, key) in ordering_categories[0].items" :key="key" :to="item.to" v-t="item.key" />
-              </v-list>
-              <v-divider vertical />
-              <v-list subheader dense nav class="flex-grow-1">
-                <v-subheader v-t="ordering_categories[1].key" />
-                <v-btn x-small text v-for="(item, name, key) in ordering_categories[1].items" :key="key" :to="item.to" v-t="item.key" />
-              </v-list>
-              <v-divider vertical />
-              <v-list subheader dense nav class="flex-grow-1">
-                <v-subheader v-t="ordering_categories[2].key" />
-                <v-btn x-small text v-for="(item, name, key) in ordering_categories[2].items" :key="key" :to="item.to">
-                  <v-icon x-small class="mr-2">{{ item.icon }}</v-icon>
-                  {{ $t(item.key) }}
-                </v-btn>
-              </v-list>
-            </div> -->
-            <!-- <v-row no-gutters>
-              <v-col cols="12" sm="4" min-width="250">
-                <v-list subheader dense nav>
-                  <v-subheader v-t="ordering_categories[0].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[0].items" :key="key" :to="item.to" v-t="item.key" />
-                </v-list>                
-              </v-col>
-              <v-col cols="12" sm="4">
-                <v-list subheader dense nav>
-                  <v-subheader v-t="ordering_categories[1].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[1].items" :key="key" :to="item.to" v-t="item.key" />
-                </v-list>
-              </v-col>
-              <v-col cols="12" sm="4">
-                <v-list subheader dense nav>
-                  <v-subheader v-t="ordering_categories[2].key" />
-                  <v-btn x-small text v-for="(item, name, key) in ordering_categories[2].items" :key="key" :to="item.to" v-t="item.key" />
-                </v-list>
-              </v-col>
-            </v-row> -->
-          </v-card-text>
-        </v-card>
-      </v-menu>
+        <v-tab>
+          <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-dashboard</v-icon>
+          <span v-show="$vuetify.breakpoint.lgAndUp">
+            {{ $t('navigation.reporting') }}
+          </span>
+          <v-icon>mdi-chevron-down</v-icon>
+        </v-tab>
 
-      <v-btn text>
-        <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-dashboard</v-icon>
-        <span v-show="$vuetify.breakpoint.lgAndUp">
-          {{ $t('navigation.reporting') }}
-        </span>
-        <v-icon>mdi-chevron-down</v-icon>
-      </v-btn>
-
-      <v-btn text>
-        <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-toolbox</v-icon>
-        <span v-show="$vuetify.breakpoint.lgAndUp">
-          {{ $t('navigation.fleet_management') }}
-        </span>
-        <v-icon>mdi-chevron-down</v-icon>
-      </v-btn>
-
-      <!-- <v-btn v-for="(item, key) in items" :key="key" small text>
-        {{ $t(item.key) }}
-        <v-icon v-if="item.categories">mdi-chevron-down</v-icon>
-      </v-btn> -->
-      <!-- <template #extension>
-        <v-tabs align-with-title background-color="transparent">
-          <v-tab>Home</v-tab>
-          <v-tab>Fleet Dashboard</v-tab>
-          <v-tab>Vehicle Dashboard</v-tab>
-          <v-tab>Ordering</v-tab>
-          <v-tab>Reporting</v-tab>
-          <v-tab>Fleet Management</v-tab>
-        </v-tabs>
-      </template> -->
+        <v-tab>
+          <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-toolbox</v-icon>
+          <span v-show="$vuetify.breakpoint.lgAndUp">
+            {{ $t('navigation.fleet_management') }}
+          </span>
+          <v-icon>mdi-chevron-down</v-icon>
+        </v-tab>
+      </v-tabs>
     </v-app-bar>
   </header>
 </template>
@@ -191,11 +153,21 @@ export default {
     //AppBar,
     //SystemBar
   },
+  watch: {
+    orderingMenu: function(val) {
+      if(!val) {
+        this.orderingTabs = 0
+      }
+    }
+  },
   data: () => ({
+    navigationTabs: null,
     orderingMenu: false,
+    orderingTabs: 0,
     ordering_categories: [
       {
         key: 'navigation.orders',
+        icon: 'mdi-timeline-text',
         items: [
           { key: 'navigation.place_factory_orders', to: '/todo' },
           { key: 'navigation.place_stock_orders', to: '/todo' },
@@ -204,6 +176,7 @@ export default {
       },
       {
         key: 'navigation.driver_orders',
+        icon: 'mdi-cash-register',
         items: [
           { key: 'navigation.manage_driver_order_settings', to: '/todo' },
           { key: 'navigation.allow_drivers_to_order', to: '/todo' },
@@ -212,6 +185,7 @@ export default {
       },
       {
         key: 'navigation.selectors',
+        icon: 'mdi-chart-timeline',
         items: [
           { key: 'navigation.manage_your_selectors', to: '/todo', icon: 'mdi-settings' },
           { key: 'navigation.manage_your_selector_groups', to: '/todo', icon: 'mdi-folder-settings-variant' }
