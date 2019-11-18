@@ -138,7 +138,7 @@ export default {
       let { remember, ...credentials } = this.model
       
       if (remember) {
-        console.log('remember me? '+remember)
+        //console.log('remember me? '+remember)
         // not sure what to do with this, maybe use it to register the auto-refresh-login config
       }
 

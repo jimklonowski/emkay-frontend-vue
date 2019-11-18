@@ -266,7 +266,7 @@ export default {
       this.error = null
       // restore original model
       this.model = cloneDeep(this.originalModel)
-      console.log('driver edit cancelled')
+      //console.log('driver edit cancelled')
     },
     saveLabelEdit() {
       this.error = null

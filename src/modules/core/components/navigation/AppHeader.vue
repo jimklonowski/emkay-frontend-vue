@@ -23,28 +23,30 @@
     <v-app-bar
       app
       style="background-image: linear-gradient(120deg,#8ec5fc,#4f286c)!important;"
-      :dark="!$vuetify.theme.dark"
+      dark
     >
       <v-app-bar-nav-icon />
       <v-btn text class="title" style="min-width:100px;" :to="{ name: 'home' }">EMKAY</v-btn>
       <v-spacer />
       <v-tabs ref="navigationTabs" v-if="isAuthenticated" v-resize="resizeNavigationTabs" v-model="navigationTab" background-color="transparent" right>
+        
         <v-tabs-slider class="d-none" />
-        <v-tab style="min-width:60px;" v-if="$vuetify.breakpoint.mdAndUp" :to="{ name: 'home' }">
+
+        <v-tab style="min-width:60px;" v-if="$vuetify.breakpoint.mdAndUp" :title="$t('navigation.home')" :to="{ name: 'home' }">
           <v-icon v-show="$vuetify.breakpoint.md">mdi-home</v-icon>
           <span v-show="$vuetify.breakpoint.lgAndUp">
             {{ $t('navigation.home') }}
           </span>
         </v-tab>
 
-        <v-tab style="min-width:60px;" to="/fleet">
+        <v-tab style="min-width:60px;" :title="$t('navigation.fleet_dashboard')" to="/fleet">
           <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-multiple</v-icon>
           <span v-show="$vuetify.breakpoint.lgAndUp">
             {{ $t('navigation.fleet_dashboard') }}
           </span>
         </v-tab>
         
-        <v-tab style="min-width:60px;" :to="{ name: 'vehicle-dashboard-wrapper' }">
+        <v-tab style="min-width:60px;" :title="$t('navigation.vehicle_dashboard')" :to="{ name: 'vehicle-dashboard-wrapper' }">
           <v-icon v-show="$vuetify.breakpoint.mdAndDown">mdi-car-cruise-control</v-icon>
           <span v-show="$vuetify.breakpoint.lgAndUp">
             {{ $t('navigation.vehicle_dashboard') }}
@@ -62,7 +64,7 @@
           bottom
         >
           <template #activator="{ on }">
-            <v-tab v-on="on" title="Ordering" style="min-width:60px;">
+            <v-tab v-on="on" :title="$t('navigation.ordering')" style="min-width:60px;">
               <v-icon color="warning lighten-4" v-show="$vuetify.breakpoint.mdAndDown">mdi-steering</v-icon>
               <span v-show="$vuetify.breakpoint.lgAndUp">
                 {{ $t('navigation.ordering') }}
@@ -94,7 +96,7 @@
             <v-tabs-items v-model="orderingTab">
               <v-tab-item v-for="(category, key) in ordering_categories" :key="`orderingtab-item${key}`">
                 <v-card-text class="pa-0">
-                  <v-list nav tile dense>
+                  <v-list nav tile dense color="secondary">
                     <v-list-item v-for="(item, name, key) in category.items" :key="key" :to="item.to" style="min-height:32px;">
                       <v-icon class="mr-4" size="20">{{ item.icon }}</v-icon>
                       <v-list-item-subtitle class="font-weight-regular">{{ $t(item.key) }}</v-list-item-subtitle>

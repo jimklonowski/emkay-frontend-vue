@@ -1,8 +1,20 @@
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ],
-
+  chainWebpack: config => {
+    config.module
+      .rule('images')
+      .use('image-webpack-loader')
+      .loader('image-webpack-loader')
+      .options({
+        mozjpeg: {
+          progressive: true,
+          quality: 65
+        },
+        bypassOnDebug: true
+      }).end()
+  },
+  css: {
+    extract: { ignoreOrder: true }
+  },
   pluginOptions: {
     i18n: {
       locale: 'en',
@@ -12,5 +24,6 @@ module.exports = {
     }
   },
   productionSourceMap: false,
-  publicPath: '/vue2/'
+  publicPath: '/vue2/',
+  transpileDependencies: ['vuetify']
 }
